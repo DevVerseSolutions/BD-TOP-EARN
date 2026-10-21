@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target Bonus | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --bonus-gradient: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* Hero Banner */
+        .bonus-banner {
+            background: var(--bonus-gradient);
+            border-radius: 22px;
+            padding: 22px 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(255, 75, 43, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .bonus-banner::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+        }
+        .banner-tag {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            backdrop-filter: blur(4px);
+        }
+        .bonus-banner h5 { font-size: 18px; font-weight: 800; margin: 0; }
+        .bonus-banner p { font-size: 12px; opacity: 0.9; margin: 4px 0 14px; }
+
+        /* Countdown Timer Box */
+        .countdown-row {
+            display: flex;
+            gap: 8px;
+        }
+        .time-box {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            padding: 6px 10px;
+            text-align: center;
+            min-width: 50px;
+            backdrop-filter: blur(5px);
+        }
+        .time-box span { font-size: 16px; font-weight: 800; display: block; line-height: 1; }
+        .time-box small { font-size: 9px; font-weight: 700; opacity: 0.8; text-transform: uppercase; }
+
+        /* User Baseline Card */
+        .baseline-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .baseline-info h6 { font-size: 14px; font-weight: 800; margin: 0; color: #0f172a; }
+        .baseline-info p { font-size: 11px; color: #64748b; margin: 2px 0 0; }
+        .baseline-badge {
+            background: #ecfdf5;
+            color: #059669;
+            font-size: 16px;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 12px;
+            border: 1px solid #a7f3d0;
+        }
+
+        /* Target Challenge Cards */
+        .target-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 18px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            margin-bottom: 14px;
+            transition: transform 0.2s;
+        }
+        .target-card:active { transform: scale(0.99); }
+        .target-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .target-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .target-icon-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #fff1f2;
+            color: #e11d48;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .target-title h6 { font-size: 14px; font-weight: 800; margin: 0; color: #0f172a; }
+        .target-title small { font-size: 11px; font-weight: 600; color: #64748b; }
+        .bonus-amount-pill {
+            background: #fff1f2;
+            color: #e11d48;
+            border: 1px solid #fecdd3;
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        /* Progress Bar */
+        .progress-box {
+            background: #f1f5f9;
+            height: 8px;
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 12px 0 6px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            border-radius: 50px;
+            transition: width 0.6s ease;
+        }
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 14px;
+        }
+
+        /* Claim Buttons */
+        .btn-claim {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .btn-claim.active {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(255, 75, 43, 0.35);
+            cursor: pointer;
+            animation: pulse-claim 2s infinite ease-in-out;
+        }
+        @keyframes pulse-claim {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .btn-claim.locked {
+            background: #f8fafc;
+            color: #94a3b8;
+            cursor: not-allowed;
+            border: 1px dashed #cbd5e1;
+        }
+        .btn-claim.pending {
+            background: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fde68a;
+            cursor: default;
+        }
+        .btn-claim.claimed {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">টার্গেট বোনাস (Target Bonus)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- Hero Banner with Live Timer -->
+    <div class="bonus-banner">
+        <div class="banner-tag" id="offerBadge">
+            <i class="fa-solid fa-bolt"></i> স্পেশাল চ্যালেঞ্জ অফার
+        </div>
+        <h5 id="offerTitle">টার্গেট পূরণ করে বোনাস জিতুন! 🔥</h5>
+        <p id="offerSub">নির্দিষ্ট সময়ের মধ্যে রেফার একাউন্ট একটিভ করিয়ে জিতে নিন আকর্ষণীয় ক্যাশ বোনাস।</p>
+
+        <!-- Live Countdown -->
+        <div class="countdown-row">
+            <div class="time-box">
+                <span id="cHours">00</span>
+                <small>ঘন্টা</small>
+            </div>
+            <div class="time-box">
+                <span id="cMinutes">00</span>
+                <small>মিনিট</small>
+            </div>
+            <div class="time-box">
+                <span id="cSeconds">00</span>
+                <small>সেকেন্ড</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Active Referral Baseline Card -->
+    <div class="baseline-card">
+        <div class="baseline-info">
+            <h6>আপনার সক্রিয় রেফার</h6>
+            <p>চ্যালেঞ্জ পূরণ করতে বন্ধুদের আইডি একটিভ করান</p>
+        </div>
+        <div class="baseline-badge">
+            <span id="userActiveCount">0</span> জন
+        </div>
+    </div>
+
+    <!-- Challenges Container -->
+    <div id="targetsContainer">
+        <div class="text-center text-muted py-5">
+            <div class="spinner-border text-danger spinner-border-sm mb-2" role="status"></div>
+            <p class="small mb-0">অফার লোড হচ্ছে...</p>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="dashboard.html" class="text-decoration-none text-muted small fw-bold">
+            <i class="fa-solid fa-arrow-left me-1"></i> ড্যাশবোর্ডে ফিরে যান
+        </a>
+    </div>
+
+</div>
+
+<!-- Firebase & Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    let DEFAULT_CONFIG = {
+        badge: "স্পেশাল চ্যালেঞ্জ অফার",
+        title: "টার্গেট পূরণ করে ক্যাশ বোনাস জিতুন! 🔥",
+        subtitle: "আজকের মধ্যে নির্ধারিত টার্গেট পূরণ করে বোনাস ক্লেইম রিকোয়েস্ট পাঠান। এডমিন যাচাই করে ব্যালেন্সে টাকা যোগ করে দেবেন।",
+        targets: [
+            { id: "target_1", title: "টার্গেট ১ (স্টার্টার)", goal: 5,  bonus: 500 },
+            { id: "target_2", title: "টার্গেট ২ (সিলভার)",   goal: 10, bonus: 1200 },
+            { id: "target_3", title: "টার্গেট ৩ (গোল্ড)",     goal: 20, bonus: 3000 },
+            { id: "target_4", title: "টার্গেট ৪ (মেগা)",      goal: 50, bonus: 8000 }
+        ]
+    };
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let userNumericId = "";
+    let activeReferrals = 0;
+    let userClaimsMap = {}; // { target_id: 'pending' | 'approved' | 'rejected' }
+    let currentConfig = DEFAULT_CONFIG;
+
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        currentUser = user;
+
+        // ইউজারের আইডি লোড
+        db.collection("users").doc(user.uid).onSnapshot(d => {
+            if(d.exists) {
+                const u = d.data();
+                userNumericId = u.user_id ? `#${u.user_id}` : (u.numeric_id ? `#${u.numeric_id}` : `#${user.uid.substring(0,8)}`);
+            }
+        });
+
+        // এডমিন সেটিংস থেকে অফার ডাটা লাইভ লোড
+        listenAdminConfig();
+
+        // ইউজারের সক্রিয় রেফার গণনা
+        await loadUserActiveReferrals(user.uid);
+
+        // লাইভ ক্লেইম স্ট্যাটাস লিসেন করা
+        listenClaimStatus(user.uid);
+
+        // লাইভ কাউন্টডাউন টাইমার
+        startCountdownTimer();
+    });
+
+    // এডমিন সেটিংস লাইভ লোড
+    function listenAdminConfig() {
+        db.collection("settings").doc("target_bonus").onSnapshot(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                if (data.badge) currentConfig.badge = data.badge;
+                if (data.title) currentConfig.title = data.title;
+                if (data.subtitle) currentConfig.subtitle = data.subtitle;
+                if (Array.isArray(data.targets) && data.targets.length > 0) {
+                    currentConfig.targets = data.targets;
+                }
+            }
+            document.getElementById('offerBadge').innerHTML = `<i class="fa-solid fa-bolt"></i> ${currentConfig.badge}`;
+            document.getElementById('offerTitle').innerText = currentConfig.title;
+            document.getElementById('offerSub').innerText = currentConfig.subtitle;
+            renderTargetCards();
+        });
+    }
+
+    // ইউজারের সক্রিয় রেফার সংখ্যা বের করা
+    async function loadUserActiveReferrals(uid) {
+        try {
+            const userSnap = await db.collection("users").doc(uid).get();
+            const uData = userSnap.data() || {};
+            const myReferCode = uData.refer_code || uData.referral_code || uid;
+
+            const teamSnap = await db.collection("users")
+                                     .where("referred_by", "in", [uid, myReferCode])
+                                     .get();
+
+            activeReferrals = 0;
+            teamSnap.forEach(doc => {
+                if ((doc.data().status || '').toLowerCase() === 'active') {
+                    activeReferrals++;
+                }
+            });
+
+            document.getElementById('userActiveCount').innerText = activeReferrals;
+        } catch (e) {
+            console.error("Error loading active referrals:", e);
+        }
+    }
+
+    // ক্লেইম স্ট্যাটাস লাইভ রিড (পেন্ডিং / অ্যাপ্রুভড / রিজেক্টেড)
+    function listenClaimStatus(uid) {
+        db.collection("target_claims")
+          .where("user_id", "==", uid)
+          .onSnapshot(snap => {
+              userClaimsMap = {};
+              snap.forEach(doc => {
+                  const data = doc.data();
+                  if (data.target_id) {
+                      userClaimsMap[data.target_id] = (data.status || 'pending').toLowerCase();
+                  }
+              });
+              renderTargetCards();
+          });
+    }
+
+    // অফার কার্ডগুলো রেন্ডার করা
+    function renderTargetCards() {
+        const container = document.getElementById('targetsContainer');
+        let html = "";
+
+        currentConfig.targets.forEach((tgt, index) => {
+            const goal = parseInt(tgt.goal);
+            const bonus = parseFloat(tgt.bonus);
+            const percent = Math.min(100, Math.floor((activeReferrals / goal) * 100));
+            const isCompleted = activeReferrals >= goal;
+            const claimStatus = userClaimsMap[tgt.id]; // 'pending', 'approved', 'rejected' or undefined
+
+            let buttonHtml = "";
+            if (claimStatus === 'approved') {
+                buttonHtml = `
+                    <button class="btn-claim claimed" disabled>
+                        <i class="fa-solid fa-circle-check"></i> বোনাস যুক্ত হয়েছে (Approved)
+                    </button>`;
+            } else if (claimStatus === 'pending') {
+                buttonHtml = `
+                    <button class="btn-claim pending" disabled>
+                        <i class="fa-solid fa-clock-rotate-left"></i> ক্লেইম পেন্ডিং রয়েছে (Admin Review)
+                    </button>`;
+            } else if (isCompleted) {
+                buttonHtml = `
+                    <button class="btn-claim active" onclick="claimTargetBonus('${tgt.id}', ${bonus}, ${goal}, '${tgt.title.replace(/'/g, "\\'")}')">
+                        <i class="fa-solid fa-gift"></i> বোনাস ক্লেইম পাঠান (৳${bonus})
+                    </button>`;
+            } else {
+                const needed = goal - activeReferrals;
+                buttonHtml = `
+                    <button class="btn-claim locked" disabled>
+                        <i class="fa-solid fa-lock"></i> আরও ${needed}টি একটিভ রেফার প্রয়োজন
+                    </button>`;
+            }
+
+            html += `
+            <div class="target-card">
+                <div class="target-header">
+                    <div class="target-title-wrap">
+                        <div class="target-icon-circle">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div class="target-title">
+                            <h6>${tgt.title}</h6>
+                            <small>${goal}টি একটিভ রেফার টার্গেট</small>
+                        </div>
+                    </div>
+                    <div class="bonus-amount-pill">৳${bonus} বোনাস</div>
+                </div>
+
+                <div class="progress-box">
+                    <div class="progress-fill" style="width: ${percent}%;"></div>
+                </div>
+
+                <div class="progress-labels">
+                    <span>অগ্রগতি: ${percent}%</span>
+                    <span>${activeReferrals} / ${goal} একটিভ</span>
+                </div>
+
+                ${buttonHtml}
+            </div>`;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // বোনাস ক্লেইম সাবমিট (এডমিনের অনুমোদনের জন্য পেন্ডিং রিকোয়েস্ট তৈরি)
+    async function claimTargetBonus(targetId, bonusAmount, goal, title) {
+        if (!currentUser) return;
+
+        if (userClaimsMap[targetId] === 'pending') {
+            Swal.fire('অলরেডি পেন্ডিং!', 'আপনার রিকোয়েস্টটি এডমিন ভেরিফিকেশনের জন্য পেন্ডিং রয়েছে।', 'info');
+            return;
+        }
+
+        if (userClaimsMap[targetId] === 'approved') {
+            Swal.fire('ইতিমধ্যে নেওয়া হয়েছে!', 'আপনি এই টার্গেটের বোনাস আগেই গ্রহণ করেছেন।', 'info');
+            return;
+        }
+
+        const confirm = await Swal.fire({
+            title: 'বোনাস ক্লেইম পাঠাবেন?',
+            html: `টার্গেট: <b>${title}</b><br>আপনি কি <b>৳${bonusAmount}</b> ক্যাশ বোনাসের আবেদন করতে চান? এডমিন যাচাই করে আপনার ব্যালেন্সে টাকা যোগ করে দেবেন।`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'হ্যাঁ, আবেদন পাঠান',
+            cancelButtonText: 'বাতিল',
+            confirmButtonColor: '#ff416c'
+        });
+
+        if (!confirm.isConfirmed) return;
+
+        Swal.fire({
+            title: 'রিকোয়েস্ট পাঠানো হচ্ছে...',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        try {
+            const claimDocId = `${currentUser.uid}_${targetId}`;
+            const claimRef = db.collection("target_claims").doc(claimDocId);
+
+            await claimRef.set({
+                user_id: currentUser.uid,
+                user_numeric_id: userNumericId || `#${currentUser.uid.substring(0,8)}`,
+                user_email: currentUser.email || "No Email",
+                target_id: targetId,
+                title: title,
+                bonus_amount: bonusAmount,
+                goal: goal,
+                active_referrals_at_claim: activeReferrals,
+                status: "pending",
+                created_at: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            Swal.fire({
+                icon: 'success',
+                title: 'আবেদন সফল হয়েছে!',
+                text: 'আপনার ক্লেইম রিকোয়েস্ট পেন্ডিং রয়েছে। এডমিন অনুমোদন দিলে আপনার ব্যালেন্সে টাকা যোগ হয়ে যাবে।',
+                confirmButtonColor: '#ff416c'
+            });
+
+        } catch (error) {
+            Swal.fire('ব্যর্থ হয়েছে!', error.toString() || 'কিছু ভুল হয়েছে, আবার চেষ্টা করুন।', 'error');
+        }
+    }
+
+    // লাইভ কাউন্টডাউন টাইমার
+    function startCountdownTimer() {
+        setInterval(() => {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+
+            const diff = midnight - now;
+            if (diff > 0) {
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / 1000 / 60) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+
+                document.getElementById('cHours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('cMinutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('cSeconds').innerText = String(seconds).padStart(2, '0');
+            }
+        }, 1000);
+    }
+</script>
+</body>
+</html>

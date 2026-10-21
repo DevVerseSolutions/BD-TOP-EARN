@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BD TOP EARN | Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00b894; 
+            --secondary-color: #00897b;
+            --accent-yellow: #feca57;
+            --primary-gradient: linear-gradient(45deg, #00dbde, #fc00ff);
+            --ring-speed: 3s;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f1f5f9; margin: 0; padding-top: 120px; padding-bottom: 95px; }
+
+        /* Header */
+        .header-container { background: var(--primary-color); padding: 12px 20px; border-radius: 0 0 20px 20px; color: white; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; border-bottom: 2px solid rgba(0,0,0,0.05); }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .nav-icon { background: rgba(255, 255, 255, 0.2); color: white; border: none; width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
+        .site-logo-text { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .user-section { display: flex; align-items: center; justify-content: space-between; }
+        .user-info-box { display: flex; align-items: center; gap: 12px; }
+        .header-avatar-container { width: 44px; height: 44px; background: white; border-radius: 50%; padding: 2px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .header-avatar-container img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .info .greeting { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; margin: 0; font-weight: 600; }
+        .info .user-name { font-size: 15px; font-weight: 700; margin: 0; color: white; }
+        .wallet-pill { background: rgba(0, 0, 0, 0.15); padding: 8px 15px; border-radius: 15px; display: flex; align-items: center; gap: 8px; }
+        .wallet-pill i { color: var(--accent-yellow); font-size: 1rem; }
+        .wallet-pill span { font-size: 14px; font-weight: 700; color: white; }
+
+        /* Activation Card */
+        .activation-card { background: linear-gradient(135deg, #ff416c, #ff4b2b); border-radius: 15px; padding: 20px; color: #fff; text-align: center; margin-top: 15px; box-shadow: 0 10px 20px rgba(255, 75, 43, 0.3); border: none; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        .activation-card h5 { font-weight: 800; margin-bottom: 5px; }
+        .btn-activate { background: #fff; color: #ff4b2b; font-weight: 800; border-radius: 50px; padding: 8px 25px; text-decoration: none; display: inline-block; margin-top: 12px; font-size: 14px; }
+        .btn-activate:hover { background: transparent; color: #fff; border: 2px solid #fff; }
+
+        /* Timer Card */
+        .timer-card { background: #fff; padding: 15px; border-radius: 15px; margin-top: 15px; border: 1px solid #e2e8f0; }
+        .t-grid { display: flex; gap: 8px; margin-top: 10px; }
+        .t-box { flex: 1; background: #f8fafc; padding: 10px 5px; border-radius: 10px; text-align: center; border: 1px solid #e2e8f0; }
+        .t-val { font-size: 20px; font-weight: 800; color: #000; line-height: 1; }
+        .t-lbl { font-size: 12px; color: #64748b; font-weight: 600; margin-top: 2px; }
+
+        /* Micro Job Featured Banner */
+        .micro-job-banner {
+            background: linear-gradient(135deg, #0984e3, #6c5ce7);
+            color: #fff;
+            padding: 14px 18px;
+            border-radius: 16px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 8px 18px rgba(108, 92, 231, 0.25);
+            text-decoration: none !important;
+            transition: transform 0.2s ease;
+        }
+        .micro-job-banner:active { transform: scale(0.98); }
+        .mj-left { display: flex; align-items: center; gap: 14px; }
+        .mj-icon-box {
+            width: 46px;
+            height: 46px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #fff;
+        }
+        .mj-text h6 { font-weight: 800; margin: 0; font-size: 15px; color: #fff; }
+        .mj-text p { font-size: 11px; margin: 0; opacity: 0.9; color: #e0e7ff; }
+
+        /* Service Grid */
+        .service-section { background: #fff; border-radius: 20px; padding: 20px 10px; margin-top: 20px; position: relative; z-index: 1; overflow: hidden; }
+        .service-section::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(transparent, #00dbde, #fc00ff, transparent 30%); animation: rotate var(--ring-speed) linear infinite; z-index: -2; }
+        .service-section::after { content: ""; position: absolute; inset: 3px; background: #fff; border-radius: 18px; z-index: -1; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        .service-title { font-weight: 800; color: #1e293b; margin-bottom: 20px; padding-left: 10px; display: flex; align-items: center; gap: 10px; }
+        .service-title i { color: #7c3aed; font-size: 1.2rem; }
+        .s-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 5px; }
+        .s-item { display: flex; flex-direction: column; align-items: center; text-decoration: none !important; transition: transform 0.2s; }
+        .s-item:active { transform: scale(0.9); }
+        .s-icon-wrapper { width: 55px; height: 55px; background: #f1f5f9; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 24px; transition: 0.3s; }
+        .s-item:hover .s-icon-wrapper { background: var(--primary-gradient); color: #fff !important; }
+        
+        /* Service Colors (সব সময় উজ্জ্বল ও সুন্দর থাকবে) */
+        .ic-mj { color: #2563eb; }
+        .ic-dp { color: #10b981; }
+        .ic-spn { color: #f43f5e; }
+        .ic-soc { color: #0284c7; }
+        .ic-lottery { color: #d946ef; }
+        .ic-vip { color: #e11d48; }
+        .ic-sl { color: #22c55e; }
+        .ic-ld { color: #f59e0b; }
+        .ic-tg { color: #ef4444; }
+        .ic-rf { color: #8b5cf6; }
+        .ic-gc { color: #ec4899; }
+        .ic-pr { color: #6366f1; }
+        .ic-sp { color: #f97316; }
+        
+        .s-label { font-size: 11px; font-weight: 700; color: #475569; text-align: center; line-height: 1.2; }
+
+        /* Footer Nav */
+        .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 75px; background: #ffffff; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05); z-index: 1000; border-top-left-radius: 20px; border-top-right-radius: 20px; }
+        .nav-item { text-decoration: none; display: flex; flex-direction: column; align-items: center; color: #666666; flex: 1; font-size: 11px; font-weight: 600; }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        .home-wrapper { position: relative; width: 60px; display: flex; justify-content: center; }
+        .home-btn { position: absolute; top: -35px; width: 56px; height: 56px; background: #00a0e9; border: 4px solid #f1f5f9; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-decoration: none; box-shadow: 0 5px 12px rgba(0, 160, 233, 0.3); }
+        .home-btn i { font-size: 18px; }
+
+        /* Sidebar */
+        .offcanvas { border-radius: 0 24px 24px 0; max-width: 300px; }
+        .menu-item { display: flex; align-items: center; padding: 10px 14px; margin-bottom: 4px; border-radius: 12px; color: #475569; text-decoration: none; font-weight: 600; font-size: 14px; }
+        .menu-item i { width: 30px; font-size: 18px; }
+        .menu-item:hover { background: #f1f5f9; }
+
+        /* Custom Welcome Popup */
+        .custom-welcome-modal {
+            border-radius: 26px !important;
+            padding: 30px 22px 26px !important;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18) !important;
+            border: 1px solid #e2e8f0 !important;
+            background: #ffffff !important;
+        }
+        .welcome-icon-box {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #0088cc, #00a884);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            margin: 0 auto 16px;
+            box-shadow: 0 10px 22px rgba(0, 136, 204, 0.28);
+            animation: pulse-icon 2s infinite ease-in-out;
+        }
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+        .welcome-title-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .welcome-desc-text {
+            font-size: 14px;
+            color: #475569;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+        .btn-welcome-tg {
+            background: linear-gradient(135deg, #0088cc, #00a884);
+            color: #ffffff !important;
+            font-weight: 800;
+            padding: 13px 32px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            font-size: 15px;
+            text-decoration: none !important;
+            box-shadow: 0 6px 18px rgba(0, 136, 204, 0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-welcome-tg:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0, 136, 204, 0.4);
+            color: #ffffff;
+        }
+        .btn-welcome-tg:active { transform: scale(0.96); }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header-container">
+        <div class="top-nav">
+            <button class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#sideMenu">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <div class="site-logo-text" id="siteLogoText">BD TOP EARN</div>
+            <button class="nav-icon" onclick="Swal.fire('Notice', 'কোনো নতুন নোটিফিকেশন নেই।', 'info')">
+                <i class="fa-regular fa-bell"></i>
+            </button>
+        </div>
+
+        <div class="user-section">
+            <div class="user-info-box">
+                <div class="header-avatar-container">
+                    <img id="uAvatar" src="https://ui-avatars.com/api/?name=User&background=00b894&color=fff" alt="Profile">
+                </div>
+                <div class="info">
+                    <p class="greeting">Welcome Back,</p>
+                    <h6 class="user-name" id="uName">User</h6>
+                </div>
+            </div>
+            <div class="wallet-pill">
+                <i class="fa-solid fa-wallet"></i>
+                <span>৳ <span id="uBalance">0.00</span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container px-3 pb-4">
+        <!-- Inactive Card -->
+        <div id="activationCard" class="activation-card" style="display: none;">
+            <div class="mb-2"><i class="fa-solid fa-triangle-exclamation fa-2xl"></i></div>
+            <h5>আপনার একাউন্ট একটিভ নয়!</h5>
+            <p style="font-size: 12px; opacity: 0.9; margin-bottom: 0;">সবগুলো সার্ভিস ব্যবহার করতে এখনই আপনার একাউন্টটি একটিভ করুন।</p>
+            <a href="activate_account.html" class="btn-activate">
+                <i class="fa-solid fa-bolt me-1"></i> Active Now
+            </a>
+        </div>
+
+        <!-- Timer (লোডিংয়ের আগে সর্বদা ০০ দেখাবে) -->
+        <div class="timer-card">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-dark"><i class="fa-regular fa-clock text-primary"></i> সাইটের বয়স</span>
+                <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">● Live</span>
+            </div>
+            <div class="t-grid">
+                <div class="t-box"><div class="t-val" id="d">00</div><div class="t-lbl">দিন</div></div>
+                <div class="t-box"><div class="t-val" id="h">00</div><div class="t-lbl">ঘন্টা</div></div>
+                <div class="t-box"><div class="t-val" id="m">00</div><div class="t-lbl">মিনিট</div></div>
+                <div class="t-box"><div class="t-val" id="s">00</div><div class="t-lbl">সেকেন্ড</div></div>
+            </div>
+        </div>
+
+        <!-- Marquee Notice -->
+        <div style="background: #fff; padding: 8px 15px; border-radius: 50px; margin-top: 15px; display: flex; align-items: center; border: 1px solid #e2e8f0;">
+            <span class="badge bg-primary rounded-pill me-2">Notice</span>
+            <marquee id="marqueeNoticeText" style="font-size: 13px; font-weight: 600; color: #334155;">আমাদের প্ল্যাটফর্মে আপনাকে স্বাগতম! সৎভাবে কাজ করুন এবং প্রতিদিন পেমেন্ট নিন।</marquee>
+        </div>
+
+        <!-- Micro Job Highlighted Section -->
+        <a href="micro_jobs.html" class="micro-job-banner need-active">
+            <div class="mj-left">
+                <div class="mj-icon-box">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <div class="mj-text">
+                    <h6>Micro Jobs</h6>
+                    <p>সহজ টাস্ক পূরণ করে আনলিমিটেড টাকা ইনকাম করুন</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-circle-arrow-right fa-xl text-white"></i>
+        </a>
+
+        <!-- Projects Grid (সর্বদা উজ্জ্বল ও স্বাভাবিক থাকবে) -->
+        <div class="service-section">
+            <h6 class="service-title"><i class="fa-solid fa-rocket"></i> আমাদের প্রজেক্ট সমূহ</h6>
+            <div class="s-grid">
+                <!-- ১. Micro Jobs -->
+                <a href="micro_jobs.html" class="s-item need-active">
+                    <div class="s-icon-wrapper ic-mj"><i class="fa-solid fa-briefcase"></i></div>
+                    <div class="s-label">Micro Jobs</div>
+                </a>
+                <!-- ২. Deposit -->
+                <a href="deposit.html" class="s-item">
+                    <div class="s-icon-wrapper ic-dp"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                    <div class="s-label">Deposit</div>
+                </a>
+                <!-- ৩. লাকি স্পিন -->
+                <a href="lucky_spin.html" class="s-item need-active">
+                    <div class="s-icon-wrapper ic-spn"><i class="fa-solid fa-dharmachakra"></i></div>
+                    <div class="s-label">লাকি স্পিন</div>
+                </a>
+                <!-- ৪. সোশ্যাল সার্ভিস -->
+                <a href="social_services.html" class="s-item need-active">
+                    <div class="s-icon-wrapper ic-soc"><i class="fa-solid fa-share-nodes"></i></div>
+                    <div class="s-label">সোশ্যাল সার্ভিস</div>
+                </a>
+
+                <!-- ৫. Lottery -->
+                <a href="lottery.html" class="s-item need-active">
+                    <div class="s-icon-wrapper ic-lottery"><i class="fa-solid fa-ticket"></i></div>
+                    <div class="s-label">Lottery</div>
+                </a>
+                <!-- ৬. VIP Plan -->
+                <a href="vip_plan.html" class="s-item need-active">
+                    <div class="s-icon-wrapper ic-vip"><i class="fa-solid fa-gem"></i></div>
+                    <div class="s-label">VIP Plan</div>
+                </a>
+
+                <!-- ৭. স্যালারি -->
+                <a href="salary.html" class="s-item need-active">
+                    <div class="s-icon-wrapper ic-sl"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="s-label">স্যালারি</div>
+                </a>
+                <!-- ৮. লিডারশিপ -->
+                <a href="leaderboard.html" class="s-item">
+                    <div class="s-icon-wrapper ic-ld"><i class="fa-solid fa-crown"></i></div>
+                    <div class="s-label">লিডারশিপ</div>
+                </a>
+                <!-- ৯. টার্গেট বোনাস -->
+                <a href="target_bonus.html" class="s-item need-active">
+                    <div class="s-icon-wrapper ic-tg"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="s-label">টার্গেট বোনাস</div>
+                </a>
+
+                <!-- ১০. রেফার -->
+                <a href="refer.html" class="s-item">
+                    <div class="s-icon-wrapper ic-rf"><i class="fa-solid fa-users"></i></div>
+                    <div class="s-label">রেফার</div>
+                </a>
+                <!-- ১১. গিফট কোড -->
+                <a href="gift_code.html" class="s-item need-active">
+                    <div class="s-icon-wrapper ic-gc"><i class="fa-solid fa-gift"></i></div>
+                    <div class="s-label">গিফট কোড</div>
+                </a>
+                <!-- ১২. প্রোফাইল -->
+                <a href="settings.html" class="s-item">
+                    <div class="s-icon-wrapper ic-pr"><i class="fa-solid fa-user-gear"></i></div>
+                    <div class="s-label">প্রোফাইল</div>
+                </a>
+                <!-- ১৩. সাপোর্ট -->
+                <a href="support.html" class="s-item">
+                    <div class="s-icon-wrapper ic-sp"><i class="fa-solid fa-headset"></i></div>
+                    <div class="s-label">সাপোর্ট</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sideMenu">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold text-primary" id="sbSiteLogo"><i class="fa-solid fa-bolt-lightning me-2"></i> BD TOP EARN</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-3">
+            <div class="text-center pb-3 border-bottom mb-3">
+                <img id="sbAvatar" src="https://ui-avatars.com/api/?name=User&background=00a0e9&color=fff" class="rounded-circle mb-2" width="70" height="70" style="object-fit:cover; border:2px solid #00a0e9;">
+                <h6 class="fw-bold mb-1" id="sbName">User</h6>
+                <span class="badge bg-secondary" id="sbStatus">Loading</span>
+            </div>
+            <a href="dashboard.html" class="menu-item"><i class="fa-solid fa-house text-primary"></i> Dashboard</a>
+            <a href="micro_jobs.html" class="menu-item need-active"><i class="fa-solid fa-briefcase text-primary"></i> Micro Jobs</a>
+            <a href="deposit.html" class="menu-item"><i class="fa-solid fa-money-bill-transfer text-success"></i> Deposit</a>
+            <a href="lucky_spin.html" class="menu-item need-active"><i class="fa-solid fa-dharmachakra text-danger"></i> Lucky Spin</a>
+            <a href="social_services.html" class="menu-item need-active"><i class="fa-solid fa-share-nodes text-info"></i> Social Services</a>
+            <a href="lottery.html" class="menu-item need-active"><i class="fa-solid fa-ticket text-purple-600"></i> Lottery</a>
+            <a href="vip_plan.html" class="menu-item need-active"><i class="fa-solid fa-gem text-danger"></i> VIP Plan</a>
+            <a href="withdraw.html" class="menu-item need-active"><i class="fa-solid fa-wallet text-emerald-600"></i> Withdraw</a>
+            <a href="withdraw_history.html" class="menu-item"><i class="fa-solid fa-clock-rotate-left text-indigo-500"></i> Withdraw History</a>
+            <a href="referral_users.html" class="menu-item"><i class="fa-solid fa-users text-info"></i> My Team</a>
+            <a href="settings.html" class="menu-item"><i class="fa-solid fa-gear text-purple-600"></i> Settings</a>
+            <a href="support.html" class="menu-item"><i class="fa-solid fa-headset text-orange-500"></i> Support</a>
+            <a href="logout.html" class="menu-item text-danger mt-3"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="footer-nav">
+        <a href="support.html" class="nav-item"><i class="fa-solid fa-headset"></i><span>Help</span></a>
+        <a href="withdraw.html" class="nav-item need-active"><i class="fa-solid fa-wallet"></i><span>Wallet</span></a>
+        <div class="home-wrapper">
+            <a href="dashboard.html" class="home-btn"><i class="fa-solid fa-house"></i></a>
+        </div>
+        <a href="referral_users.html" class="nav-item"><i class="fa-solid fa-users"></i><span>Team</span></a>
+        <a href="settings.html" class="nav-item"><i class="fa-solid fa-circle-user"></i><span>Profile</span></a>
+    </div>
+
+    <!-- স্ক্রিপ্টসমূহ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // ১. আল্ট্রা-ফাস্ট ইনস্ট্যান্ট ক্যাশ লোডার (০.০১ সেকেন্ডে পেজ লোড নিশ্চিত করে)
+        let siteStartTime = null;
+
+        (function loadCachedDataFast() {
+            const cachedName = localStorage.getItem('cached_uName');
+            const cachedBalance = localStorage.getItem('cached_uBalance');
+            const cachedAvatar = localStorage.getItem('cached_uAvatar');
+            const cachedStatus = localStorage.getItem('cached_uStatus');
+            const cachedNotice = localStorage.getItem('cached_marqueeNotice');
+            const cachedSiteName = localStorage.getItem('cached_siteName');
+            const cachedLaunchDate = localStorage.getItem('cached_siteLaunchDate');
+
+            if (cachedName) {
+                document.getElementById('uName').innerText = cachedName;
+                document.getElementById('sbName').innerText = cachedName;
+            }
+            if (cachedBalance) {
+                document.getElementById('uBalance').innerText = cachedBalance;
+            }
+            if (cachedAvatar) {
+                document.getElementById('uAvatar').src = cachedAvatar;
+                document.getElementById('sbAvatar').src = cachedAvatar;
+            }
+            if (cachedNotice) {
+                document.getElementById('marqueeNoticeText').innerText = cachedNotice;
+            }
+            if (cachedSiteName) {
+                document.getElementById('siteLogoText').innerText = cachedSiteName;
+                document.getElementById('sbSiteLogo').innerHTML = `<i class="fa-solid fa-bolt-lightning me-2"></i> ${cachedSiteName}`;
+            }
+            if (cachedLaunchDate) {
+                siteStartTime = new Date(cachedLaunchDate).getTime();
+            }
+            if (cachedStatus === 'active') {
+                const sbStatus = document.getElementById('sbStatus');
+                sbStatus.className = "badge bg-success";
+                sbStatus.innerText = "● Active";
+                document.getElementById('activationCard').style.display = "none";
+            }
+        })();
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+            authDomain: "bdt-php.firebaseapp.com",
+            projectId: "bdt-php",
+            storageBucket: "bdt-php.firebasestorage.app",
+            messagingSenderId: "98854531594",
+            appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+            measurementId: "G-VLCRVLP8YP"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let isUserActive = localStorage.getItem('cached_uStatus') === 'active';
+        let telegramChannelUrl = "https://t.me/NoReX_Officials";
+        let welcomeDesc = "প্রতিদিন ফ্রি গিফট কোড ও সকল আপডেট পেতে আমাদের টেলিগ্রাম চ্যানেলে জয়েন করুন।";
+
+        // সকল ১৪টি অপশনের অন/অফ স্ট্যাটাস (ক্যাশ থেকে বা ডিফল্ট চালু)
+        const featureStatus = {
+            deposit: true,
+            withdraw: true,
+            micro_jobs: true,
+            target_bonus: true,
+            social_service: true,
+            spin_game: true,
+            vip_panel: true,
+            lottery: true,
+            salary: true,
+            leaderboard: true,
+            referral: true,
+            gift_code: true,
+            profile_settings: true,
+            support: true
+        };
+
+        const urlToFeature = {
+            'deposit.html': 'deposit',
+            'withdraw.html': 'withdraw',
+            'withdraw_history.html': 'withdraw',
+            'micro_jobs.html': 'micro_jobs',
+            'target_bonus.html': 'target_bonus',
+            'social_services.html': 'social_service',
+            'lucky_spin.html': 'spin_game',
+            'vip_plan.html': 'vip_panel',
+            'lottery.html': 'lottery',
+            'salary.html': 'salary',
+            'leaderboard.html': 'leaderboard',
+            'refer.html': 'referral',
+            'referral_users.html': 'referral',
+            'gift_code.html': 'gift_code',
+            'settings.html': 'profile_settings',
+            'support.html': 'support'
+        };
+
+        const featureNamesBn = {
+            'deposit': 'ডিপোজিট',
+            'withdraw': 'উইথড্র',
+            'micro_jobs': 'মাইক্রো জব',
+            'target_bonus': 'টার্গেট বোনাস',
+            'social_service': 'সোশ্যাল সার্ভিস',
+            'spin_game': 'লাকি স্পিন',
+            'vip_panel': 'ভিআইপি প্ল্যান',
+            'lottery': 'লটারি',
+            'salary': 'স্যালারি',
+            'leaderboard': 'লিডারশিপ',
+            'referral': 'রেফার ও টিম',
+            'gift_code': 'গিফট কোড',
+            'profile_settings': 'প্রোফাইল ও সেটিংস',
+            'support': 'সাপোর্ট'
+        };
+
+        // সার্ভিস অন/অফ সেটিংস লাইভ লিসেনার (কোনো ডিজাইন নষ্ট না করে শুধু পারমিশন হ্যান্ডেল করবে)
+        db.collection("settings").doc("features").onSnapshot(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                featureStatus.deposit = data.deposit !== false;
+                featureStatus.withdraw = data.withdraw !== false;
+                featureStatus.micro_jobs = data.micro_jobs !== false;
+                featureStatus.target_bonus = (data.target_bonus !== undefined) ? (data.target_bonus !== false) : (data.gmail_sell !== false);
+                featureStatus.social_service = data.social_service !== false;
+                featureStatus.spin_game = data.spin_game !== false;
+                featureStatus.vip_panel = data.vip_panel !== false;
+                featureStatus.lottery = data.lottery !== false;
+                featureStatus.salary = data.salary !== false;
+                featureStatus.leaderboard = data.leaderboard !== false;
+                featureStatus.referral = data.referral !== false;
+                featureStatus.gift_code = data.gift_code !== false;
+                featureStatus.profile_settings = data.profile_settings !== false;
+                featureStatus.support = data.support !== false;
+            }
+        }, () => {});
+
+        // অথেনটিকেশন ও ডাটা ফেচ
+        auth.onAuthStateChanged((user) => {
+            if(!user) {
+                localStorage.clear();
+                window.location.href = "login.html";
+                return;
+            }
+
+            // রিয়েলটাইম ব্যালেন্স ও ইউজার ডাটা
+            db.collection("users").doc(user.uid).onSnapshot(snap => {
+                if(snap.exists) {
+                    const data = snap.data();
+                    const name = data.fullname || data.name || "User";
+                    const bal = parseFloat(data.balance || 0).toFixed(2);
+                    
+                    document.getElementById('uName').innerText = name;
+                    document.getElementById('sbName').innerText = name;
+                    document.getElementById('uBalance').innerText = bal;
+                    
+                    localStorage.setItem('cached_uName', name);
+                    localStorage.setItem('cached_uBalance', bal);
+                    
+                    if(data.profile_pic) {
+                        document.getElementById('uAvatar').src = data.profile_pic;
+                        document.getElementById('sbAvatar').src = data.profile_pic;
+                        localStorage.setItem('cached_uAvatar', data.profile_pic);
+                    }
+                    
+                    const status = (data.status || 'inactive').toLowerCase();
+                    const sbStatus = document.getElementById('sbStatus');
+                    
+                    if(status === 'active' || data.is_active === true) {
+                        isUserActive = true;
+                        localStorage.setItem('cached_uStatus', 'active');
+                        sbStatus.className = "badge bg-success";
+                        sbStatus.innerText = "● Active";
+                        document.getElementById('activationCard').style.display = "none";
+                    } else {
+                        isUserActive = false;
+                        localStorage.setItem('cached_uStatus', 'inactive');
+                        sbStatus.className = "badge bg-danger";
+                        sbStatus.innerText = "● Inactive";
+                        document.getElementById('activationCard').style.display = "block";
+                    }
+                }
+            });
+
+            // জেনারেল সেটিংস লাইভ রিড
+            db.collection("settings").doc("general").onSnapshot(doc => {
+                if(doc.exists) {
+                    const d = doc.data();
+                    if(d.marquee_notice) {
+                        document.getElementById('marqueeNoticeText').innerText = d.marquee_notice;
+                        localStorage.setItem('cached_marqueeNotice', d.marquee_notice);
+                    }
+                    if(d.site_name) {
+                        document.getElementById('siteLogoText').innerText = d.site_name;
+                        document.getElementById('sbSiteLogo').innerHTML = `<i class="fa-solid fa-bolt-lightning me-2"></i> ${d.site_name}`;
+                        localStorage.setItem('cached_siteName', d.site_name);
+                    }
+                    if(d.site_launch_date) {
+                        siteStartTime = new Date(d.site_launch_date).getTime();
+                        localStorage.setItem('cached_siteLaunchDate', d.site_launch_date);
+                    }
+                    if(d.telegram_channel) {
+                        telegramChannelUrl = d.telegram_channel;
+                    }
+                    if(d.welcome_text) {
+                        welcomeDesc = d.welcome_text;
+                    }
+                }
+                showWelcomeModal();
+            }, () => {
+                showWelcomeModal();
+            });
+        });
+
+        // সার্বিক ক্লিক ইভেন্ট হ্যান্ডলার (ডিজাইন একদম সুন্দর ও অক্ষুণ্ণ রেখে বন্ধ সার্ভিস লক করবে)
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (!link) return;
+
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            // সার্ভিস অফ চেক
+            for (const [page, featKey] of Object.entries(urlToFeature)) {
+                if (href.includes(page)) {
+                    if (featureStatus[featKey] === false) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'সার্ভিসটি বন্ধ আছে!',
+                            text: `বর্তমানে ${featureNamesBn[featKey] || 'এই'} সার্ভিসটি সাময়িকভাবে বন্ধ রাখা হয়েছে।`,
+                            confirmButtonText: 'ঠিক আছে',
+                            confirmButtonColor: '#ff4b2b',
+                            customClass: {
+                                popup: 'rounded-4'
+                            }
+                        });
+                        return;
+                    }
+                    break;
+                }
+            }
+
+            // একাউন্ট একটিভেশন চেক
+            if (link.classList.contains('need-active')) {
+                if (!isUserActive) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'একাউন্ট একটিভ নয়!',
+                        text: 'কাজ বা সার্ভিসটি ব্যবহার করতে প্রথমে আপনার একাউন্টটি একটিভ করুন।',
+                        confirmButtonText: '<i class="fa-solid fa-bolt me-1"></i> Active Now',
+                        confirmButtonColor: '#ff4b2b',
+                        showCancelButton: true,
+                        cancelButtonText: 'পরে করব',
+                        cancelButtonColor: '#64748b',
+                        customClass: {
+                            popup: 'rounded-4'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "activate_account.html";
+                        }
+                    });
+                }
+            }
+        }, true);
+
+        // সাইটের বয়স লাইভ গণনা (লঞ্চ ডেট না আসা পর্যন্ত সর্বদা ০০ দেখাবে, কোনো ভুল দিন ফ্ল্যাশ করবে না)
+        setInterval(() => {
+            if (!siteStartTime) {
+                document.getElementById("d").innerText = "00";
+                document.getElementById("h").innerText = "00";
+                document.getElementById("m").innerText = "00";
+                document.getElementById("s").innerText = "00";
+                return;
+            }
+            const now = new Date().getTime();
+            const diff = now - siteStartTime;
+            if(diff > 0){
+                document.getElementById("d").innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById("h").innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById("m").innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById("s").innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+            } else {
+                document.getElementById("d").innerText = "00";
+                document.getElementById("h").innerText = "00";
+                document.getElementById("m").innerText = "00";
+                document.getElementById("s").innerText = "00";
+            }
+        }, 1000);
+
+        // Welcome Popup
+        function showWelcomeModal() {
+            if(!sessionStorage.getItem('welcomed')) {
+                Swal.fire({
+                    html: `
+                        <div class="welcome-icon-box">
+                            <i class="fa-brands fa-telegram"></i>
+                        </div>
+                        <h4 class="welcome-title-text">Welcome!</h4>
+                        <p class="welcome-desc-text">${welcomeDesc}</p>
+                        <a href="${telegramChannelUrl}" target="_blank" class="btn-welcome-tg">
+                            <i class="fa-brands fa-telegram fa-lg"></i> Join Telegram
+                        </a>
+                    `,
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: {
+                        popup: 'custom-welcome-modal'
+                    }
+                });
+                sessionStorage.setItem('welcomed', '1');
+            }
+        }
+    </script>
+</body>
+</html>

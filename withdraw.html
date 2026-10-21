@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw Balance | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --bkash: #e2136e;
+            --nagad: #f7941d;
+            --rocket: #8c3494;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, #00b894, #00897b);
+            border-radius: 20px;
+            padding: 22px 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 184, 148, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .balance-card::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            width: 130px;
+            height: 130px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+        .balance-label { font-size: 13px; font-weight: 600; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+        .balance-amount { font-size: 32px; font-weight: 800; margin: 4px 0 0; }
+
+        /* Referral Requirement Progress Card */
+        .ref-req-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+        }
+        .ref-req-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .ref-req-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .section-label span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Method Selector */
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .method-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 12px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .method-btn i { font-size: 24px; margin-bottom: 6px; display: block; }
+        .method-btn .name { font-size: 12px; font-weight: 700; color: #334155; }
+        
+        .method-btn[data-method="bKash"] i { color: var(--bkash); }
+        .method-btn[data-method="Nagad"] i { color: var(--nagad); }
+        .method-btn[data-method="Rocket"] i { color: var(--rocket); }
+
+        .method-btn.active {
+            border-color: var(--primary);
+            background: #f0fdf4;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 184, 148, 0.15);
+        }
+        .method-btn.active::after {
+            content: "✓";
+            position: absolute;
+            top: 4px;
+            right: 6px;
+            font-size: 10px;
+            background: var(--primary);
+            color: #fff;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        /* Inputs */
+        .custom-input-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .custom-input-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 15px;
+        }
+        .custom-input-box input {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 14px 12px 42px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            outline: none;
+            transition: 0.2s;
+        }
+        .custom-input-box input:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.12);
+        }
+
+        /* Amount Selector Grid (Fixed Packages) */
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .amount-chip {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 4px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .amount-chip:hover {
+            border-color: #cbd5e1;
+            background: #fff;
+        }
+        .amount-chip.active {
+            border-color: var(--primary);
+            background: #f0fdf4;
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 184, 148, 0.15);
+        }
+
+        /* Fee Calculation Box */
+        .fee-breakdown {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            font-size: 12px;
+        }
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .fee-row:last-child {
+            margin-bottom: 0;
+            padding-top: 6px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Action Buttons */
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #00b894, #00897b);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 15px;
+            box-shadow: 0 6px 18px rgba(0, 184, 148, 0.25);
+            transition: 0.2s;
+        }
+        .btn-submit:active { transform: scale(0.98); }
+
+        .btn-history-trigger {
+            width: 100%;
+            background: #fff;
+            color: #475569;
+            font-weight: 700;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-history-trigger:hover {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        /* History Popup Modal */
+        .modal-content {
+            border-radius: 24px;
+            border: none;
+            overflow: hidden;
+        }
+        .modal-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 20px;
+        }
+        .modal-body {
+            max-height: 480px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f8fafc;
+        }
+        
+        .history-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .h-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .h-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .h-bKash { background: #fdf2f7; color: var(--bkash); }
+        .h-Nagad { background: #fff8f1; color: var(--nagad); }
+        .h-Rocket { background: #fcf4fd; color: var(--rocket); }
+
+        .h-details h6 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 15px;
+            color: #0f172a;
+        }
+        .h-details p {
+            margin: 2px 0 0;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+        }
+        .h-date {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 3px;
+        }
+        .h-right {
+            text-align: right;
+        }
+        .st-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 50px;
+            display: inline-block;
+            text-transform: capitalize;
+        }
+        .st-pending { background: #fef3c7; color: #b45309; }
+        .st-approved { background: #dcfce7; color: #15803d; }
+        .st-rejected { background: #fee2e2; color: #b91c1c; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">টাকা উত্তোলন (Withdraw)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- User Live Balance -->
+    <div class="balance-card">
+        <div class="balance-label">বর্তমান ব্যালেন্স</div>
+        <div class="balance-amount">৳ <span id="uBalance">0.00</span></div>
+    </div>
+
+    <!-- Active Referral Requirement Box -->
+    <div class="ref-req-card">
+        <div class="ref-req-header">
+            <div class="ref-req-title">
+                <i class="fa-solid fa-user-check text-primary"></i>
+                <span>একটিভ রেফার শর্ত</span>
+            </div>
+            <span class="badge bg-secondary" id="refStatusBadge">যাচাই হচ্ছে...</span>
+        </div>
+        <div class="progress" style="height: 8px; border-radius: 50px; background: #e2e8f0;">
+            <div class="progress-bar bg-success" id="refProgressBar" role="progressbar" style="width: 0%"></div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-2">
+            <small class="text-muted" id="refInfoText">উইথড্র করতে একটিভ রেফার প্রয়োজন।</small>
+            <small class="fw-bold text-dark" id="refCountText">0/2</small>
+        </div>
+    </div>
+
+    <!-- Withdraw Form -->
+    <div class="form-card">
+        <div class="section-label">
+            <span><i class="fa-solid fa-money-check text-primary"></i> পেমেন্ট মেথড সিলেক্ট করুন</span>
+        </div>
+
+        <!-- 3 Methods: bKash, Nagad, Rocket -->
+        <div class="method-grid">
+            <div class="method-btn active" data-method="bKash" onclick="selectMethod('bKash')">
+                <i class="fa-solid fa-mobile-screen"></i>
+                <div class="name">বিকাশ</div>
+            </div>
+            <div class="method-btn" data-method="Nagad" onclick="selectMethod('Nagad')">
+                <i class="fa-solid fa-wallet"></i>
+                <div class="name">নগদ</div>
+            </div>
+            <div class="method-btn" data-method="Rocket" onclick="selectMethod('Rocket')">
+                <i class="fa-solid fa-building-columns"></i>
+                <div class="name">রকেট</div>
+            </div>
+        </div>
+
+        <!-- Account Number Input -->
+        <div class="section-label">
+            <span><i class="fa-solid fa-phone text-primary"></i> একাউন্ট নম্বর</span>
+        </div>
+        <div class="custom-input-box">
+            <i class="fa-solid fa-phone"></i>
+            <input type="number" id="wNumber" placeholder="আপনার বিকাশ/নগদ/রকেট নম্বর দিন">
+        </div>
+
+        <!-- Fixed Amount Selection Grid -->
+        <div class="section-label">
+            <span><i class="fa-solid fa-bangladeshi-taka-sign text-primary"></i> টাকার পরিমাণ সিলেক্ট করুন</span>
+            <small class="text-primary fw-bold" id="minWithdrawLabel">মিনিমাম: ৳৫০</small>
+        </div>
+        <div class="amount-grid" id="amountContainer">
+            <!-- বোতামগুলো জাভাস্ক্রিপ্ট / এডমিন সেটিংস থেকে স্বয়ংক্রিয়ভাবে তৈরি হবে -->
+        </div>
+
+        <!-- Fee & Net Amount Display -->
+        <div class="fee-breakdown">
+            <div class="fee-row">
+                <span class="text-muted">নির্বাচিত পরিমাণ:</span>
+                <span class="fw-bold text-dark">৳ <span id="selectedAmountVal">0.00</span></span>
+            </div>
+            <div class="fee-row">
+                <span class="text-muted">উইথড্র ফি (<span id="feePercentLabel">5</span>%):</span>
+                <span class="text-danger fw-bold">- ৳ <span id="feeVal">0.00</span></span>
+            </div>
+            <div class="fee-row">
+                <span class="fw-bold text-dark">আপনি রিসিভ করবেন:</span>
+                <span class="text-success fw-bold fs-6">৳ <span id="netVal">0.00</span></span>
+            </div>
+        </div>
+
+        <button class="btn-submit" id="btnSubmit" onclick="handleWithdraw()">
+            <i class="fa-solid fa-paper-plane me-1"></i> উইথড্র রিকোয়েস্ট পাঠান
+        </button>
+    </div>
+
+    <!-- History Trigger Button -->
+    <button class="btn-history-trigger" data-bs-toggle="modal" data-bs-target="#historyModal" onclick="loadHistory()">
+        <i class="fa-solid fa-clock-rotate-left text-primary"></i>
+        <span>উইথড্র হিস্ট্রি দেখুন (Withdraw History)</span>
+    </button>
+
+</div>
+
+<!-- Withdraw History Popup Modal -->
+<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title fw-bold" id="historyModalLabel">
+                    <i class="fa-solid fa-clock-rotate-left text-primary me-2"></i>উইথড্র হিস্ট্রি
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="historyList">
+                <div class="text-center text-muted py-4">
+                    <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div>
+                    <p class="small mb-0">হিস্ট্রি লোড হচ্ছে...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase & Script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    // ========================================================
+    // ⚙️ ডিফল্ট কনফিগারেশন (এডমিন প্যানেলে না পেলে এগুলো কাজ করবে)
+    // ========================================================
+    let WITHDRAW_FEE_PERCENT = 5; 
+    let REQUIRED_ACTIVE_REF = 2;  
+    let MIN_WITHDRAW = 50;        
+    let WITHDRAW_AMOUNTS = [50, 100, 150, 200, 250, 300, 500, 1000];
+    // ========================================================
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentBalance = 0;
+    let selectedMethod = 'bKash';
+    let selectedAmount = 0;
+    let currentUserUid = null;
+    let activeRefCount = 0;
+    let isEligibleToWithdraw = false;
+
+    // ১. এডমিন সেটিংস ফায়ারবেস (settings/withdraw) থেকে রিড করা
+    async function loadAdminSettings() {
+        try {
+            const doc = await db.collection("settings").doc("withdraw").get();
+            if (doc.exists) {
+                const data = doc.data();
+                if (data.fee_percent !== undefined) WITHDRAW_FEE_PERCENT = parseFloat(data.fee_percent);
+                if (data.required_active_referrals !== undefined) REQUIRED_ACTIVE_REF = parseInt(data.required_active_referrals);
+                if (data.min_withdraw !== undefined) MIN_WITHDRAW = parseFloat(data.min_withdraw);
+                if (Array.isArray(data.amounts) && data.amounts.length > 0) {
+                    WITHDRAW_AMOUNTS = data.amounts.map(Number);
+                }
+            }
+        } catch (e) {
+            console.log("Using default settings:", e);
+        }
+
+        // সেটিংস অনুযায়ী ইন্টারফেস আপডেট
+        document.getElementById('feePercentLabel').innerText = WITHDRAW_FEE_PERCENT;
+        document.getElementById('minWithdrawLabel').innerText = `মিনিমাম: ৳${MIN_WITHDRAW}`;
+        renderAmountChips();
+    }
+
+    // টাকা সিলেক্ট করার বোতামগুলো তৈরি করা
+    function renderAmountChips() {
+        const container = document.getElementById('amountContainer');
+        container.innerHTML = "";
+        
+        WITHDRAW_AMOUNTS.forEach((amt, index) => {
+            const chip = document.createElement('div');
+            chip.className = `amount-chip ${index === 0 ? 'active' : ''}`;
+            chip.innerText = `৳${amt}`;
+            chip.onclick = () => selectAmount(amt, chip);
+            container.appendChild(chip);
+        });
+
+        // ডিফল্ট প্রথম অ্যামাউন্ট সিলেক্ট করে রাখা
+        if (WITHDRAW_AMOUNTS.length > 0) {
+            selectAmount(WITHDRAW_AMOUNTS[0], container.children[0]);
+        }
+    }
+
+    // অ্যামাউন্ট সিলেক্ট ও ফি লাইভ হিসেব ফাংশন
+    function selectAmount(amt, chipElement) {
+        selectedAmount = amt;
+        document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('active'));
+        if (chipElement) chipElement.classList.add('active');
+
+        document.getElementById('selectedAmountVal').innerText = amt.toFixed(2);
+        
+        const fee = (amt * WITHDRAW_FEE_PERCENT) / 100;
+        const net = amt - fee;
+
+        document.getElementById('feeVal').innerText = fee.toFixed(2);
+        document.getElementById('netVal').innerText = (net > 0 ? net : 0).toFixed(2);
+    }
+
+    // মেথড সিলেক্ট
+    function selectMethod(method) {
+        selectedMethod = method;
+        document.querySelectorAll('.method-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.method === method);
+        });
+    }
+
+    // ইউজার অথ ও ব্যালেন্স হ্যান্ডলিং
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        currentUserUid = user.uid;
+
+        // এডমিন সেটিংস লোড করা
+        await loadAdminSettings();
+        
+        // লাইভ ব্যালেন্স রিড
+        db.collection("users").doc(user.uid).onSnapshot(doc => {
+            if (doc.exists) {
+                currentBalance = parseFloat(doc.data().balance || 0);
+                document.getElementById('uBalance').innerText = currentBalance.toFixed(2);
+            }
+        });
+
+        // একটিভ রেফার চেক করা
+        checkActiveReferrals(user.uid);
+    });
+
+    // একটিভ রেফার কাউন্ট এবং প্রগ্রেস চেক
+    async function checkActiveReferrals(uid) {
+        try {
+            const userSnap = await db.collection("users").doc(uid).get();
+            const userData = userSnap.data() || {};
+            const myReferCode = userData.refer_code || userData.my_refer_code || uid;
+
+            const refSnap = await db.collection("users")
+                                    .where("referred_by", "in", [uid, myReferCode])
+                                    .get();
+
+            activeRefCount = 0;
+            refSnap.forEach(doc => {
+                const data = doc.data();
+                if ((data.status || '').toLowerCase() === 'active') {
+                    activeRefCount++;
+                }
+            });
+
+            const percent = Math.min(100, Math.floor((activeRefCount / REQUIRED_ACTIVE_REF) * 100));
+            document.getElementById('refProgressBar').style.width = percent + "%";
+            document.getElementById('refCountText').innerText = `${activeRefCount}/${REQUIRED_ACTIVE_REF}`;
+
+            const badge = document.getElementById('refStatusBadge');
+            const infoText = document.getElementById('refInfoText');
+
+            if (activeRefCount >= REQUIRED_ACTIVE_REF) {
+                isEligibleToWithdraw = true;
+                badge.className = "badge bg-success";
+                badge.innerHTML = "✓ যোগ্য (Eligible)";
+                infoText.innerHTML = `<span class="text-success fw-bold">শর্ত পূরণ হয়েছে! আপনি এখন উইথড্র করতে পারবেন।</span>`;
+            } else {
+                isEligibleToWithdraw = false;
+                const needed = REQUIRED_ACTIVE_REF - activeRefCount;
+                badge.className = "badge bg-danger";
+                badge.innerHTML = "🔒 লকড (Locked)";
+                infoText.innerHTML = `উইথড্র করতে আরও <b class="text-danger">${needed}টি</b> একটিভ রেফার প্রয়োজন।`;
+            }
+
+        } catch (error) {
+            console.error("Referral check error:", error);
+            document.getElementById('refStatusBadge').innerText = "ত্রুটি";
+        }
+    }
+
+    // উইথড্র রিকোয়েস্ট সাবমিট করা
+    async function handleWithdraw() {
+        // ১. একটিভ রেফার শর্ত চেক
+        if (!isEligibleToWithdraw) {
+            const needed = REQUIRED_ACTIVE_REF - activeRefCount;
+            Swal.fire({
+                title: 'একটিভ রেফার শর্ত অপূর্ণ!',
+                html: `উইথড্র করার জন্য আপনার কমপক্ষে <b>${REQUIRED_ACTIVE_REF}টি একটিভ রেফার</b> থাকতে হবে।<br><br>বর্তমানে আপনার আছে: <b>${activeRefCount}</b> জন।<br>উইথড্র চালু করতে আরও <b>${needed} জন রেফারার আইডি এক্টিভ</b> করাতে হবে।`,
+                icon: 'warning',
+                confirmButtonColor: '#00b894'
+            });
+            return;
+        }
+
+        const number = document.getElementById('wNumber').value.trim();
+
+        if (!number || number.length < 11) {
+            Swal.fire('ভুল নাম্বার!', 'সঠিক ১১ ডিজিটের মোবাইল একাউন্ট নম্বর দিন।', 'warning');
+            return;
+        }
+
+        if (!selectedAmount || selectedAmount < MIN_WITHDRAW) {
+            Swal.fire('ভুল পরিমাণ!', `সর্বনিম্ন উইথড্র ৳${MIN_WITHDRAW} টাকা।`, 'warning');
+            return;
+        }
+
+        if (selectedAmount > currentBalance) {
+            Swal.fire('অপর্যাপ্ত ব্যালেন্স!', 'আপনার একাউন্টে পর্যাপ্ত ব্যালেন্স নেই।', 'error');
+            return;
+        }
+
+        const fee = (selectedAmount * WITHDRAW_FEE_PERCENT) / 100;
+        const netAmount = selectedAmount - fee;
+
+        const btn = document.getElementById('btnSubmit');
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>রিকোয়েস্ট প্রসেস হচ্ছে...`;
+
+        try {
+            const userRef = db.collection("users").doc(currentUserUid);
+            const withdrawRef = db.collection("withdraws").doc();
+
+            await db.runTransaction(async (transaction) => {
+                const userDoc = await transaction.get(userRef);
+                const userBal = parseFloat(userDoc.data().balance || 0);
+
+                if (userBal < selectedAmount) {
+                    throw "ইনসাফিসিয়েন্ট ব্যালেন্স!";
+                }
+
+                // ইউজার ব্যালেন্স আপডেট
+                transaction.update(userRef, {
+                    balance: userBal - selectedAmount
+                });
+
+                // উইথড্র রেকর্ড সেভ করা
+                transaction.set(withdrawRef, {
+                    user_id: currentUserUid,
+                    method: selectedMethod,
+                    number: number,
+                    amount: selectedAmount,
+                    fee_percent: WITHDRAW_FEE_PERCENT,
+                    fee_amount: fee,
+                    net_amount: netAmount,
+                    status: "pending",
+                    created_at: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            });
+
+            document.getElementById('wNumber').value = "";
+
+            Swal.fire({
+                title: 'অভিনন্দন!',
+                html: `আপনার উইথড্র রিকোয়েস্ট সফল হয়েছে।<br>মোট টাকা: <b>৳${selectedAmount.toFixed(2)}</b><br>ফি (${WITHDRAW_FEE_PERCENT}%): <b>৳${fee.toFixed(2)}</b><br>আপনি পাবেন: <b class="text-success">৳${netAmount.toFixed(2)}</b>`,
+                icon: 'success',
+                confirmButtonColor: '#00b894'
+            });
+
+        } catch (error) {
+            Swal.fire('ব্যর্থ হয়েছে!', error.toString() || 'কিছু ভুল হয়েছে, আবার চেষ্টা করুন।', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-paper-plane me-1"></i> উইথড্র রিকোয়েস্ট পাঠান`;
+        }
+    }
+
+    // উইথড্র হিস্ট্রি মডালে লোড করা
+    async function loadHistory() {
+        const historyList = document.getElementById('historyList');
+        historyList.innerHTML = `
+            <div class="text-center text-muted py-4">
+                <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div>
+                <p class="small mb-0">হিস্ট্রি লোড হচ্ছে...</p>
+            </div>`;
+
+        try {
+            const snap = await db.collection("withdraws")
+                                 .where("user_id", "==", currentUserUid)
+                                 .get();
+
+            if (snap.empty) {
+                historyList.innerHTML = `
+                    <div class="text-center text-muted py-5">
+                        <i class="fa-solid fa-receipt fa-3x mb-3 text-secondary opacity-50"></i>
+                        <p class="fw-bold mb-0">কোনো উইথড্র রেকর্ড পাওয়া যায়নি!</p>
+                        <small class="text-muted">আপনি এখনো কোনো উইথড্র করেননি।</small>
+                    </div>`;
+                return;
+            }
+
+            let docs = [];
+            snap.forEach(doc => docs.push(doc.data()));
+            docs.sort((a, b) => {
+                const timeA = a.created_at ? a.created_at.toMillis() : 0;
+                const timeB = b.created_at ? b.created_at.toMillis() : 0;
+                return timeB - timeA;
+            });
+
+            let html = "";
+            docs.forEach(item => {
+                const status = (item.status || 'pending').toLowerCase();
+                const badgeClass = status === 'approved' ? 'st-approved' : (status === 'rejected' ? 'st-rejected' : 'st-pending');
+                const badgeText = status === 'approved' ? 'সফল (Approved)' : (status === 'rejected' ? 'বাতিল (Rejected)' : 'পেন্ডিং (Pending)');
+                
+                let timeStr = "কিছুক্ষণ আগে";
+                if (item.created_at && item.created_at.toDate) {
+                    const d = item.created_at.toDate();
+                    timeStr = d.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' }) + " • " + d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+                }
+
+                let iconClass = 'fa-solid fa-wallet';
+                let iconBoxClass = 'h-bKash';
+                if (item.method === 'Nagad') {
+                    iconClass = 'fa-solid fa-mobile-screen-button';
+                    iconBoxClass = 'h-Nagad';
+                } else if (item.method === 'Rocket') {
+                    iconClass = 'fa-solid fa-building-columns';
+                    iconBoxClass = 'h-Rocket';
+                }
+
+                const displayNet = item.net_amount ? parseFloat(item.net_amount).toFixed(2) : parseFloat(item.amount).toFixed(2);
+                const displayFee = item.fee_amount ? `(ফি: ৳${parseFloat(item.fee_amount).toFixed(2)})` : '';
+
+                html += `
+                <div class="history-card">
+                    <div class="h-left">
+                        <div class="h-icon ${iconBoxClass}">
+                            <i class="${iconClass}"></i>
+                        </div>
+                        <div class="h-details">
+                            <h6>৳ ${displayNet} <small style="font-size: 11px; font-weight: normal; color: #dc2626;">${displayFee}</small></h6>
+                            <p>${item.method} • ${item.number}</p>
+                            <div class="h-date"><i class="fa-regular fa-clock me-1"></i>${timeStr}</div>
+                        </div>
+                    </div>
+                    <div class="h-right">
+                        <span class="st-badge ${badgeClass}">${badgeText}</span>
+                    </div>
+                </div>`;
+            });
+
+            historyList.innerHTML = html;
+
+        } catch (e) {
+            historyList.innerHTML = `<div class="text-center text-danger py-4"><i class="fa-solid fa-triangle-exclamation mb-1"></i><p>ডাটা লোড করতে সমস্যা হয়েছে।</p></div>`;
+        }
+    }
+</script>
+</body>
+</html>

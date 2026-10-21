@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --support-gradient: linear-gradient(135deg, #0284c7, #2563eb);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* Support Hero Banner */
+        .support-banner {
+            background: var(--support-gradient);
+            border-radius: 20px;
+            padding: 22px 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .support-banner::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .support-banner h5 { font-size: 18px; font-weight: 800; margin: 0; }
+        .support-banner p { font-size: 12px; opacity: 0.9; margin: 4px 0 0; }
+        .headset-box {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Section Container */
+        .section-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Social Link Items */
+        .support-link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            border-radius: 14px;
+            text-decoration: none !important;
+            margin-bottom: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .support-link-item:last-child { margin-bottom: 0; }
+        .support-link-item:hover {
+            background: #fff;
+            border-color: #cbd5e1;
+            transform: translateX(3px);
+        }
+        .support-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .icon-sq {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .bg-tg-ch { background: #229ED9; }
+        .bg-tg-admin { background: #0088cc; }
+        .bg-fb { background: #1877F2; }
+        .bg-yt { background: #FF0000; }
+
+        .support-text h6 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .support-text p {
+            margin: 2px 0 0;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        /* Video Container */
+        .video-box {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+        .video-box iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-desc h6 {
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 12px 0 4px;
+        }
+        .video-desc p {
+            font-size: 12px;
+            color: #64748b;
+            margin: 0 0 12px;
+            line-height: 1.4;
+        }
+
+        /* Watch on YouTube Button */
+        .btn-watch-yt {
+            width: 100%;
+            background: #ff0000;
+            color: #ffffff !important;
+            font-weight: 800;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none !important;
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.25);
+            transition: all 0.2s ease;
+        }
+        .btn-watch-yt:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">হেল্প ও সাপোর্ট (Support)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- Support Banner -->
+    <div class="support-banner">
+        <div>
+            <h5>২৪/৭ গ্রাহক সেবা</h5>
+            <p>যেকোনো সমস্যা বা সহায়তার জন্য আমাদের সাথে থাকুন</p>
+        </div>
+        <div class="headset-box">
+            <i class="fa-solid fa-headset"></i>
+        </div>
+    </div>
+
+    <!-- Official Channels Section -->
+    <div class="section-card">
+        <div class="section-title">
+            <i class="fa-solid fa-comments text-primary"></i>
+            <span>অফিসিয়াল সাপোর্ট চ্যানেলসমূহ</span>
+        </div>
+
+        <!-- Telegram Channel -->
+        <a href="https://t.me/NoReX_Officials" target="_blank" class="support-link-item" id="tgChannelLink">
+            <div class="support-left">
+                <div class="icon-sq bg-tg-ch">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="support-text">
+                    <h6>টেলিগ্রাম চ্যানেল (Official)</h6>
+                    <p>সব নতুন আপডেট ও প্রতিদিনের গিফট কোড</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-muted small"></i>
+        </a>
+
+        <!-- Telegram Admin Support -->
+        <a href="https://t.me/DevAtik" target="_blank" class="support-link-item" id="tgAdminLink">
+            <div class="support-left">
+                <div class="icon-sq bg-tg-admin">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="support-text">
+                    <h6>এডমিন সাপোর্ট (Direct)</h6>
+                    <p>লেনদেন বা একাউন্ট সংক্রান্ত সরাসরি হেল্প</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-muted small"></i>
+        </a>
+
+        <!-- Facebook Page -->
+        <a href="https://facebook.com" target="_blank" class="support-link-item" id="fbLink">
+            <div class="support-left">
+                <div class="icon-sq bg-fb">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </div>
+                <div class="support-text">
+                    <h6>ফেসবুক পেজ (Facebook)</h6>
+                    <p>আমাদের অফিসিয়াল পেজে ফলো করুন</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-muted small"></i>
+        </a>
+
+        <!-- YouTube Channel -->
+        <a href="https://youtube.com" target="_blank" class="support-link-item" id="ytLink">
+            <div class="support-left">
+                <div class="icon-sq bg-yt">
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+                <div class="support-text">
+                    <h6>ইউটিউব চ্যানেল (YouTube)</h6>
+                    <p>ভিডিও দেখে সহজ কাজগুলো শিখুন</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-muted small"></i>
+        </a>
+    </div>
+
+    <!-- Training Video Section -->
+    <div class="section-card">
+        <div class="section-title">
+            <i class="fa-solid fa-circle-play text-danger"></i>
+            <span>কাজের ট্রেনিং ভিডিও (Video Tutorial)</span>
+        </div>
+
+        <!-- পেজের ভেতরে ভিডিও প্লে করার ফ্রেম -->
+        <div class="video-box">
+            <iframe id="videoPlayer" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="video-desc">
+            <h6 id="videoTitle">কিভাবে প্রতিদিন কাজ করে ইনকাম করবেন?</h6>
+            <p id="videoSub">ভিডিওটি মনোযোগ দিয়ে দেখলে প্ল্যাটফর্মের সমস্ত কাজের নিয়ম সহজে বুঝতে পারবেন।</p>
+
+            <!-- সরাসরি ইউটিউব অ্যাপ বা সাইটে যাওয়ার বাটন -->
+            <a href="https://youtube.com" target="_blank" id="ytDirectWatchBtn" class="btn-watch-yt">
+                <i class="fa-brands fa-youtube fa-lg"></i> ইউটিউবে গিয়ে সরাসরি দেখুন (Watch on YouTube)
+            </a>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="text-center mt-3">
+        <a href="dashboard.html" class="text-decoration-none text-muted small fw-bold">
+            <i class="fa-solid fa-arrow-left me-1"></i> ড্যাশবোর্ডে ফিরে যান
+        </a>
+    </div>
+
+</div>
+
+<!-- Firebase & Script -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // ইউটিউব যেকোনো লিংক থেকে এমবেড ও ওয়াচ লিংক বের করার ফাংশন
+    function parseYouTubeUrls(inputUrl) {
+        if (!inputUrl) return { embed: "https://www.youtube.com/embed/dQw4w9WgXcQ", watch: "https://youtube.com" };
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+        const match = inputUrl.match(regExp);
+        if (match && match[2].length === 11) {
+            const vidId = match[2];
+            return {
+                embed: "https://www.youtube.com/embed/" + vidId,
+                watch: "https://www.youtube.com/watch?v=" + vidId
+            };
+        }
+        return { embed: inputUrl, watch: inputUrl };
+    }
+
+    // ফায়ারবেস থেকে লাইভ সাপোর্ট লিংক রিড করা (এডমিন চেঞ্জ করলেই রিয়েলটাইম আপডেট হবে)
+    db.collection("settings").doc("support").onSnapshot(doc => {
+        if (doc.exists) {
+            const data = doc.data();
+            if (data.telegram_channel) document.getElementById('tgChannelLink').href = data.telegram_channel;
+            if (data.telegram_admin) document.getElementById('tgAdminLink').href = data.telegram_admin;
+            if (data.facebook) document.getElementById('fbLink').href = data.facebook;
+            if (data.youtube) document.getElementById('ytLink').href = data.youtube;
+            
+            // ভিডিও হ্যান্ডলিং
+            const rawVideo = data.video_url || data.video_embed_url;
+            if (rawVideo) {
+                const urls = parseYouTubeUrls(rawVideo);
+                document.getElementById('videoPlayer').src = urls.embed;
+                document.getElementById('ytDirectWatchBtn').href = urls.watch;
+            }
+
+            if (data.video_title) document.getElementById('videoTitle').innerText = data.video_title;
+            if (data.video_sub || data.video_desc) document.getElementById('videoSub').innerText = data.video_sub || data.video_desc;
+        }
+    }, err => {
+        console.log("Support links load notice:", err);
+    });
+</script>
+</body>
+</html>

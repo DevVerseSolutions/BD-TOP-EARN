@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Code Redemption | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --accent-pink: #ec4899;
+            --accent-gradient: linear-gradient(135deg, #ec4899, #f43f5e);
+            --primary-gradient: linear-gradient(135deg, #00b894, #00897b);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* Balance Card */
+        .balance-card {
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 184, 148, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .balance-card::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            width: 110px;
+            height: 110px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .balance-label { font-size: 12px; font-weight: 600; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+        .balance-amount { font-size: 26px; font-weight: 800; margin: 2px 0 0; }
+        .wallet-icon-box {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        /* Telegram Notice Box */
+        .tg-banner {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            border-radius: 16px;
+            padding: 14px 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2);
+            text-decoration: none !important;
+            transition: transform 0.2s;
+        }
+        .tg-banner:active { transform: scale(0.98); }
+        .tg-left { display: flex; align-items: center; gap: 12px; }
+        .tg-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .tg-text h6 { font-size: 13px; font-weight: 800; margin: 0; color: #fff; }
+        .tg-text p { font-size: 11px; margin: 0; opacity: 0.9; color: #dbeafe; }
+
+        /* Gift Redeem Card */
+        .gift-main-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 30px 22px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .gift-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background: #fdf2f8;
+            border: 2px dashed var(--accent-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 34px;
+            color: var(--accent-pink);
+            animation: bounce 2s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .gift-title { font-weight: 800; font-size: 18px; color: #1e293b; margin-bottom: 6px; }
+        .gift-subtitle { font-size: 12px; color: #64748b; margin-bottom: 22px; font-weight: 500; }
+
+        /* Code Input */
+        .code-input-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .code-input-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 16px;
+        }
+        .code-input {
+            width: 100%;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px 16px 14px 46px;
+            font-size: 16px;
+            font-weight: 800;
+            color: #1e293b;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .code-input:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 184, 148, 0.12);
+        }
+
+        /* Redeem Button */
+        .btn-claim {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: white;
+            font-weight: 800;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 15px;
+            box-shadow: 0 6px 18px rgba(0, 184, 148, 0.25);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .btn-claim:active { transform: scale(0.98); }
+
+        /* History Section */
+        .history-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 18px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .history-header {
+            font-size: 14px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .history-item {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .h-code { font-weight: 800; font-size: 13px; color: #1e293b; letter-spacing: 1px; }
+        .h-time { font-size: 10px; color: #94a3b8; margin-top: 2px; }
+        .h-amount { font-weight: 800; color: #10b981; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">গিফট কোড (Gift Code)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- User Current Balance -->
+    <div class="balance-card">
+        <div>
+            <div class="balance-label">বর্তমান ব্যালেন্স</div>
+            <div class="balance-amount">৳ <span id="uBalance">0.00</span></div>
+        </div>
+        <div class="wallet-icon-box">
+            <i class="fa-solid fa-wallet"></i>
+        </div>
+    </div>
+
+    <!-- Telegram Channel Notice -->
+    <a href="https://t.me/NoReX_Officials" target="_blank" class="tg-banner">
+        <div class="tg-left">
+            <div class="tg-icon">
+                <i class="fa-brands fa-telegram"></i>
+            </div>
+            <div class="tg-text">
+                <h6>প্রতিদিনের গিফট কোড পেতে</h6>
+                <p>আমাদের টেলিগ্রাম চ্যানেলে জয়েন করুন</p>
+            </div>
+        </div>
+        <i class="fa-solid fa-arrow-up-right-from-square text-white fs-6"></i>
+    </a>
+
+    <!-- Redeem Form Card -->
+    <div class="gift-main-card">
+        <div class="gift-icon-wrapper">
+            <i class="fa-solid fa-gift"></i>
+        </div>
+        <h5 class="gift-title">গিফট কোড রিডিম করুন</h5>
+        <p class="gift-subtitle">আপনার গোপন গিফট কোডটি দিয়ে ফ্রিতে ব্যালেন্স বোনাস নিন</p>
+
+        <form id="giftForm">
+            <div class="code-input-wrapper">
+                <i class="fa-solid fa-ticket"></i>
+                <input type="text" id="giftCodeInput" class="code-input" placeholder="ENTER CODE" autocomplete="off" required>
+            </div>
+            <button type="submit" id="btnRedeem" class="btn-claim">
+                <i class="fa-solid fa-circle-check me-1"></i> ক্লেইম করুন (Claim Gift)
+            </button>
+        </form>
+    </div>
+
+    <!-- Claimed History -->
+    <div class="history-card">
+        <div class="history-header">
+            <i class="fa-solid fa-clock-rotate-left text-primary"></i>
+            <span>আপনার পূর্বে ক্লেইম করা গিফট</span>
+        </div>
+        <div id="historyList">
+            <div class="text-center text-muted py-3">
+                <div class="spinner-border spinner-border-sm text-primary mb-1"></div>
+                <p class="small mb-0">হিস্ট্রি লোড হচ্ছে...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let userId = "";
+
+    // Auth & Realtime Balance
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        userId = user.uid;
+
+        // লাইভ ব্যালেন্স রিড
+        db.collection("users").doc(user.uid).onSnapshot(doc => {
+            if (doc.exists) {
+                const bal = parseFloat(doc.data().balance || 0);
+                document.getElementById('uBalance').innerText = bal.toFixed(2);
+            }
+        });
+
+        // ক্লেইম হিস্ট্রি লোড
+        loadGiftHistory(user.uid);
+    });
+
+    // ফর্ম সাবমিট ও কোড ক্লেইম হ্যান্ডলার
+    document.getElementById('giftForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const code = document.getElementById('giftCodeInput').value.trim().toUpperCase();
+        const btn = document.getElementById('btnRedeem');
+        
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>যাচাই করা হচ্ছে...`;
+
+        try {
+            // ১. গিফট কোড যাচাই করা
+            const snap = await db.collection("gift_codes")
+                                 .where("code", "==", code)
+                                 .where("status", "==", "active")
+                                 .get();
+
+            if (snap.empty) {
+                Swal.fire({
+                    title: 'ভুল কোড!',
+                    text: 'কোডটি সঠিক নয় অথবা এর মেয়াদ শেষ হয়ে গেছে।',
+                    icon: 'error',
+                    confirmButtonColor: '#00b894'
+                });
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ক্লেইম করুন (Claim Gift)`;
+                return;
+            }
+
+            const giftDoc = snap.docs[0];
+            const giftData = giftDoc.data();
+
+            // ২. ইউজার ইতিমধ্যে ক্লেইম করেছে কি না চেক করা
+            const usedCheck = await db.collection("gift_code_usage")
+                                      .where("user_id", "==", userId)
+                                      .where("gift_id", "==", giftDoc.id)
+                                      .get();
+
+            if (!usedCheck.empty) {
+                Swal.fire({
+                    title: 'ইতিমধ্যে ব্যবহার করেছেন!',
+                    text: 'আপনি ইতিপূর্বে এই গিফট কোডটি ক্লেইম করেছেন। নতুন কোডের জন্য অপেক্ষা করুন।',
+                    icon: 'warning',
+                    confirmButtonColor: '#00b894'
+                });
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ক্লেইম করুন (Claim Gift)`;
+                return;
+            }
+
+            const amount = parseFloat(giftData.amount || 20);
+
+            // ৩. ব্যালেন্স যোগ এবং ক্লেইম হিস্ট্রি আপডেট
+            await db.collection("users").doc(userId).update({
+                balance: firebase.firestore.FieldValue.increment(amount)
+            });
+
+            await db.collection("gift_code_usage").add({
+                user_id: userId,
+                gift_id: giftDoc.id,
+                code: code,
+                amount: amount,
+                created_at: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            document.getElementById('giftCodeInput').value = "";
+
+            Swal.fire({
+                icon: 'success',
+                title: 'অভিনন্দন!',
+                html: `আপনি সফলভাবে <b>৳${amount.toFixed(2)}</b> গিফট বোনাস পেয়েছেন!`,
+                confirmButtonColor: '#00b894'
+            });
+
+            // হিস্ট্রি রিফ্রেশ
+            loadGiftHistory(userId);
+
+        } catch (err) {
+            Swal.fire('ত্রুটি হয়েছে', err.message, 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> ক্লেইম করুন (Claim Gift)`;
+        }
+    });
+
+    // হিস্ট্রি লোড করার ফাংশন
+    async function loadGiftHistory(uid) {
+        const historyList = document.getElementById('historyList');
+        try {
+            const snap = await db.collection("gift_code_usage")
+                                 .where("user_id", "==", uid)
+                                 .get();
+
+            if (snap.empty) {
+                historyList.innerHTML = `
+                    <div class="text-center text-muted py-3">
+                        <i class="fa-solid fa-ticket-simple fa-2x mb-2 opacity-50"></i>
+                        <p class="small mb-0">এখনো কোনো গিফট কোড ক্লেইম করা হয়নি।</p>
+                    </div>`;
+                return;
+            }
+
+            let docs = [];
+            snap.forEach(doc => docs.push(doc.data()));
+            docs.sort((a, b) => {
+                const timeA = a.created_at ? a.created_at.toMillis() : 0;
+                const timeB = b.created_at ? b.created_at.toMillis() : 0;
+                return timeB - timeA;
+            });
+
+            let html = "";
+            docs.forEach(item => {
+                let timeStr = "আজ";
+                if (item.created_at && item.created_at.toDate) {
+                    const d = item.created_at.toDate();
+                    timeStr = d.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' }) + " • " + d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+                }
+
+                html += `
+                <div class="history-item">
+                    <div>
+                        <div class="h-code"><i class="fa-solid fa-gift text-pink-500 me-1"></i> ${item.code}</div>
+                        <div class="h-time">${timeStr}</div>
+                    </div>
+                    <div class="h-amount">+৳${parseFloat(item.amount).toFixed(2)}</div>
+                </div>`;
+            });
+
+            historyList.innerHTML = html;
+
+        } catch (e) {
+            historyList.innerHTML = `<p class="text-center text-muted small py-2">হিস্ট্রি লোড করা সম্ভব হয়নি।</p>`;
+        }
+    }
+</script>
+</body>
+</html>

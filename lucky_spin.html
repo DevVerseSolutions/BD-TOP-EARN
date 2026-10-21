@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Spin | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --gold-light: #ffd700;
+            --gold-dark: #b8860b;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #1e293b;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 42px;
+            height: 42px;
+            background: #fff;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* VIP Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 22px;
+            padding: 20px 22px;
+            color: white;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .balance-card::after {
+            content: "";
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .balance-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .balance-amount {
+            font-size: 30px;
+            font-weight: 900;
+            color: #ffd700;
+            margin: 4px 0 0;
+            letter-spacing: 0.5px;
+        }
+        .vip-badge {
+            background: linear-gradient(135deg, #ffd700, #d97706);
+            color: #451a03;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Wheel Showcase Card */
+        .wheel-showcase-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 30px 16px 26px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            margin-bottom: 22px;
+            position: relative;
+        }
+
+        /* 3D Golden Wheel Outer Bezel */
+        .wheel-outer-bezel {
+            position: relative;
+            width: 304px;
+            height: 304px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffeaa7 0%, #d4af37 40%, #855800 100%);
+            padding: 12px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28), inset 0 3px 6px rgba(255, 255, 255, 0.8), inset 0 -4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Pointer Needle */
+        .wheel-needle {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 36px;
+            height: 48px;
+            z-index: 100;
+            filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
+            pointer-events: none;
+        }
+
+        /* Wheel Canvas */
+        #wheelCanvas {
+            border-radius: 50%;
+            display: block;
+            box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.45), 0 0 0 4px #2d1e00;
+            transition: transform 5s cubic-bezier(0.12, 0.95, 0.15, 1);
+        }
+
+        /* Metallic Center Hub */
+        .center-spin-hub {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 58px;
+            height: 58px;
+            background: radial-gradient(circle at 35% 35%, #fff6cc 0%, #ffd700 45%, #996515 100%);
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a2800;
+            font-size: 20px;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        /* Spin Action Button */
+        .btn-fortune-spin {
+            width: 100%;
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 50%, #dc2626 100%);
+            color: #ffffff;
+            font-weight: 900;
+            border: none;
+            padding: 15px;
+            border-radius: 16px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 22px rgba(234, 88, 12, 0.35);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-fortune-spin:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba(234, 88, 12, 0.45);
+        }
+        .btn-fortune-spin:active:not(:disabled) { transform: scale(0.98); }
+        .btn-fortune-spin:disabled {
+            background: #cbd5e1 !important;
+            color: #64748b !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            transform: none !important;
+            opacity: 0.85;
+        }
+
+        /* VIP Digital Countdown Box */
+        .digital-timer-card {
+            background: #0f172a;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 18px;
+            padding: 16px 18px;
+            margin-top: 18px;
+            display: none;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+        .dt-header {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .timer-digits-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .digit-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 6px 12px;
+            font-family: monospace;
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffd700;
+            min-width: 52px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+        }
+        .timer-colon {
+            color: #ffd700;
+            font-weight: 900;
+            font-size: 18px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0.3; } }
+
+        /* History Card */
+        .history-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+        }
+        .history-header {
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .history-item {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 12px 16px;
+            margin-bottom: 9px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .h-time { font-size: 11px; color: #94a3b8; font-weight: 600; margin-top: 2px; }
+        .h-prize-badge {
+            font-weight: 900;
+            color: #059669;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">লাকি স্পিন (Fortune Wheel)</h6>
+        <div style="width: 42px;"></div>
+    </div>
+
+    <!-- VIP Balance Banner -->
+    <div class="balance-card">
+        <div>
+            <div class="balance-label">
+                <i class="fa-solid fa-wallet text-warning"></i> বর্তমান ব্যালেন্স
+            </div>
+            <div class="balance-amount">৳ <span id="uBalance">0.00</span></div>
+        </div>
+        <div class="vip-badge" id="lblDailyBadge">
+            <i class="fa-solid fa-crown"></i> ডেইলি ফ্রি স্পিন
+        </div>
+    </div>
+
+    <!-- Main Wheel Showcase Card -->
+    <div class="wheel-showcase-card">
+        
+        <!-- 3D Bezel Wrapper -->
+        <div class="wheel-outer-bezel">
+            <!-- 3D Golden Pointer Needle -->
+            <svg class="wheel-needle" viewBox="0 0 36 48">
+                <defs>
+                    <linearGradient id="needleGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#ffd700"/>
+                        <stop offset="50%" stop-color="#d97706"/>
+                        <stop offset="100%" stop-color="#78350f"/>
+                    </linearGradient>
+                </defs>
+                <path d="M18 48 L2 10 A 16 16 0 0 1 34 10 Z" fill="url(#needleGrad)" stroke="#ffffff" stroke-width="2.5"/>
+                <circle cx="18" cy="14" r="6" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+            </svg>
+
+            <!-- Wheel Canvas (280x280) -->
+            <canvas id="wheelCanvas" width="280" height="280"></canvas>
+
+            <!-- Center Metallic Hub -->
+            <div class="center-spin-hub">
+                <i class="fa-solid fa-gem"></i>
+            </div>
+        </div>
+
+        <!-- Spin Action Button (ডিফল্ট নিষ্ক্রিয় যাতে কেউ লোড হওয়ার আগে চাপ দিয়ে স্পিন করতে না পারে) -->
+        <button type="button" class="btn-fortune-spin" id="spinBtn" disabled onclick="startSpin()">
+            <i class="fa-solid fa-spinner fa-spin me-1" id="spinBtnIcon"></i> <span id="spinBtnText">যাচাই করা হচ্ছে...</span>
+        </button>
+
+        <!-- Digital 24h Countdown Box -->
+        <div class="digital-timer-card" id="cooldownCard">
+            <div class="dt-header">
+                <i class="fa-regular fa-clock text-warning"></i> পরবর্তী স্পিনের বাকি সময়
+            </div>
+            <div class="timer-digits-wrap">
+                <span class="digit-box" id="tHours">00</span>
+                <span class="timer-colon">:</span>
+                <span class="digit-box" id="tMinutes">00</span>
+                <span class="timer-colon">:</span>
+                <span class="digit-box" id="tSeconds">00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spin History Card -->
+    <div class="history-card">
+        <div class="history-header">
+            <i class="fa-solid fa-trophy text-warning"></i>
+            <span>পূর্ববর্তী স্পিন জয়ের হিস্ট্রি</span>
+        </div>
+        <div id="spinHistoryList">
+            <div class="text-center text-muted py-3">
+                <div class="spinner-border spinner-border-sm text-warning mb-1"></div>
+                <p class="small mb-0">হিস্ট্রি লোড হচ্ছে...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Firebase & Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    // ডিফল্ট ৮টি ব্যাকআপ স্লট
+    let PRIZES = [
+        { label: "৳ ১",  amount: 1,  color1: "#d97706", color2: "#b45309" },
+        { label: "৳ ২",  amount: 2,  color1: "#059669", color2: "#047857" },
+        { label: "৳ ৩",  amount: 3,  color1: "#4f46e5", color2: "#4338ca" },
+        { label: "৳ ৪",  amount: 4,  color1: "#e11d48", color2: "#be123c" },
+        { label: "৳ ৫",  amount: 5,  color1: "#0284c7", color2: "#0369a1" },
+        { label: "৳ ৭",  amount: 7,  color1: "#7c3aed", color2: "#6d28d9" },
+        { label: "৳ ৮",  amount: 8,  color1: "#0d9488", color2: "#0f766e" },
+        { label: "৳ ১০", amount: 10, color1: "#ea580c", color2: "#c2410c" }
+    ];
+
+    let COOLDOWN_HOURS = 24;
+    let DAILY_LIMIT = 1;
+    let isSpinSystemActive = true;
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let isSpinning = false;
+    let currentRotation = 0;
+    let cooldownTimerInterval = null;
+
+    // 🎨 ডায়নামিক হুইল ড্রয়িং (এডমিনের স্লট অনুযায়ী)
+    function drawDynamicWheel() {
+        const canvas = document.getElementById("wheelCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        const width = canvas.width;
+        const height = canvas.height;
+        const radius = width / 2;
+        const numSlices = PRIZES.length;
+        const arc = (2 * Math.PI) / numSlices;
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < numSlices; i++) {
+            const angle = i * arc;
+            ctx.beginPath();
+
+            const grad = ctx.createRadialGradient(radius, radius, 15, radius, radius, radius);
+            grad.addColorStop(0, PRIZES[i].color1 || "#059669");
+            grad.addColorStop(1, PRIZES[i].color2 || "#047857");
+
+            ctx.fillStyle = grad;
+            ctx.moveTo(radius, radius);
+            ctx.arc(radius, radius, radius, angle, angle + arc);
+            ctx.lineTo(radius, radius);
+            ctx.fill();
+
+            ctx.strokeStyle = "rgba(255, 215, 0, 0.4)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(angle + arc / 2);
+            ctx.textAlign = "right";
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "900 16px 'Plus Jakarta Sans', sans-serif";
+            ctx.shadowColor = "rgba(0, 0, 0, 0.6)";
+            ctx.shadowBlur = 6;
+            ctx.shadowOffsetX = 1;
+            ctx.shadowOffsetY = 2;
+            ctx.fillText(PRIZES[i].label, radius - 24, 6);
+            ctx.restore();
+        }
+
+        const pinCount = 16;
+        for (let j = 0; j < pinCount; j++) {
+            const pinAngle = j * ((2 * Math.PI) / pinCount);
+            const px = radius + (radius - 8) * Math.cos(pinAngle);
+            const py = radius + (radius - 8) * Math.sin(pinAngle);
+
+            ctx.beginPath();
+            ctx.arc(px, py, 3.5, 0, 2 * Math.PI);
+            ctx.fillStyle = "#ffffff";
+            ctx.shadowColor = "#ffd700";
+            ctx.shadowBlur = 5;
+            ctx.fill();
+        }
+    }
+
+    drawDynamicWheel();
+
+    // পেজ লোড ও রিয়েলটাইম ডেটা রিড
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        currentUser = user;
+
+        // ব্যালেন্স লাইভ আপডেট
+        db.collection("users").doc(user.uid).onSnapshot(doc => {
+            if (doc.exists) {
+                const bal = parseFloat(doc.data().balance || 0);
+                document.getElementById('uBalance').innerText = bal.toFixed(2);
+            }
+        });
+
+        // এডমিন সেটিংস রিড (স্লটের টাকা, স্পিন লিমিট, অন/অফ)
+        db.collection("settings").doc("spin_wheel").onSnapshot(async doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                isSpinSystemActive = (data.is_enabled !== false);
+                DAILY_LIMIT = Number(data.daily_limit || 1);
+                COOLDOWN_HOURS = Number(data.cooldown_hours || 24);
+
+                // এডমিনের দেওয়া স্লট দিয়ে চাকা সাজানো
+                if (Array.isArray(data.prizes) && data.prizes.length >= 2) {
+                    PRIZES = data.prizes;
+                    drawDynamicWheel();
+                }
+
+                // ব্যাজ টেক্সট
+                const badgeEl = document.getElementById('lblDailyBadge');
+                if (DAILY_LIMIT >= 999) {
+                    badgeEl.innerHTML = `<i class="fa-solid fa-crown"></i> আনলিমিটেড স্পিন`;
+                } else {
+                    badgeEl.innerHTML = `<i class="fa-solid fa-crown"></i> ডেইলি লিমিট: ${DAILY_LIMIT} বার`;
+                }
+
+                if (!isSpinSystemActive) {
+                    lockDisabledSystem();
+                    return;
+                }
+
+                // স্পিনের যোগ্যতা পুনরায় চেক
+                await checkSpinEligibility(currentUser.uid);
+            }
+        });
+
+        // হিস্ট্রি লোড
+        loadSpinHistory(user.uid);
+    });
+
+    function lockDisabledSystem() {
+        const btn = document.getElementById('spinBtn');
+        const text = document.getElementById('spinBtnText');
+        const icon = document.getElementById('spinBtnIcon');
+        btn.disabled = true;
+        icon.className = "fa-solid fa-circle-exclamation me-1";
+        text.innerText = "স্পিন সেবা সাময়িক বন্ধ";
+    }
+
+    // স্পিন যোগ্যতা নিখুঁতভাবে যাচাই
+    async function checkSpinEligibility(uid) {
+        if (!isSpinSystemActive) {
+            lockDisabledSystem();
+            return;
+        }
+
+        try {
+            const cooldownMs = COOLDOWN_HOURS * 60 * 60 * 1000;
+            const now = Date.now();
+            const storageKey = `bdt_spins_${uid}`;
+
+            // লোকাল স্টোরেজ থেকে টাইমস্ট্যাম্পের তালিকা
+            let localTimestamps = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+            // সার্ভার থেকেও রিড করা
+            const userDoc = await db.collection("users").doc(uid).get();
+            let serverTimestamps = [];
+            if (userDoc.exists) {
+                serverTimestamps = userDoc.data().spin_timestamps || [];
+            }
+
+            // উভয়টি মার্জ করে সবচেয়ে সঠিক তালিকা নেওয়া
+            let combined = [...new Set([...localTimestamps, ...serverTimestamps])];
+
+            // শুধুমাত্র বর্তমান কুলডাউনের ভেতরে থাকা স্পিনগুলো ফিল্টার
+            let validRecentSpins = combined.filter(t => (now - t) < cooldownMs).sort((a,b) => a - b);
+
+            // লোকাল স্টোরেজ আপডেট
+            localStorage.setItem(storageKey, JSON.stringify(validRecentSpins));
+
+            // যদি লিমিট আনলিমিটেড হয়
+            if (DAILY_LIMIT >= 999) {
+                unlockSpin(999);
+                return;
+            }
+
+            // যদি কোটা বাকি থাকে
+            if (validRecentSpins.length < DAILY_LIMIT) {
+                const remaining = DAILY_LIMIT - validRecentSpins.length;
+                unlockSpin(remaining);
+            } else {
+                // সব কোটা শেষ হলে সবচেয়ে পুরনো স্পিনের সময় থেকে পরবর্তী স্পিনের বাকি সময় হিসাব
+                const earliestSpin = validRecentSpins[0];
+                const timePassed = now - earliestSpin;
+                const remainingMs = cooldownMs - timePassed;
+                lockSpinWithTimer(remainingMs);
+            }
+
+        } catch (e) {
+            console.error("Eligibility check error:", e);
+            unlockSpin(1);
+        }
+    }
+
+    function lockSpinWithTimer(ms) {
+        const btn = document.getElementById('spinBtn');
+        const text = document.getElementById('spinBtnText');
+        const icon = document.getElementById('spinBtnIcon');
+        const card = document.getElementById('cooldownCard');
+
+        btn.disabled = true;
+        icon.className = "fa-solid fa-lock me-1";
+        text.innerText = "আজকের স্পিন সম্পন্ন";
+        card.style.display = "block";
+
+        if (cooldownTimerInterval) clearInterval(cooldownTimerInterval);
+
+        let targetEndTime = Date.now() + ms;
+
+        function updateCountdown() {
+            const diff = targetEndTime - Date.now();
+            if (diff <= 0) {
+                clearInterval(cooldownTimerInterval);
+                checkSpinEligibility(currentUser.uid);
+                return;
+            }
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('tHours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('tMinutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('tSeconds').innerText = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        cooldownTimerInterval = setInterval(updateCountdown, 1000);
+    }
+
+    function unlockSpin(remainingCount) {
+        if (!isSpinSystemActive) {
+            lockDisabledSystem();
+            return;
+        }
+        const btn = document.getElementById('spinBtn');
+        const text = document.getElementById('spinBtnText');
+        const icon = document.getElementById('spinBtnIcon');
+        const card = document.getElementById('cooldownCard');
+
+        btn.disabled = false;
+        icon.className = "fa-solid fa-rotate-right fa-spin-pulse me-1";
+        
+        if (remainingCount >= 999) {
+            text.innerText = "স্পিন করুন (SPIN NOW)";
+        } else {
+            text.innerText = `স্পিন করুন (বাকি: ${remainingCount} বার)`;
+        }
+        
+        card.style.display = "none";
+        if (cooldownTimerInterval) clearInterval(cooldownTimerInterval);
+    }
+
+    // ========================================================
+    // 🎡 স্পিন ঘোরানো (ইনস্ট্যান্ট ক্লিক প্রোটেকশন সহ)
+    // ========================================================
+    function startSpin() {
+        if (isSpinning || !currentUser || !isSpinSystemActive) return;
+
+        const now = Date.now();
+        const cooldownMs = COOLDOWN_HOURS * 60 * 60 * 1000;
+        const storageKey = `bdt_spins_${currentUser.uid}`;
+        let localTimestamps = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        let validRecentSpins = localTimestamps.filter(t => (now - t) < cooldownMs);
+
+        // 🔥 ইনস্ট্যান্ট ডাবল ভেরিফিকেশন (২ সেকেন্ডের লুপহোল বন্ধ)
+        if (DAILY_LIMIT < 999 && validRecentSpins.length >= DAILY_LIMIT) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'আজকের কোটা শেষ!',
+                text: `আপনি ${COOLDOWN_HOURS} ঘণ্টায় সর্বোচ্চ ${DAILY_LIMIT} বার স্পিন করতে পারবেন।`,
+                confirmButtonColor: '#00b894'
+            });
+            checkSpinEligibility(currentUser.uid);
+            return;
+        }
+
+        // বাটন সাথে সাথে নিষ্ক্রিয় করা
+        isSpinning = true;
+        const btn = document.getElementById('spinBtn');
+        const text = document.getElementById('spinBtnText');
+        const icon = document.getElementById('spinBtnIcon');
+        btn.disabled = true;
+        icon.className = "fa-solid fa-spinner fa-spin me-1";
+        text.innerText = "স্পিন ঘুরছে...";
+
+        // লোকাল মেমোরিতে স্পিন টাইম ইনস্ট্যান্ট যুক্ত
+        validRecentSpins.push(now);
+        localStorage.setItem(storageKey, JSON.stringify(validRecentSpins));
+
+        // উইনিং স্লট নির্বাচন
+        const numSlices = PRIZES.length;
+        const sliceAngle = 360 / numSlices;
+        const winningIndex = Math.floor(Math.random() * numSlices);
+        const winningPrize = PRIZES[winningIndex];
+
+        // ঘূর্ণন কোণ
+        const extraRounds = 6;
+        const sliceCenter = (winningIndex * sliceAngle) + (sliceAngle / 2);
+        const targetStopAngle = (360 * extraRounds) + (270 - sliceCenter);
+        currentRotation += targetStopAngle;
+
+        const canvas = document.getElementById('wheelCanvas');
+        canvas.style.transform = `rotate(${currentRotation}deg)`;
+
+        // চাকা থামার পর পুরস্কার বিতরণ
+        setTimeout(async () => {
+            isSpinning = false;
+
+            // কনফেটি
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            try {
+                // ১. ইউজারের ব্যালেন্সে টাকা যোগ ও টাইমস্ট্যাম্প ডাটাবেজে সংরক্ষণ
+                await db.collection("users").doc(currentUser.uid).update({
+                    balance: firebase.firestore.FieldValue.increment(winningPrize.amount),
+                    spin_timestamps: firebase.firestore.FieldValue.arrayUnion(now)
+                });
+
+                // ২. এডমিন প্যানেলের জন্য হিস্ট্রি রেকর্ড তৈরি
+                await db.collection("spin_history").add({
+                    user_id: currentUser.uid,
+                    amount: winningPrize.amount,
+                    prize_label: winningPrize.label,
+                    created_at: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // ৩. অভিনন্দন বার্তা
+                Swal.fire({
+                    icon: 'success',
+                    title: 'অভিনন্দন! 🎉',
+                    html: `আপনি স্পিন করে জিতেছেন <b style="font-size: 26px; color: #10b981;">৳ ${winningPrize.amount}</b> টাকা!<br><span class="text-muted small">টাকাটি আপনার মূল ব্যালেন্সে যোগ করা হয়েছে।</span>`,
+                    confirmButtonColor: '#00b894'
+                });
+
+                // হিস্ট্রি রিফ্রেশ ও কোটা পুনরায় যাচাই
+                loadSpinHistory(currentUser.uid);
+                await checkSpinEligibility(currentUser.uid);
+
+            } catch (err) {
+                console.error("Spin reward error:", err);
+                Swal.fire('ত্রুটি!', 'টাকা যোগ করতে সমস্যা হয়েছে, এডমিনের সাথে যোগাযোগ করুন।', 'error');
+            }
+
+        }, 5100);
+    }
+
+    // স্পিন হিস্ট্রি লোড
+    async function loadSpinHistory(uid) {
+        const list = document.getElementById('spinHistoryList');
+        try {
+            const snap = await db.collection("spin_history")
+                                 .where("user_id", "==", uid)
+                                 .get();
+
+            if (snap.empty) {
+                list.innerHTML = `
+                    <div class="text-center text-muted py-3">
+                        <i class="fa-solid fa-gift fa-2x mb-2 opacity-50"></i>
+                        <p class="small mb-0">এখনো কোনো স্পিন রিওয়ার্ড পাওয়া যায়নি।</p>
+                    </div>`;
+                return;
+            }
+
+            let docs = [];
+            snap.forEach(doc => docs.push(doc.data()));
+            docs.sort((a, b) => {
+                const timeA = a.created_at ? a.created_at.toMillis() : 0;
+                const timeB = b.created_at ? b.created_at.toMillis() : 0;
+                return timeB - timeA;
+            });
+
+            let html = "";
+            docs.slice(0, 5).forEach(item => {
+                let timeStr = "আজ";
+                if (item.created_at && item.created_at.toDate) {
+                    const d = item.created_at.toDate();
+                    timeStr = d.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' }) + " • " + d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+                }
+
+                html += `
+                <div class="history-item">
+                    <div>
+                        <div class="fw-bold text-dark"><i class="fa-solid fa-award text-warning me-1"></i> লাকি স্পিন রিওয়ার্ড</div>
+                        <div class="h-time">${timeStr}</div>
+                    </div>
+                    <div class="h-prize-badge">+ ৳ ${item.amount}</div>
+                </div>`;
+            });
+
+            list.innerHTML = html;
+
+        } catch (e) {
+            list.innerHTML = `<p class="text-center text-danger small py-2">হিস্ট্রি লোড করা সম্ভব হয়নি।</p>`;
+        }
+    }
+</script>
+</body>
+</html>

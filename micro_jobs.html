@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro Jobs | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --mj-gradient: linear-gradient(135deg, #0984e3, #6c5ce7);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* Hero Banner */
+        .mj-banner {
+            background: var(--mj-gradient);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .mj-banner::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .mj-banner-text small { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; }
+        .mj-banner-text h4 { font-size: 26px; font-weight: 800; margin: 2px 0 0; }
+        .mj-hero-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Nav Pills (Tabs) */
+        .nav-tabs-custom {
+            display: flex;
+            background: #e2e8f0;
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 18px;
+        }
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .tab-btn.active {
+            background: #ffffff;
+            color: #0f172a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        /* Task Item Cards */
+        .task-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: transform 0.2s;
+        }
+        .task-card:active { transform: scale(0.99); }
+        .task-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+        }
+        .task-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .ic-yt { background: #fef2f2; color: #ef4444; }
+        .ic-fb { background: #eff6ff; color: #3b82f6; }
+        .ic-tg { background: #f0f9ff; color: #0284c7; }
+        .ic-app { background: #f0fdf4; color: #10b981; }
+        .ic-web { background: #faf5ff; color: #a855f7; }
+
+        .task-details h6 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.3;
+        }
+        .task-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .reward-pill {
+            background: #ecfdf5;
+            color: #059669;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid #a7f3d0;
+        }
+        .task-cat-text {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .task-limit-text {
+            font-size: 10px;
+            color: #0284c7;
+            font-weight: 700;
+            background: #e0f2fe;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Action Buttons on Card */
+        .btn-do-task {
+            background: linear-gradient(135deg, #00b894, #00897b);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            flex-shrink: 0;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 184, 148, 0.25);
+            transition: 0.2s;
+        }
+        .btn-do-task:active { transform: scale(0.95); }
+
+        /* History Cards */
+        .history-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .h-left h6 { font-size: 13px; font-weight: 800; margin: 0; color: #1e293b; }
+        .h-left small { font-size: 11px; color: #94a3b8; display: block; margin-top: 2px; }
+        .h-proof-link { font-size: 11px; font-weight: 700; color: #0284c7; text-decoration: none; }
+        
+        .badge-st { font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; }
+        .st-pending { background: #fef3c7; color: #b45309; }
+        .st-approved { background: #dcfce7; color: #15803d; }
+        .st-rejected { background: #fee2e2; color: #b91c1c; }
+
+        /* Modal Customization */
+        .modal-content {
+            border-radius: 24px;
+            border: none;
+            overflow: hidden;
+        }
+        .modal-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 20px;
+        }
+        .modal-body {
+            padding: 20px;
+            background: #ffffff;
+        }
+        .task-rule-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.5;
+        }
+        .btn-visit-link {
+            width: 100%;
+            background: #0284c7;
+            color: white;
+            font-weight: 700;
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none !important;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+        }
+        .btn-visit-link:hover { color: white; background: #0369a1; }
+        
+        .proof-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 18px;
+        }
+        .img-preview-box {
+            width: 100%;
+            max-height: 180px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            margin-top: 10px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+            background: #000;
+        }
+        .img-preview-box img {
+            max-width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+        }
+        .btn-submit-task {
+            width: 100%;
+            background: linear-gradient(135deg, #00b894, #00897b);
+            color: #fff;
+            font-weight: 800;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 14px;
+            box-shadow: 0 6px 16px rgba(0, 184, 148, 0.25);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">মাইক্রো জব (Micro Jobs)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- Balance / Hero Banner -->
+    <div class="mj-banner">
+        <div class="mj-banner-text">
+            <small>বর্তমান মেইন ব্যালেন্স</small>
+            <h4>৳ <span id="uBalance">0.00</span></h4>
+        </div>
+        <div class="mj-hero-icon">
+            <i class="fa-solid fa-briefcase"></i>
+        </div>
+    </div>
+
+    <!-- Tabs (All Tasks vs History) -->
+    <div class="nav-tabs-custom">
+        <button type="button" class="tab-btn active" id="tabAllBtn" onclick="switchTab('all')">
+            <i class="fa-solid fa-list-check"></i> সব কাজ (All Tasks)
+        </button>
+        <button type="button" class="tab-btn" id="tabHistoryBtn" onclick="switchTab('history')">
+            <i class="fa-solid fa-clock-rotate-left"></i> কাজের হিস্ট্রি (History)
+        </button>
+    </div>
+
+    <!-- Section 1: All Tasks List -->
+    <div id="allTasksSection">
+        <div id="tasksListContainer">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div>
+                <p class="small text-muted mb-0">কাজের তালিকা লোড হচ্ছে...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: History List -->
+    <div id="historySection" style="display: none;">
+        <div id="historyListContainer">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div>
+                <p class="small text-muted mb-0">হিস্ট্রি লোড হচ্ছে...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="text-center mt-4">
+        <a href="dashboard.html" class="text-decoration-none text-muted small fw-bold">
+            <i class="fa-solid fa-arrow-left me-1"></i> ড্যাশবোর্ডে ফিরে যান
+        </a>
+    </div>
+
+</div>
+
+<!-- Task Details & Proof Submit Modal -->
+<div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title fw-bold" id="mTaskTitle">কাজের বিবরণ</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Reward Chip -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="small text-muted fw-bold">কাজের পারিশ্রমিক:</span>
+                    <span class="badge bg-success fs-6" id="mTaskReward">৳ 0.00</span>
+                </div>
+
+                <!-- Rules / Description -->
+                <div class="task-rule-box">
+                    <div class="fw-bold mb-1 text-dark"><i class="fa-solid fa-circle-exclamation text-primary me-1"></i> কাজের নিয়মাবলী:</div>
+                    <div id="mTaskDesc">নিয়মাবলী লোড হচ্ছে...</div>
+                </div>
+
+                <!-- Open Link Button -->
+                <a href="#" target="_blank" id="mTaskLinkBtn" class="btn-visit-link">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> কাজের লিংকে প্রবেশ করুন (Go to Link)
+                </a>
+
+                <!-- Proof Submission Box -->
+                <div class="proof-box">
+                    <label class="form-label small fw-bold text-dark mb-1">
+                        <i class="fa-solid fa-camera text-primary me-1"></i> কাজের প্রুফ স্ক্রিনশট আপলোড করুন:
+                    </label>
+                    <input type="file" id="proofFileInput" class="form-control form-control-sm mb-2" accept="image/*">
+                    <small class="text-muted d-block" style="font-size: 11px;">ছবি সিলেক্ট করলেই স্বয়ংক্রিয়ভাবে প্রুফ লিংক তৈরি হবে।</small>
+
+                    <!-- Image Preview -->
+                    <div class="img-preview-box" id="imgPreviewBox">
+                        <img id="proofPreviewImg" src="" alt="Proof Preview">
+                    </div>
+                </div>
+
+                <!-- Auto-Filled & Readonly User ID -->
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-dark mb-1">
+                        <i class="fa-solid fa-fingerprint text-primary me-1"></i> আপনার ইউজার আইডি (প্রমাণস্বরূপ):
+                    </label>
+                    <input type="text" id="proofNoteInput" class="form-control form-control-sm fw-bold text-dark" readonly style="background: #f1f5f9; cursor: not-allowed; font-family: monospace; font-size: 13px; letter-spacing: 1px;">
+                </div>
+
+                <button type="button" id="btnSubmitProof" class="btn-submit-task" onclick="submitTaskProof()">
+                    <i class="fa-solid fa-circle-check me-1"></i> প্রুফ জমা দিন (Submit Task)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase & Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    const IMGBB_API_KEY = "24dcac3ce6cb918c5d55bd7bcc4d293c";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let formattedUserNumericId = "";
+    let allJobsList = [];
+    let userSubmittedJobIds = new Set();
+    let currentSelectedJob = null;
+    let uploadedProofImageUrl = "";
+    let taskModalInstance = null;
+
+    // অথ লিসেনার
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        currentUser = user;
+        taskModalInstance = new bootstrap.Modal(document.getElementById('taskModal'));
+
+        // লাইভ ব্যালেন্স ও আইডি রিড
+        db.collection("users").doc(user.uid).onSnapshot(async doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const bal = parseFloat(data.balance || 0);
+                document.getElementById('uBalance').innerText = bal.toFixed(2);
+
+                let numId = data.account_id || data.user_id || data.numeric_id;
+                if (!numId) {
+                    numId = String(Math.floor(10000000 + Math.random() * 90000000));
+                    await db.collection("users").doc(user.uid).set({ user_id: numId }, { merge: true });
+                }
+                formattedUserNumericId = `#${numId}`;
+            }
+        });
+
+        // ইউজারের পূর্বে করা কাজগুলো লাইভ রিড করা
+        listenUserSubmissions();
+
+        // এডমিনের তৈরি করা মাইক্রো জবগুলো লাইভ রিড করা
+        listenMicroJobs();
+    });
+
+    // ইউজারের পূর্বে সাবমিট করা জব আইডি ট্র্যাক করা
+    function listenUserSubmissions() {
+        db.collection("micro_job_submissions")
+          .where("user_id", "==", currentUser.uid)
+          .onSnapshot(snap => {
+              userSubmittedJobIds.clear();
+              snap.forEach(doc => {
+                  const data = doc.data();
+                  if (data.task_id) userSubmittedJobIds.add(data.task_id);
+              });
+              renderAllTasks();
+          });
+    }
+
+    // এডমিনের মাইক্রো জব লাইভ রিড করা (কোটা ও অ্যাক্টিভ চেক)
+    function listenMicroJobs() {
+        db.collection("micro_jobs").onSnapshot(snap => {
+            allJobsList = [];
+            snap.forEach(doc => {
+                const data = doc.data();
+                data.id = doc.id;
+                allJobsList.push(data);
+            });
+            renderAllTasks();
+        }, err => {
+            console.error("Jobs load error:", err);
+        });
+    }
+
+    // সব কাজের তালিকা রেন্ডার করা (যে কাজ ইউজার করে ফেলেছে তা একটিভ লিস্ট থেকে সরে যাবে)
+    function renderAllTasks() {
+        const container = document.getElementById('tasksListContainer');
+        let html = "";
+        let availableCount = 0;
+
+        allJobsList.forEach(job => {
+            const isSubmittedByMe = userSubmittedJobIds.has(job.id);
+            const isPaused = (job.status === "paused");
+            const totalLimit = Number(job.total_limit || 0);
+            const completedCount = Number(job.completed_count || 0);
+            const isQuotaFull = (totalLimit > 0 && completedCount >= totalLimit);
+
+            // শর্ত: ইউজার যদি কাজটা করে থাকে অথবা কোটা পূর্ণ হয়ে যায় অথবা এডমিন পজ রাখে—তাহলে একটিভ তালিকায় দেখাবে না
+            if (isSubmittedByMe || isPaused || isQuotaFull) {
+                return;
+            }
+
+            availableCount++;
+            const iconClass = job.iconClass || "fa-solid fa-briefcase ic-web";
+            const limitText = totalLimit > 0 ? `বাকি: ${totalLimit - completedCount}/${totalLimit}` : `আনলিমিটেড`;
+
+            html += `
+            <div class="task-card">
+                <div class="task-left">
+                    <div class="task-icon-box">
+                        <i class="${iconClass}"></i>
+                    </div>
+                    <div class="task-details">
+                        <h6>${job.title}</h6>
+                        <div class="task-meta">
+                            <span class="reward-pill">+ ৳ ${parseFloat(job.reward).toFixed(2)}</span>
+                            <span class="task-cat-text">${job.category || "টাস্ক"}</span>
+                            <span class="task-limit-text"><i class="fa-solid fa-users me-1"></i>${limitText}</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn-do-task" onclick="openTaskModal('${job.id}')">
+                        <i class="fa-solid fa-bolt me-1"></i> কাজ করুন
+                    </button>
+                </div>
+            </div>`;
+        });
+
+        if (availableCount === 0) {
+            container.innerHTML = `
+                <div class="text-center text-muted py-5">
+                    <i class="fa-solid fa-circle-check fa-3x mb-3 text-success opacity-50"></i>
+                    <p class="fw-bold mb-1 text-dark">আপাতত নতুন কোনো কাজ নেই!</p>
+                    <small>আপনার সব কাজ সম্পন্ন হয়েছে অথবা কোটা পূর্ণ। 'কাজের হিস্ট্রি' ট্যাবে গিয়ে স্ট্যাটাস দেখুন।</small>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = html;
+    }
+
+    // টাস্ক পপ-আপ ওপেন করা
+    function openTaskModal(jobId) {
+        currentSelectedJob = allJobsList.find(j => j.id === jobId);
+        if (!currentSelectedJob) return;
+
+        uploadedProofImageUrl = "";
+        document.getElementById('proofFileInput').value = "";
+        document.getElementById('imgPreviewBox').style.display = "none";
+        document.getElementById('proofPreviewImg').src = "";
+
+        document.getElementById('proofNoteInput').value = formattedUserNumericId || "লোড হচ্ছে...";
+        document.getElementById('mTaskTitle').innerText = currentSelectedJob.title;
+        document.getElementById('mTaskReward').innerText = `৳ ${parseFloat(currentSelectedJob.reward).toFixed(2)}`;
+        document.getElementById('mTaskDesc').innerHTML = currentSelectedJob.desc || "কাজের লিংকে গিয়ে নিয়মমতো কাজ শেষ করুন এবং প্রুফ হিসেবে স্ক্রিনশট জমা দিন।";
+        document.getElementById('mTaskLinkBtn').href = currentSelectedJob.link || "#";
+
+        taskModalInstance.show();
+    }
+
+    // 📸 স্ক্রিনশট আপলোড (ImgBB API)
+    document.getElementById('proofFileInput').onchange = async (evt) => {
+        const file = evt.target.files[0];
+        if (!file) return;
+
+        if (file.size > 10 * 1024 * 1024) {
+            Swal.fire('ফাইল বড়!', 'অনুগ্রহ করে ১০ মেগাবাইটের কম সাইজের ছবি দিন।', 'warning');
+            return;
+        }
+
+        Swal.fire({
+            title: 'প্রুফ আপলোড হচ্ছে...',
+            text: 'ইমেজ লিংক তৈরি করা হচ্ছে, অপেক্ষা করুন।',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        try {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await res.json();
+
+            if (result.success) {
+                uploadedProofImageUrl = result.data.display_url || result.data.url;
+                const previewBox = document.getElementById('imgPreviewBox');
+                const previewImg = document.getElementById('proofPreviewImg');
+                previewImg.src = uploadedProofImageUrl;
+                previewBox.style.display = "block";
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ছবি আপলোড সফল!',
+                    timer: 1400,
+                    showConfirmButton: false
+                });
+
+            } else {
+                throw new Error(result.error ? result.error.message : 'আপলোড ব্যর্থ হয়েছে');
+            }
+        } catch (err) {
+            Swal.fire('আপলোড ত্রুটি!', err.message || 'ছবি আপলোড করতে সমস্যা হয়েছে।', 'error');
+        }
+    };
+
+    // প্রুফ সাবমিট করা (জমা দেওয়ার সাথে সাথে এই কাজ একটিভ তালিকা থেকে হিস্ট্রিতে চলে যাবে)
+    async function submitTaskProof() {
+        if (!currentSelectedJob) return;
+
+        if (!uploadedProofImageUrl) {
+            Swal.fire('প্রুফ ছবি আবশ্যক!', 'কাজের স্ক্রিনশট ছবি নির্বাচন করুন।', 'warning');
+            return;
+        }
+
+        if (userSubmittedJobIds.has(currentSelectedJob.id)) {
+            Swal.fire('ইতিমধ্যে জমা দেওয়া হয়েছে!', 'আপনি এই কাজটি ইতিপূর্বে সম্পন্ন করেছেন।', 'info');
+            return;
+        }
+
+        const btn = document.getElementById('btnSubmitProof');
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>জমা হচ্ছে...`;
+
+        try {
+            // ১. সাবমিশন ডেটা সংরক্ষণ
+            await db.collection("micro_job_submissions").add({
+                user_id: currentUser.uid,
+                user_numeric_id: formattedUserNumericId,
+                user_email: currentUser.email || "No Email",
+                task_id: currentSelectedJob.id,
+                task_title: currentSelectedJob.title,
+                reward: parseFloat(currentSelectedJob.reward),
+                proof_image: uploadedProofImageUrl,
+                proof_note: formattedUserNumericId,
+                status: "pending",
+                created_at: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // ২. জবটির সাবমিশন কাউন্ট ১ বৃদ্ধি করা
+            await db.collection("micro_jobs").doc(currentSelectedJob.id).update({
+                completed_count: firebase.firestore.FieldValue.increment(1)
+            }).catch(() => {});
+
+            // ৩. লোকাল সেটে অ্যাড (যাতে লিস্ট থেকে এখনই উধাও হয়ে যায়)
+            userSubmittedJobIds.add(currentSelectedJob.id);
+
+            taskModalInstance.hide();
+            
+            // স্বয়ংক্রিয়ভাবে হিস্ট্রি ট্যাবে সুইচ করা
+            switchTab('history');
+
+            Swal.fire({
+                icon: 'success',
+                title: 'কাজ সফলভাবে জমা হয়েছে!',
+                text: 'আপনার কাজটি পেন্ডিং হিস্ট্রিতে যুক্ত করা হয়েছে। এডমিন যাচাই করে ব্যালেন্স যোগ করে দেবেন।',
+                confirmButtonColor: '#00b894'
+            });
+
+        } catch (e) {
+            Swal.fire('ব্যর্থ হয়েছে!', e.message || 'জমা দেওয়ার সময় সমস্যা হয়েছে।', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> প্রুফ জমা দিন (Submit Task)`;
+        }
+    }
+
+    // হিস্ট্রি ট্যাব সুইচ করা
+    function switchTab(tab) {
+        const tabAllBtn = document.getElementById('tabAllBtn');
+        const tabHistoryBtn = document.getElementById('tabHistoryBtn');
+        const allSec = document.getElementById('allTasksSection');
+        const histSec = document.getElementById('historySection');
+
+        if (tab === 'all') {
+            tabAllBtn.classList.add('active');
+            tabHistoryBtn.classList.remove('active');
+            allSec.style.display = 'block';
+            histSec.style.display = 'none';
+            renderAllTasks();
+        } else {
+            tabHistoryBtn.classList.add('active');
+            tabAllBtn.classList.remove('active');
+            allSec.style.display = 'none';
+            histSec.style.display = 'block';
+            loadUserHistory();
+        }
+    }
+
+    // ইউজারের কাজের হিস্ট্রি লোড করা
+    async function loadUserHistory() {
+        const container = document.getElementById('historyListContainer');
+        container.innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div>
+                <p class="small text-muted mb-0">হিস্ট্রি লোড হচ্ছে...</p>
+            </div>`;
+
+        try {
+            const snap = await db.collection("micro_job_submissions")
+                                 .where("user_id", "==", currentUser.uid)
+                                 .get();
+
+            if (snap.empty) {
+                container.innerHTML = `
+                    <div class="text-center text-muted py-5">
+                        <i class="fa-solid fa-file-circle-check fa-3x mb-3 text-secondary opacity-50"></i>
+                        <p class="fw-bold mb-0">কোনো কাজের হিস্ট্রি পাওয়া যায়নি!</p>
+                        <small>টাস্ক সম্পন্ন করে প্রুফ জমা দিন।</small>
+                    </div>`;
+                return;
+            }
+
+            let docs = [];
+            snap.forEach(doc => docs.push(doc.data()));
+            docs.sort((a, b) => {
+                const timeA = a.created_at ? a.created_at.toMillis() : 0;
+                const timeB = b.created_at ? b.created_at.toMillis() : 0;
+                return timeB - timeA;
+            });
+
+            let html = "";
+            docs.forEach(item => {
+                const status = (item.status || 'pending').toLowerCase();
+                let badgeClass = "st-pending";
+                let badgeText = "পেন্ডিং (Pending)";
+
+                if (status === 'approved') {
+                    badgeClass = "st-approved";
+                    badgeText = "অনুমোদিত (Approved)";
+                } else if (status === 'rejected') {
+                    badgeClass = "st-rejected";
+                    badgeText = "বাতিল (Rejected)";
+                }
+
+                let timeStr = "আজ";
+                if (item.created_at && item.created_at.toDate) {
+                    const d = item.created_at.toDate();
+                    timeStr = d.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' }) + " • " + d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+                }
+
+                html += `
+                <div class="history-card">
+                    <div class="h-left">
+                        <h6>${item.task_title}</h6>
+                        <small><i class="fa-regular fa-clock me-1"></i>${timeStr} • পারিশ্রমিক: <b>৳${parseFloat(item.reward).toFixed(2)}</b></small>
+                        <a href="${item.proof_image}" target="_blank" class="h-proof-link">
+                            <i class="fa-solid fa-image me-1"></i> জমা দেওয়া স্ক্রিনশট দেখুন
+                        </a>
+                    </div>
+                    <div>
+                        <span class="badge-st ${badgeClass}">${badgeText}</span>
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+
+        } catch (e) {
+            container.innerHTML = `<p class="text-center text-danger small py-3">হিস্ট্রি লোড করতে সমস্যা হয়েছে।</p>`;
+        }
+    }
+</script>
+</body>
+</html>

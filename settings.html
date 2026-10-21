@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --primary-gradient: linear-gradient(135deg, #00b894, #00897b);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* Profile Hero Card */
+        .profile-hero {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 24px 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .avatar-wrapper {
+            position: relative;
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 12px;
+        }
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 6px 15px rgba(0, 184, 148, 0.2);
+            background: #f8fafc;
+        }
+        .avatar-edit-label {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            border: 2px solid #fff;
+            transition: 0.2s;
+        }
+        .avatar-edit-label:active { transform: scale(0.9); }
+
+        .user-name-title { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+        .user-email-text { font-size: 12px; color: #64748b; font-weight: 500; margin-bottom: 10px; }
+        
+        .badge-status {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+        .badge-active { background: #dcfce7; color: #15803d; }
+        .badge-inactive { background: #fee2e2; color: #b91c1c; }
+
+        /* Quick Stat Pill Grid */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px dashed #e2e8f0;
+        }
+        .stat-item {
+            background: #f8fafc;
+            border: 1px solid #edf2f7;
+            border-radius: 14px;
+            padding: 10px;
+            text-align: center;
+        }
+        .stat-item small { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; display: block; }
+        .stat-item span { font-size: 15px; font-weight: 800; color: #1e293b; margin-top: 2px; display: block; }
+
+        /* Details Info Card */
+        .info-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+        }
+        .card-header-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { font-size: 12px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 8px; }
+        .info-val { font-size: 13px; font-weight: 700; color: #1e293b; text-align: right; }
+        
+        .code-copy-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 3px 9px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #475569;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .code-copy-btn:hover { background: #e2e8f0; color: #1e293b; }
+        .code-copy-btn:active { transform: scale(0.95); }
+
+        /* Form Inputs */
+        .form-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+        }
+        .custom-input-box {
+            position: relative;
+            margin-bottom: 14px;
+        }
+        .custom-input-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .custom-input-box input {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 11px 14px 11px 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            outline: none;
+            transition: 0.2s;
+        }
+        .custom-input-box input:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.12);
+        }
+
+        /* Action Buttons */
+        .btn-save {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            box-shadow: 0 6px 18px rgba(0, 184, 148, 0.25);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-save:active { transform: scale(0.98); }
+
+        .btn-logout-clean {
+            width: 100%;
+            background: #fff;
+            color: #ef4444;
+            font-weight: 700;
+            border: 1px solid #fee2e2;
+            padding: 12px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            text-decoration: none !important;
+            transition: 0.2s;
+        }
+        .btn-logout-clean:hover { background: #fef2f2; color: #dc2626; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">প্রোফাইল সেটিংস (Profile)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- User Profile Hero Card -->
+    <div class="profile-hero">
+        <div class="avatar-wrapper">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" id="imgPreview" class="avatar-img" alt="Avatar">
+            <label for="profileInput" class="avatar-edit-label" title="ক্লিক করে সরাসরি ছবি আপলোড করুন">
+                <i class="fa-solid fa-camera"></i>
+            </label>
+            <input type="file" id="profileInput" hidden accept="image/*">
+        </div>
+
+        <h5 class="user-name-title" id="uName">লোড হচ্ছে...</h5>
+        <div class="user-email-text" id="uEmail">user@example.com</div>
+        <span class="badge-status badge-active" id="uStatus">যাচাই হচ্ছে...</span>
+
+        <!-- Quick Summary -->
+        <div class="stat-grid">
+            <div class="stat-item">
+                <small>বর্তমান ব্যালেন্স</small>
+                <span class="text-success">৳ <span id="uBalance">0.00</span></span>
+            </div>
+            <div class="stat-item">
+                <small>মোট রেফার</small>
+                <span class="text-primary" id="uReferCount">0 জন</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Details (ইউজার আইডি ও একাউন্ট তথ্য) -->
+    <div class="info-card">
+        <div class="card-header-title">
+            <i class="fa-solid fa-address-card text-primary"></i>
+            <span>একাউন্টের বিস্তারিত তথ্য</span>
+        </div>
+
+        <!-- ৮ ডিজিটের পারফেক্ট ইউজার আইডি (UID) -->
+        <div class="info-row">
+            <span class="info-label"><i class="fa-solid fa-fingerprint text-secondary"></i> ইউজার আইডি (ID)</span>
+            <span class="info-val d-flex align-items-center justify-content-end gap-1">
+                <span id="uUid" class="fw-bold text-dark" style="font-family: monospace; font-size: 13px; letter-spacing: 1px;">#---</span>
+                <button type="button" class="code-copy-btn" onclick="copyUid()">
+                    <i class="fa-regular fa-copy"></i> কপি
+                </button>
+            </span>
+        </div>
+
+        <!-- রেফার কোড -->
+        <div class="info-row">
+            <span class="info-label"><i class="fa-solid fa-hashtag text-secondary"></i> রেফার কোড</span>
+            <span class="info-val d-flex align-items-center justify-content-end gap-1">
+                <span id="uReferCode" class="fw-bold text-dark">---</span>
+                <button type="button" class="code-copy-btn" onclick="copyReferCode()">
+                    <i class="fa-regular fa-copy"></i> কপি
+                </button>
+            </span>
+        </div>
+
+        <!-- মোবাইল নম্বর -->
+        <div class="info-row">
+            <span class="info-label"><i class="fa-solid fa-phone text-secondary"></i> মোবাইল নম্বর</span>
+            <span class="info-val" id="uPhone">দেওয়া হয়নি</span>
+        </div>
+
+        <!-- যোগদানের তারিখ -->
+        <div class="info-row">
+            <span class="info-label"><i class="fa-solid fa-calendar-check text-secondary"></i> যোগদানের তারিখ</span>
+            <span class="info-val" id="uJoinDate">---</span>
+        </div>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <div class="form-card">
+        <div class="card-header-title">
+            <i class="fa-solid fa-user-pen text-primary"></i>
+            <span>তথ্য ও পাসওয়ার্ড পরিবর্তন করুন</span>
+        </div>
+
+        <form id="profileForm">
+            <div class="mb-2">
+                <label class="form-label small fw-bold text-muted mb-1">আপনার পুরো নাম</label>
+                <div class="custom-input-box">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="fullname" placeholder="আপনার নাম লিখুন" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small fw-bold text-muted mb-1">নতুন পাসওয়ার্ড (ঐচ্ছিক)</label>
+                <div class="custom-input-box">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="new_pass" placeholder="পাসওয়ার্ড বদলাতে চাইলে লিখুন">
+                </div>
+                <small class="text-muted d-block" style="font-size: 11px;">পাসওয়ার্ড পরিবর্তন না করতে চাইলে খালি রাখুন (কমপক্ষে ৬ অক্ষর)।</small>
+            </div>
+
+            <button type="submit" id="saveBtn" class="btn-save">
+                <i class="fa-solid fa-floppy-disk me-1"></i> তথ্য সংরক্ষণ করুন (Save Changes)
+            </button>
+        </form>
+    </div>
+
+    <!-- Logout Action -->
+    <a href="logout.html" class="btn-logout-clean">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>একাউন্ট লগআউট করুন (Logout)</span>
+    </a>
+
+</div>
+
+<!-- Firebase & Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    // আপনার ImgBB API Key
+    const IMGBB_API_KEY = "24dcac3ce6cb918c5d55bd7bcc4d293c";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let formattedUserNumericId = "";
+    let userReferCode = "";
+
+    // ========================================================
+    // 📋 ১০০% কার্যকর ক্রস-ডিভাইস কপি ফাংশন (Mobile + PC)
+    // ========================================================
+    function copyTextToClipboard(text, successTitle) {
+        if (!text || text === "---" || text === "#---") return;
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(() => {
+                showCopySuccess(successTitle, text);
+            }).catch(() => {
+                fallbackCopyMethod(text, successTitle);
+            });
+        } else {
+            fallbackCopyMethod(text, successTitle);
+        }
+    }
+
+    function fallbackCopyMethod(text, successTitle) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "-9999px";
+        textArea.style.left = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            showCopySuccess(successTitle, text);
+        } catch (err) {
+            Swal.fire({
+                icon: 'info',
+                title: 'কপি করুন:',
+                html: `<b style="font-size: 14px; color: #00b894;">${text}</b>`,
+                confirmButtonColor: '#00b894'
+            });
+        }
+        document.body.removeChild(textArea);
+    }
+
+    function showCopySuccess(title, text) {
+        Swal.fire({
+            icon: 'success',
+            title: title,
+            html: `<b style="font-family: monospace; font-size: 14px; color: #1e293b;">${text}</b>`,
+            timer: 1300,
+            showConfirmButton: false
+        });
+    }
+
+    // ছোট ৮-সংখ্যার UID কপি
+    function copyUid() {
+        copyTextToClipboard(formattedUserNumericId, 'ইউজার আইডি কপি হয়েছে!');
+    }
+
+    // রেফার কোড কপি
+    function copyReferCode() {
+        copyTextToClipboard(userReferCode, 'রেফার কোড কপি হয়েছে!');
+    }
+    // ========================================================
+
+    // 📸 ক্যামেরা বাটনে চাপলে সরাসরি API দিয়ে ছবি আপলোড ও সেভ
+    document.getElementById('profileInput').onchange = async (evt) => {
+        const file = evt.target.files[0];
+        if (!file) return;
+
+        if (file.size > 10 * 1024 * 1024) {
+            Swal.fire('ফাইল বড়!', 'অনুগ্রহ করে ১০ মেগাবাইট বা তার ছোট ছবি দিন।', 'warning');
+            return;
+        }
+
+        Swal.fire({
+            title: 'ছবি আপলোড হচ্ছে...',
+            text: 'অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        try {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const uploadedImageUrl = result.data.display_url || result.data.url;
+
+                document.getElementById('imgPreview').src = uploadedImageUrl;
+
+                if (currentUser) {
+                    await db.collection("users").doc(currentUser.uid).update({
+                        profile_pic: uploadedImageUrl
+                    });
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ছবি পরিবর্তন সফল!',
+                    text: 'আপনার প্রোফাইল ছবি সফলভাবে আপডেট করা হয়েছে।',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+            } else {
+                throw new Error(result.error ? result.error.message : 'API আপলোড ব্যর্থ হয়েছে');
+            }
+
+        } catch (error) {
+            console.error("Upload error:", error);
+            Swal.fire('আপলোড ব্যর্থ!', error.message || 'ছবি আপলোড করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।', 'error');
+        }
+    };
+
+    // ইউজার ও সমস্ত তথ্য লোড করা
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        currentUser = user;
+
+        try {
+            const userRef = db.collection("users").doc(user.uid);
+            const doc = await userRef.get();
+
+            if (doc.exists) {
+                const data = doc.data();
+                
+                // ১. পারফেক্ট ৮ ডিজিটের শর্ট ইউজার আইডি চেক ও তৈরি (#84920153 ফরম্যাট)
+                let numId = data.account_id || data.user_id || data.numeric_id;
+                if (!numId) {
+                    // ৮ সংখ্যার ইউনিক নম্বর তৈরি (১০০০০০০০ থেকে ৯৯৯৯৯৯৯৯)
+                    numId = String(Math.floor(10000000 + Math.random() * 90000000));
+                    // ডাটাবেজে পার্মানেন্ট সেভ
+                    await userRef.set({ user_id: numId }, { merge: true });
+                }
+
+                formattedUserNumericId = `#${numId}`;
+                document.getElementById('uUid').innerText = formattedUserNumericId;
+
+                // ২. নাম ও ইমেইল
+                document.getElementById('uName').innerText = data.fullname || data.name || "User";
+                document.getElementById('fullname').value = data.fullname || data.name || "";
+                document.getElementById('uEmail').innerText = user.email || data.email || "ইমেইল নেই";
+
+                // ৩. ছবি লোড
+                if (data.profile_pic) {
+                    document.getElementById('imgPreview').src = data.profile_pic;
+                }
+
+                // ৪. ব্যালেন্স
+                document.getElementById('uBalance').innerText = parseFloat(data.balance || 0).toFixed(2);
+
+                // ৫. স্ট্যাটাস
+                const status = (data.status || 'inactive').toLowerCase();
+                const statusBadge = document.getElementById('uStatus');
+                if (status === 'active') {
+                    statusBadge.className = "badge-status badge-active";
+                    statusBadge.innerHTML = "● Active Account";
+                } else {
+                    statusBadge.className = "badge-status badge-inactive";
+                    statusBadge.innerHTML = "● Inactive Account";
+                }
+
+                // ৬. রেফার কোড
+                userReferCode = data.refer_code || data.referral_code || "315217";
+                document.getElementById('uReferCode').innerText = userReferCode;
+
+                // ৭. মোবাইল নম্বর
+                document.getElementById('uPhone').innerText = data.phone || data.mobile || "দেওয়া হয়নি";
+
+                // ৮. মোট রেফার সংখ্যা
+                const refCount = data.referral_count || 0;
+                document.getElementById('uReferCount').innerText = `${refCount} জন`;
+
+                // ৯. যোগদানের তারিখ
+                if (data.created_at && data.created_at.toDate) {
+                    const d = data.created_at.toDate();
+                    document.getElementById('uJoinDate').innerText = d.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
+                } else {
+                    document.getElementById('uJoinDate').innerText = "নথিভুক্ত";
+                }
+            }
+        } catch (e) {
+            console.error("Error loading user profile:", e);
+        }
+    });
+
+    // নাম ও পাসওয়ার্ড আপডেট
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fullname = document.getElementById('fullname').value.trim();
+        const newPass = document.getElementById('new_pass').value;
+        const saveBtn = document.getElementById('saveBtn');
+
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>সেভ হচ্ছে...`;
+
+        try {
+            await db.collection("users").doc(currentUser.uid).update({
+                fullname: fullname
+            });
+
+            if (newPass.length > 0) {
+                if (newPass.length < 6) {
+                    throw new Error("পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।");
+                }
+                await currentUser.updatePassword(newPass);
+            }
+
+            document.getElementById('uName').innerText = fullname;
+
+            Swal.fire({
+                icon: 'success',
+                title: 'সফল হয়েছে!',
+                text: 'আপনার নাম ও পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।',
+                confirmButtonColor: '#00b894'
+            });
+
+        } catch (err) {
+            Swal.fire('ব্যর্থ হয়েছে!', err.message || 'আপডেট করতে সমস্যা হয়েছে।', 'error');
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk me-1"></i> তথ্য সংরক্ষণ করুন (Save Changes)`;
+        }
+    });
+</script>
+</body>
+</html>

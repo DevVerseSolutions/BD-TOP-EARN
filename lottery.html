@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BD TOP EARN | Lottery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary-color: #00b894; 
+            --secondary-color: #00897b;
+            --accent-yellow: #feca57;
+            --lottery-gradient: linear-gradient(135deg, #d946ef, #8b5cf6);
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f1f5f9; margin: 0; padding-top: 85px; padding-bottom: 95px; }
+
+        /* Top Bar */
+        .top-header { background: var(--primary-color); padding: 14px 20px; border-radius: 0 0 20px 20px; color: white; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        .back-btn { background: rgba(255, 255, 255, 0.2); color: white; border: none; width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; text-decoration: none; }
+        .page-title { font-weight: 800; font-size: 1.15rem; margin: 0; letter-spacing: 0.5px; }
+        .wallet-pill { background: rgba(0, 0, 0, 0.15); padding: 7px 14px; border-radius: 14px; display: flex; align-items: center; gap: 8px; }
+        .wallet-pill i { color: var(--accent-yellow); font-size: 0.95rem; }
+        .wallet-pill span { font-size: 13px; font-weight: 700; color: white; }
+
+        /* Hero Banner */
+        .lottery-hero { background: var(--lottery-gradient); border-radius: 20px; padding: 22px 18px; color: white; text-align: center; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(217, 70, 239, 0.25); }
+        .lottery-hero h4 { font-weight: 900; margin-bottom: 4px; font-size: 22px; }
+        .lottery-hero p { font-size: 12px; opacity: 0.9; margin-bottom: 0; }
+        .prize-pool { font-size: 28px; font-weight: 900; color: #feca57; text-shadow: 0 2px 8px rgba(0,0,0,0.2); margin: 10px 0; }
+
+        /* Lottery Card */
+        .lottery-card { background: #ffffff; border-radius: 18px; padding: 18px; border: 1px solid #e2e8f0; margin-top: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .lottery-card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #cbd5e1; padding-bottom: 12px; margin-bottom: 14px; }
+        .ticket-price { font-size: 18px; font-weight: 800; color: #0f172a; }
+        .badge-draw { background: #eff6ff; color: #2563eb; font-weight: 700; font-size: 11px; padding: 6px 12px; border-radius: 50px; }
+
+        .l-info-row { display: flex; justify-content: space-between; font-size: 13px; color: #64748b; margin-bottom: 8px; font-weight: 600; }
+        .l-info-row span:last-child { color: #0f172a; font-weight: 700; }
+
+        .btn-buy { background: var(--lottery-gradient); color: #fff; font-weight: 800; border: none; width: 100%; padding: 12px; border-radius: 14px; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 6px 16px rgba(217, 70, 239, 0.3); transition: 0.2s; cursor: pointer; }
+        .btn-buy:active { transform: scale(0.98); }
+
+        /* History */
+        .history-section { margin-top: 25px; }
+        .history-title { font-weight: 800; font-size: 16px; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .ticket-item { background: #fff; border-radius: 14px; padding: 12px 16px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .t-num { font-weight: 800; color: #8b5cf6; font-size: 14px; }
+        .t-date { font-size: 11px; color: #94a3b8; font-weight: 600; }
+
+        /* Footer Nav */
+        .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 75px; background: #ffffff; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05); z-index: 1000; border-top-left-radius: 20px; border-top-right-radius: 20px; }
+        .nav-item { text-decoration: none; display: flex; flex-direction: column; align-items: center; color: #666666; flex: 1; font-size: 11px; font-weight: 600; }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        .home-wrapper { position: relative; width: 60px; display: flex; justify-content: center; }
+        .home-btn { position: absolute; top: -35px; width: 56px; height: 56px; background: #00a0e9; border: 4px solid #f1f5f9; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-decoration: none; box-shadow: 0 5px 12px rgba(0, 160, 233, 0.3); }
+        .home-btn i { font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="top-header">
+        <a href="dashboard.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="page-title"><i class="fa-solid fa-ticket me-1"></i> Mega Lottery</h6>
+        <div class="wallet-pill">
+            <i class="fa-solid fa-wallet"></i>
+            <span>৳ <span id="uBalance">0.00</span></span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container px-3">
+        <!-- Hero Banner (রিয়েলটাইম ডাইনামিক) -->
+        <div class="lottery-hero mt-3" id="lotteryHeroBanner">
+            <h4 id="heroLotteryTitle">মেগা লটারি ড্র</h4>
+            <p>অল্প টাকায় টিকেট কিনুন এবং জিতে নিন আকর্ষণীয় পুরস্কার!</p>
+            <div class="prize-pool" id="heroPrizePool">৳ ০.০০</div>
+            <span class="badge bg-light text-dark rounded-pill px-3 py-2 fw-bold" id="heroFirstPrize">প্রথম পুরস্কার: ৳ ০.০০</span>
+        </div>
+
+        <!-- সকল অ্যাক্টিভ লটারি কার্ডের কনটেইনার -->
+        <div id="lotteryCardsContainer">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div>
+                <p class="text-muted small mb-0">লটারি লোড হচ্ছে...</p>
+            </div>
+        </div>
+
+        <!-- My Tickets -->
+        <div class="history-section">
+            <h6 class="history-title"><i class="fa-solid fa-receipt text-primary"></i> আমার টিকেট সমূহ</h6>
+            <div id="ticketsList">
+                <div class="text-center py-4 text-muted" style="font-size: 13px;">
+                    <i class="fa-solid fa-ticket-simple fa-2x mb-2 text-secondary opacity-50"></i>
+                    <p class="mb-0">আপনার কেনা কোনো টিকেট নেই</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="footer-nav">
+        <a href="support.html" class="nav-item"><i class="fa-solid fa-headset"></i><span>Help</span></a>
+        <a href="withdraw.html" class="nav-item"><i class="fa-solid fa-wallet"></i><span>Wallet</span></a>
+        <div class="home-wrapper">
+            <a href="dashboard.html" class="home-btn"><i class="fa-solid fa-house"></i></a>
+        </div>
+        <a href="referral_users.html" class="nav-item"><i class="fa-solid fa-users"></i><span>Team</span></a>
+        <a href="settings.html" class="nav-item"><i class="fa-solid fa-circle-user"></i><span>Profile</span></a>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+            authDomain: "bdt-php.firebaseapp.com",
+            projectId: "bdt-php",
+            storageBucket: "bdt-php.firebasestorage.app",
+            messagingSenderId: "98854531594",
+            appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+            measurementId: "G-VLCRVLP8YP"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentUser = null;
+        let userData = {};
+        let userBalance = 0;
+        let isUserActive = false;
+
+        auth.onAuthStateChanged(async (user) => {
+            if(!user) {
+                window.location.href = "login.html";
+                return;
+            }
+            currentUser = user;
+            loadUserData();
+            listenActiveLotteries();
+            loadMyTickets();
+        });
+
+        // ইউজারের ব্যালেন্স ও স্ট্যাটাস লাইভ রিড
+        function loadUserData() {
+            db.collection("users").doc(currentUser.uid).onSnapshot(snap => {
+                if(snap.exists) {
+                    userData = snap.data();
+                    userBalance = parseFloat(userData.balance || 0);
+                    document.getElementById('uBalance').innerText = userBalance.toFixed(2);
+                    isUserActive = ((userData.status || '').toLowerCase() === 'active' || userData.is_active === true);
+                }
+            });
+        }
+
+        // এডমিন প্যানেল থেকে তৈরি করা অ্যাক্টিভ লটারিগুলো লাইভ লোড করা
+        function listenActiveLotteries() {
+            db.collection("lotteries")
+              .where("status", "==", "active")
+              .onSnapshot(snapshot => {
+                const container = document.getElementById("lotteryCardsContainer");
+
+                if (snapshot.empty) {
+                    // হিরো ব্যানার ডিফল্ট
+                    document.getElementById('heroLotteryTitle').innerText = "মেগা লটারি ড্র";
+                    document.getElementById('heroPrizePool').innerText = "৳ ০.০০";
+                    document.getElementById('heroFirstPrize').innerText = "কোনো সক্রিয় ড্র নেই";
+
+                    container.innerHTML = `
+                        <div class="lottery-card text-center py-5">
+                            <i class="fa-solid fa-ticket-simple fa-3x text-muted opacity-50 mb-3"></i>
+                            <h6 class="fw-bold text-dark">বর্তমানে কোনো সক্রিয় লটারি নেই!</h6>
+                            <p class="text-muted small mb-0">এডমিন নতুন লটারি পাবলিশ করলে এখানে স্বয়ংক্রিয়ভাবে চলে আসবে।</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let lotteries = [];
+                snapshot.forEach(doc => {
+                    lotteries.push({ id: doc.id, ...doc.data() });
+                });
+
+                // নতুন তৈরি করা লটারি আগে
+                lotteries.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+
+                // প্রথম লটারি দিয়ে হিরো ব্যানার সাজানো
+                const topLottery = lotteries[0];
+                const totalPrize = Number(topLottery.prize1 || 0) + Number(topLottery.prize2 || 0) + Number(topLottery.prize3 || 0);
+                document.getElementById('heroLotteryTitle').innerText = topLottery.title || "মেগা লটারি ড্র";
+                document.getElementById('heroPrizePool').innerText = `৳ ${totalPrize.toLocaleString('bn-BD')}`;
+                document.getElementById('heroFirstPrize').innerText = `প্রথম পুরস্কার: ৳ ${Number(topLottery.prize1 || 0).toLocaleString('bn-BD')}`;
+
+                // প্রতিটি সক্রিয় লটারির জন্য কার্ড তৈরি
+                let html = "";
+                lotteries.forEach(l => {
+                    const price = Number(l.ticketPrice || 20);
+                    const p1 = Number(l.prize1 || 0);
+                    const p2 = Number(l.prize2 || 0);
+                    const p3 = Number(l.prize3 || 0);
+                    const sold = Number(l.soldTickets || 0);
+                    const max = Number(l.totalTickets || 0);
+                    const limitText = max > 0 ? `${sold}/${max}` : `বিক্রি: ${sold} টি (আনলিমিটেড)`;
+
+                    let drawDateFormatted = "অনির্দিষ্ট";
+                    if(l.drawDate) {
+                        try {
+                            const d = new Date(l.drawDate);
+                            drawDateFormatted = d.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' }) + " • " + d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+                        } catch(e) {
+                            drawDateFormatted = l.drawDate.replace('T', ' ');
+                        }
+                    }
+
+                    // বাটন নিষ্ক্রিয় হবে যদি টিকেট লিমিট শেষ হয়ে যায়
+                    const isSoldOut = (max > 0 && sold >= max);
+
+                    html += `
+                    <div class="lottery-card">
+                        <div class="lottery-card-header">
+                            <div>
+                                <span class="text-muted d-block" style="font-size: 11px; font-weight: 700;">টিকেটের মূল্য</span>
+                                <span class="ticket-price">৳ ${price.toFixed(2)}</span>
+                            </div>
+                            <span class="badge-draw"><i class="fa-regular fa-clock me-1"></i> ড্র: ${drawDateFormatted}</span>
+                        </div>
+                        
+                        <div class="l-info-row">
+                            <span>লটারির নাম:</span>
+                            <span class="text-primary fw-bold">${l.title}</span>
+                        </div>
+                        <div class="l-info-row">
+                            <span>পুরস্কার সমূহ:</span>
+                            <span class="text-success">১ম: ৳${p1} | ২য়: ৳${p2} | ৩য়: ৳${p3}</span>
+                        </div>
+                        <div class="l-info-row">
+                            <span>টিকেট সেলস:</span>
+                            <span>${limitText}</span>
+                        </div>
+
+                        <button class="btn-buy mt-3" ${isSoldOut ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : ''} onclick="buyLotteryTicket('${l.id}', ${price}, '${l.title.replace(/'/g, "\\'")}', ${max}, ${sold})">
+                            <i class="fa-solid fa-cart-shopping"></i> ${isSoldOut ? 'টিকেট শেষ (Sold Out)' : `টিকেট কিনুন (৳ ${price})`}
+                        </button>
+                    </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            });
+        }
+
+        // টিকেট কেনার মূল ফাংশন (এডমিনের লটারির সাথে সম্পূর্ণ লিংকড)
+        async function buyLotteryTicket(lotteryId, ticketPrice, lotteryTitle, maxTickets, soldTickets) {
+            if(!isUserActive) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'একাউন্ট একটিভ নয়!',
+                    text: 'লটারিতে অংশগ্রহণ করতে হলে আগে আপনার একাউন্ট একটিভ করতে হবে।',
+                    confirmButtonText: '<i class="fa-solid fa-bolt me-1"></i> Active Now',
+                    confirmButtonColor: '#ff4b2b',
+                    showCancelButton: true,
+                    cancelButtonText: 'বাতিল'
+                }).then((res) => {
+                    if(res.isConfirmed) {
+                        window.location.href = 'activate_account.html';
+                    }
+                });
+                return;
+            }
+
+            if(maxTickets > 0 && soldTickets >= maxTickets) {
+                Swal.fire('টিকেট শেষ!', 'এই লটারির সব টিকেট বিক্রি হয়ে গেছে।', 'warning');
+                return;
+            }
+
+            if(userBalance < ticketPrice) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'পর্যাপ্ত ব্যালেন্স নেই!',
+                    text: `টিকেট কেনার জন্য ব্যালেন্সে কমপক্ষে ৳ ${ticketPrice} থাকতে হবে।`,
+                    confirmButtonText: 'ডিপোজিট করুন',
+                    confirmButtonColor: '#00b894',
+                    showCancelButton: true,
+                    cancelButtonText: 'বাতিল'
+                }).then((res) => {
+                    if(res.isConfirmed) {
+                        window.location.href = 'deposit.html';
+                    }
+                });
+                return;
+            }
+
+            // নিশ্চিতকরণ
+            const confirmBuy = await Swal.fire({
+                title: 'টিকেট কিনতে চান?',
+                html: `লটারি: <b>${lotteryTitle}</b><br>আপনার ব্যালেন্স থেকে <b>৳${ticketPrice}</b> কেটে নেওয়া হবে।`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'হ্যাঁ, কিনুন',
+                cancelButtonText: 'বাতিল',
+                confirmButtonColor: '#d946ef'
+            });
+
+            if(!confirmBuy.isConfirmed) return;
+
+            try {
+                Swal.fire({
+                    title: 'টিকেট ইস্যু হচ্ছে...',
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                const ticketCode = 'BDT-' + Math.floor(100000 + Math.random() * 900000);
+                const userName = userData.name || userData.username || userData.email || 'ইউজার';
+                const userPhone = userData.phone || userData.number || '';
+
+                // ১. ইউজারের ব্যালেন্স মাইনাস
+                await db.collection("users").doc(currentUser.uid).update({
+                    balance: firebase.firestore.FieldValue.increment(-ticketPrice)
+                });
+
+                // ২. এডমিনের লটারিতে soldTickets ১ বাড়িয়ে দেওয়া
+                await db.collection("lotteries").doc(lotteryId).update({
+                    soldTickets: firebase.firestore.FieldValue.increment(1)
+                });
+
+                // ৩. টিকেট সংরক্ষণ (এডমিন প্যানেলে দেখার জন্য প্রয়োজনীয় সব ফিল্ডসহ)
+                await db.collection("lottery_tickets").add({
+                    lotteryId: lotteryId,
+                    lotteryTitle: lotteryTitle,
+                    userId: currentUser.uid,
+                    userName: userName,
+                    userPhone: userPhone,
+                    ticketNumber: ticketCode,
+                    price: ticketPrice,
+                    round: lotteryTitle,
+                    purchasedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'টিকেট ক্রয় সফল!',
+                    html: `অভিনন্দন! আপনার টিকেট সংগ্রহ করা হয়েছে。<br><b>টিকেট নম্বর: <span style="color:#8b5cf6;">#${ticketCode}</span></b>`,
+                    confirmButtonColor: '#00b894'
+                });
+
+                loadMyTickets();
+
+            } catch(err) {
+                Swal.fire('Error', 'টিকেট কাটতে সমস্যা হয়েছে: ' + err.message, 'error');
+            }
+        }
+
+        // নিজের কেনা টিকেট লোড করা
+        async function loadMyTickets() {
+            try {
+                const snap = await db.collection("lottery_tickets")
+                    .where("userId", "==", currentUser.uid)
+                    .get();
+
+                const container = document.getElementById("ticketsList");
+                if(snap.empty) {
+                    container.innerHTML = `
+                        <div class="text-center py-4 text-muted" style="font-size: 13px;">
+                            <i class="fa-solid fa-ticket-simple fa-2x mb-2 text-secondary opacity-50"></i>
+                            <p class="mb-0">আপনার কেনা কোনো টিকেট নেই</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let tickets = [];
+                snap.forEach(doc => tickets.push(doc.data()));
+
+                // নতুন কেনা টিকেট উপরে
+                tickets.sort((a, b) => {
+                    const timeA = (a.purchasedAt || a.createdAt)?.toMillis() || 0;
+                    const timeB = (b.purchasedAt || b.createdAt)?.toMillis() || 0;
+                    return timeB - timeA;
+                });
+
+                let html = '';
+                tickets.forEach(t => {
+                    let date = "আজকে";
+                    const tStamp = t.purchasedAt || t.createdAt;
+                    if(tStamp && tStamp.toDate) {
+                        date = tStamp.toDate().toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' });
+                    }
+                    html += `
+                        <div class="ticket-item">
+                            <div>
+                                <div class="t-num"><i class="fa-solid fa-ticket me-1"></i> #${t.ticketNumber}</div>
+                                <div class="t-date">${t.lotteryTitle || t.round || 'মেগা লটারি'} • ${date}</div>
+                            </div>
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2">গৃহীত</span>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                console.error("Ticket load error:", e);
+            }
+        }
+    </script>
+</body>
+</html>

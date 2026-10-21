@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activation | BD TOP EARN</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+        }
+        .main-container {
+            width: 100%;
+            max-width: 400px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2.2rem 1.6rem;
+            border: 1px solid #edf2f7;
+            text-align: center;
+            box-shadow: none !important;
+        }
+        .icon-wrapper {
+            width: 72px;
+            height: 72px;
+            background: #eef2ff;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #4f46e5;
+            font-size: 28px;
+        }
+        h2 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #0b253c;
+            margin: 0 0 0.8rem;
+        }
+        .description {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1.8rem;
+        }
+        .fee-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin-bottom: 1.6rem;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .fee-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .fee-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0b253c;
+        }
+        .btn-pay {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            box-shadow: none !important;
+            transition: background 0.2s ease;
+        }
+        .btn-pay:hover { background: #4338ca; }
+        
+        .pending-notice {
+            display: none;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .pending-notice i {
+            font-size: 2rem;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .back-link-wrapper {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .back-link {
+            font-size: 0.9rem;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .back-link:hover { color: #0b253c; }
+
+        /* Modal / Popup Styling */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 999;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 24px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+        .modal-header h3 {
+            font-size: 1.2rem;
+            color: #0b253c;
+            font-weight: 700;
+        }
+        .close-btn {
+            background: #f1f5f9;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #64748b;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        .method-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .method-btn {
+            border: 2px solid #e2e8f0;
+            background: #ffffff;
+            padding: 0.6rem 0.3rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .method-btn.active {
+            border-color: #4f46e5;
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+        .payment-info-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .payment-info-box .fee-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+        .number-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .number-val {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #0b253c;
+            letter-spacing: 0.5px;
+            user-select: all;
+        }
+        .copy-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 0.45rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.35rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1.5px solid #cbd5e1;
+            font-size: 0.9rem;
+            outline: none;
+            background: #f8fafc;
+        }
+        .form-control:focus {
+            border-color: #4f46e5;
+            background: #ffffff;
+        }
+        .toast-msg {
+            display: none;
+            font-size: 0.75rem;
+            color: #16a34a;
+            margin-top: 0.35rem;
+            text-align: right;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="card">
+        <div class="icon-wrapper">
+            <i class="fa-solid fa-lock-open"></i>
+        </div>
+        <h2>Unlock Account</h2>
+        <p class="description">আপনার অ্যাকাউন্টটি বর্তমানে ইনঅ্যাক্টিভ অবস্থায় রয়েছে। দ্রুত অ্যাক্টিভেশন সম্পন্ন করে কাজ শুরু করুন।</p>
+
+        <!-- সাবমিট করার পর যে নোটিশ দেখাবে -->
+        <div class="pending-notice" id="pendingCard">
+            <i class="fa-regular fa-clock"></i>
+            <strong style="display:block; font-size: 1rem; margin-bottom: 0.3rem;">রিকোয়েস্ট পেন্ডিং আছে!</strong>
+            এডমিন যাচাই করে ৫ মিনিটের মধ্যেই আপনার অ্যাকাউন্ট একটিভ করে দেবেন, অনুগ্রহ করে অপেক্ষা করুন।
+        </div>
+
+        <!-- মূল পেমেন্ট বাটন এবং ফি -->
+        <div id="activationActionBox">
+            <div class="fee-card">
+                <span class="fee-label">One-time Fee</span>
+                <span class="fee-amount">৳<span id="displayFee">100.00</span></span>
+            </div>
+            <button type="button" class="btn-pay" onclick="openPaymentModal()">
+                Activate Now <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ব্যাক টু ড্যাশবোর্ড বাটন -->
+    <div class="back-link-wrapper">
+        <a href="dashboard.html" class="back-link">
+            ← Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<!-- পেমেন্ট পপআপ / মডাল -->
+<div class="modal-overlay" id="paymentModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>পেমেন্ট সম্পন্ন করুন</h3>
+            <button type="button" class="close-btn" onclick="closePaymentModal()">&times;</button>
+        </div>
+
+        <form id="paymentForm" onsubmit="handlePaymentSubmit(event)">
+            <!-- পেমেন্ট মেথড বাটন (বিকাশ, নগদ, রকেট) -->
+            <div class="method-tabs">
+                <button type="button" class="method-btn active" id="btn-bkash" onclick="selectMethod('bkash')">বিকাশ</button>
+                <button type="button" class="method-btn" id="btn-nagad" onclick="selectMethod('nagad')">নগদ</button>
+                <button type="button" class="method-btn" id="btn-rocket" onclick="selectMethod('rocket')">রকেট</button>
+            </div>
+
+            <!-- নাম্বার এবং ফির বিবরণ -->
+            <div class="payment-info-box">
+                <div class="fee-row">
+                    <span>প্রদেয় ফি (Send Money):</span>
+                    <strong style="color: #0b253c;">৳<span id="modalFee">100.00</span></strong>
+                </div>
+                <div class="number-row">
+                    <div>
+                        <div style="font-size: 0.72rem; color: #64748b; font-weight: 600;" id="methodLabel">বিকাশ নাম্বার (Send Money):</div>
+                        <span class="number-val" id="paymentNumber">01712345678</span>
+                    </div>
+                    <!-- স্ট্রং কপি বাটন -->
+                    <button type="button" class="copy-btn" id="copyBtn" onclick="copyNumber()">
+                        <i class="fa-regular fa-copy"></i> কপি
+                    </button>
+                </div>
+                <div class="toast-msg" id="copyToast">✓ নাম্বার কপি করা হয়েছে!</div>
+            </div>
+
+            <!-- সেন্ডার নাম্বার ইনপুট -->
+            <div class="form-group">
+                <label for="sender_number">যে নাম্বার থেকে টাকা পাঠিয়েছেন:</label>
+                <input type="text" id="sender_number" class="form-control" placeholder="017xxxxxxxx" required>
+            </div>
+
+            <!-- ট্রানজেকশন আইডি ইনপুট -->
+            <div class="form-group">
+                <label for="transaction_id">ট্রানজেকশন আইডি (TrxID):</label>
+                <input type="text" id="transaction_id" class="form-control" placeholder="যেমন: 9J3K8L2M" required style="text-transform: uppercase;">
+            </div>
+
+            <button type="submit" id="btnSubmitActivation" class="btn-pay" style="margin-top: 1.2rem;">
+                Activate Now <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let userNumericId = "";
+    let currentFee = 100;
+
+    let paymentNumbers = {
+        'bkash': '01712345678',
+        'nagad': '01812345678',
+        'rocket': '01912345678'
+    };
+
+    const methodLabels = {
+        'bkash': 'বিকাশ নাম্বার (Send Money):',
+        'nagad': 'নগদ নাম্বার (Send Money):',
+        'rocket': 'রকেট নাম্বার (Send Money):'
+    };
+
+    let selectedMethodName = 'bkash';
+
+    // ১. এডমিন সেটিংস (settings/activation) থেকে ডায়নামিক নম্বর ও ফি লাইভ রিড
+    db.collection("settings").doc("activation").onSnapshot(doc => {
+        if (doc.exists) {
+            const data = doc.data();
+            if (data.fee !== undefined) currentFee = parseFloat(data.fee);
+            if (data.bkash_number) paymentNumbers['bkash'] = data.bkash_number;
+            if (data.nagad_number) paymentNumbers['nagad'] = data.nagad_number;
+            if (data.rocket_number) paymentNumbers['rocket'] = data.rocket_number;
+
+            document.getElementById('displayFee').innerText = currentFee.toFixed(2);
+            document.getElementById('modalFee').innerText = currentFee.toFixed(2);
+            updatePaymentNumberUI();
+        }
+    });
+
+    // ইউজার অথ চেক
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        currentUser = user;
+
+        // ইউজার স্ট্যাটাস চেক
+        db.collection("users").doc(user.uid).onSnapshot(d => {
+            if (d.exists) {
+                const u = d.data();
+                userNumericId = u.user_id ? `#${u.user_id}` : `#${user.uid.substring(0,8)}`;
+                if ((u.status || '').toLowerCase() === 'active') {
+                    window.location.href = "dashboard.html";
+                }
+            }
+        });
+
+        // পেন্ডিং কোনো আবেদন আছে কি না চেক
+        db.collection("verifications")
+          .where("user_id", "==", user.uid)
+          .where("status", "==", "pending")
+          .onSnapshot(snap => {
+              if (!snap.empty) {
+                  document.getElementById('activationActionBox').style.display = "none";
+                  document.getElementById('pendingCard').style.display = "block";
+              } else {
+                  document.getElementById('activationActionBox').style.display = "block";
+                  document.getElementById('pendingCard').style.display = "none";
+              }
+          });
+    });
+
+    function openPaymentModal() {
+        document.getElementById('paymentModal').classList.add('active');
+        updatePaymentNumberUI();
+    }
+
+    function closePaymentModal() {
+        document.getElementById('paymentModal').classList.remove('active');
+    }
+
+    function selectMethod(method) {
+        selectedMethodName = method;
+        document.querySelectorAll('.method-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + method).classList.add('active');
+        updatePaymentNumberUI();
+    }
+
+    function updatePaymentNumberUI() {
+        document.getElementById('paymentNumber').innerText = paymentNumbers[selectedMethodName] || "01712345678";
+        document.getElementById('methodLabel').innerText = methodLabels[selectedMethodName] || "নম্বর (Send Money):";
+    }
+
+    // ১০০% কাজ করা কপি ফাংশন
+    function copyNumber() {
+        const textToCopy = document.getElementById('paymentNumber').innerText.trim();
+        const tempInput = document.createElement("input");
+        tempInput.setAttribute("value", textToCopy);
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+
+        const copyBtn = document.getElementById('copyBtn');
+        const toast = document.getElementById('copyToast');
+        const originalText = copyBtn.innerHTML;
+
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> কপি হয়েছে!';
+        copyBtn.style.background = '#16a34a';
+        toast.style.display = 'block';
+
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.style.background = '#4f46e5';
+            toast.style.display = 'none';
+        }, 2000);
+    }
+
+    // ফর্ম সাবমিট হ্যান্ডলার (এডমিন প্যানেলে সরাসরি রিকোয়েস্ট পাঠাবে)
+    async function handlePaymentSubmit(event) {
+        event.preventDefault();
+
+        if (!currentUser) return;
+
+        const senderNum = document.getElementById('sender_number').value.trim();
+        const trxId = document.getElementById('transaction_id').value.trim().toUpperCase();
+
+        if (!senderNum || senderNum.length < 11) {
+            Swal.fire('ভুল নম্বর!', '১১ ডিজিটের সঠিক সেন্ডার নম্বর দিন।', 'warning');
+            return;
+        }
+
+        if (!trxId || trxId.length < 4) {
+            Swal.fire('ভুল TrxID!', 'সঠিক ট্রানজেকশন আইডি দিন।', 'warning');
+            return;
+        }
+
+        const btn = document.getElementById('btnSubmitActivation');
+        btn.disabled = true;
+        btn.innerHTML = `আবেদন জমা হচ্ছে...`;
+
+        try {
+            const adminNum = paymentNumbers[selectedMethodName] || "01712345678";
+
+            await db.collection("verifications").add({
+                user_id: currentUser.uid,
+                user_numeric_id: userNumericId,
+                user_email: currentUser.email || "No Email",
+                method: selectedMethodName,
+                sender_number: senderNum,
+                admin_number: adminNum,
+                amount: currentFee,
+                trx_id: trxId,
+                status: "pending",
+                created_at: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            closePaymentModal();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'আবেদন সফল হয়েছে!',
+                text: 'এডমিন আপনার TrxID যাচাই করে ৫ মিনিটের মধ্যে একাউন্ট সক্রিয় করে দেবেন।',
+                confirmButtonColor: '#4f46e5'
+            });
+
+        } catch (e) {
+            Swal.fire('Error', e.message, 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `Activate Now <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>`;
+        }
+    }
+
+    window.addEventListener('click', function(e) {
+        const modal = document.getElementById('paymentModal');
+        if (e.target === modal) {
+            closePaymentModal();
+        }
+    });
+</script>
+</body>
+</html>

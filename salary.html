@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Salary (10 Levels) | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --salary-gradient: linear-gradient(135deg, #059669, #10b981);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* Top Overview Card */
+        .salary-banner {
+            background: var(--salary-gradient);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .salary-banner::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .banner-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .banner-label { font-size: 12px; font-weight: 600; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+        .banner-count { font-size: 28px; font-weight: 800; line-height: 1; }
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            backdrop-filter: blur(5px);
+        }
+        .current-rank-pill {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Tier Cards */
+        .tier-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 18px;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            margin-bottom: 14px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        /* Active Level Card Style */
+        .tier-card.is-active-level {
+            border-color: #10b981;
+            background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
+        }
+
+        /* Completed / Expired Level Card Style */
+        .tier-card.is-passed-level {
+            opacity: 0.75;
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .tier-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .tier-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tier-icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #ecfdf5;
+            color: #059669;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 800;
+        }
+        .tier-card.is-passed-level .tier-icon-circle {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+        .tier-title h6 { font-size: 14px; font-weight: 800; margin: 0; color: #0f172a; }
+        .tier-title small { font-size: 11px; font-weight: 600; color: #64748b; }
+        .tier-amount-pill {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .tier-card.is-passed-level .tier-amount-pill {
+            background: #f1f5f9;
+            color: #64748b;
+            border-color: #e2e8f0;
+        }
+
+        /* Progress Bar */
+        .progress-box {
+            background: #e2e8f0;
+            height: 7px;
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 10px 0 6px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 50px;
+            transition: width 0.6s ease;
+        }
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        /* Action Buttons */
+        .btn-tier-claim {
+            width: 100%;
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .btn-tier-claim.active-claim {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+            cursor: pointer;
+            animation: pulse-btn 2s infinite ease-in-out;
+        }
+        @keyframes pulse-btn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .btn-tier-claim.claimed {
+            background: #e0f2fe;
+            color: #0369a1;
+            cursor: default;
+        }
+        .btn-tier-claim.passed {
+            background: #f1f5f9;
+            color: #94a3b8;
+            cursor: not-allowed;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-tier-claim.locked {
+            background: #f8fafc;
+            color: #94a3b8;
+            cursor: not-allowed;
+            border: 1px dashed #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">মাসিক স্যালারি (১০টি লেভেল)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- Active Referral Overview Banner -->
+    <div class="salary-banner">
+        <div class="banner-top-row">
+            <div>
+                <div class="banner-label">আপনার সক্রিয় রেফার</div>
+                <div class="banner-count"><span id="activeRefCount">0</span> জন</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+        </div>
+        <div class="current-rank-pill" id="currentRankBadge">
+            <i class="fa-solid fa-award"></i> বর্তমান পদবী: যাচাই হচ্ছে...
+        </div>
+    </div>
+
+    <!-- Salary Tiers Container (১ থেকে ১০ লেভেল) -->
+    <div id="tiersContainer">
+        <div class="text-center text-muted py-5">
+            <div class="spinner-border text-success spinner-border-sm mb-2" role="status"></div>
+            <p class="small mb-0">স্যালারি লেভেল লোড হচ্ছে...</p>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <p class="small text-muted mb-0">
+            <i class="fa-solid fa-circle-info me-1"></i> প্রতিটি নতুন লেভেলে উত্তীর্ণ হলে পূর্ববর্তী লেভেল বন্ধ হয়ে যাবে এবং নতুন লেভেলের স্যালারি চালু হবে।
+        </p>
+    </div>
+
+</div>
+
+<!-- Firebase & Script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    // ========================================================
+    // ⚙️ সম্পূর্ণ ১০টি লেভেলের ডিফল্ট তালিকা (এডমিন প্যানেলে না পেলে এগুলো কাজ করবে)
+    // ========================================================
+    let SALARY_TIERS = [
+        { id: "tier_1",  level: 1,  target: 50,   salary: 500,   title: "লেভেল ১ (ব্রোঞ্জ)" },
+        { id: "tier_2",  level: 2,  target: 100,  salary: 1000,  title: "লেভেল ২ (সিলভার)" },
+        { id: "tier_3",  level: 3,  target: 200,  salary: 2000,  title: "লেভেল ৩ (গোল্ড)" },
+        { id: "tier_4",  level: 4,  target: 350,  salary: 3500,  title: "লেভেল ৪ (প্লাটিনাম)" },
+        { id: "tier_5",  level: 5,  target: 500,  salary: 5500,  title: "লেভেল ৫ (ডায়মন্ড)" },
+        { id: "tier_6",  level: 6,  target: 750,  salary: 8500,  title: "লেভেল ৬ (মাস্টার)" },
+        { id: "tier_7",  level: 7,  target: 1000, salary: 12000, title: "লেভেল ৭ (গ্র্যান্ডমাস্টার)" },
+        { id: "tier_8",  level: 8,  target: 1500, salary: 18000, title: "লেভেল ৮ (লেজেন্ড)" },
+        { id: "tier_9",  level: 9,  target: 2000, salary: 25000, title: "লেভেল ৯ (রয়্যাল)" },
+        { id: "tier_10", level: 10, target: 3000, salary: 40000, title: "লেভেল ১০ (ক্রাউন কিং)" }
+    ];
+    // ========================================================
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let userActiveReferrals = 0;
+    let claimedTiersThisMonth = new Set();
+    const currentMonthKey = new Date().toISOString().slice(0, 7); // e.g. "2026-10"
+
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        currentUser = user;
+
+        // ১. এডমিন সেটিংস (settings/salary) থেকে ১০টি টায়ার লোড
+        await loadAdminTiers();
+
+        // ২. ইউজারের মোট একটিভ রেফার গণনা
+        await loadUserActiveReferrals(user.uid);
+
+        // ৩. চলতি মাসে অলরেডি ক্লেইম করা হয়েছে কি না চেক
+        await checkClaimedTiers(user.uid);
+
+        // ৪. ইন্টারফেসে রেন্ডার
+        renderSalaryTiers();
+    });
+
+    async function loadAdminTiers() {
+        try {
+            const doc = await db.collection("settings").doc("salary").get();
+            if (doc.exists) {
+                const data = doc.data();
+                if (Array.isArray(data.tiers) && data.tiers.length > 0) {
+                    SALARY_TIERS = data.tiers;
+                }
+            }
+        } catch (e) {
+            console.log("Using default 10 salary tiers:", e);
+        }
+    }
+
+    async function loadUserActiveReferrals(uid) {
+        try {
+            const userSnap = await db.collection("users").doc(uid).get();
+            const uData = userSnap.data() || {};
+            const myReferCode = uData.refer_code || uData.referral_code || uid;
+
+            const teamSnap = await db.collection("users")
+                                     .where("referred_by", "in", [uid, myReferCode])
+                                     .get();
+
+            userActiveReferrals = 0;
+            teamSnap.forEach(doc => {
+                if ((doc.data().status || '').toLowerCase() === 'active') {
+                    userActiveReferrals++;
+                }
+            });
+
+            document.getElementById('activeRefCount').innerText = userActiveReferrals;
+        } catch (e) {
+            console.error("Error loading active referrals:", e);
+        }
+    }
+
+    async function checkClaimedTiers(uid) {
+        try {
+            const snap = await db.collection("salary_claims")
+                                 .where("user_id", "==", uid)
+                                 .where("month", "==", currentMonthKey)
+                                 .get();
+
+            claimedTiersThisMonth.clear();
+            snap.forEach(doc => {
+                const data = doc.data();
+                if (data.tier_id) claimedTiersThisMonth.add(data.tier_id);
+            });
+        } catch (e) {
+            console.error("Error checking claims:", e);
+        }
+    }
+
+    // ========================================================
+    // 🎯 মূল লজিক: সর্বোচ্চ অর্জিত লেভেলটিই শুধুমাত্র সচল থাকবে
+    // ========================================================
+    function renderSalaryTiers() {
+        const container = document.getElementById('tiersContainer');
+        let html = "";
+
+        // ১. ইউজার সর্বোচ্চ কোন লেভেলটি অর্জন করেছে তা বের করা
+        let activeLevelIndex = -1;
+        for (let i = 0; i < SALARY_TIERS.length; i++) {
+            if (userActiveReferrals >= parseInt(SALARY_TIERS[i].target)) {
+                activeLevelIndex = i; // সর্বোচ্চ কোয়ালিফাইড লেভেল
+            }
+        }
+
+        // টপ ব্যানারে পদবী আপডেট
+        const rankBadge = document.getElementById('currentRankBadge');
+        if (activeLevelIndex === -1) {
+            rankBadge.innerHTML = `<i class="fa-solid fa-user-lock"></i> বর্তমান পদবী: লেভেল ১ এর কাজ চলমান`;
+        } else {
+            const curTier = SALARY_TIERS[activeLevelIndex];
+            rankBadge.innerHTML = `<i class="fa-solid fa-crown text-warning"></i> বর্তমান পদবী: <b>${curTier.title}</b> (৳${curTier.salary}/মাস)`;
+        }
+
+        // ২. কার্ডগুলো তৈরি করা
+        SALARY_TIERS.forEach((tier, index) => {
+            const target = parseInt(tier.target);
+            const salary = parseFloat(tier.salary);
+            const percent = Math.min(100, Math.floor((userActiveReferrals / target) * 100));
+
+            let cardStatusClass = "";
+            let buttonHtml = "";
+
+            if (activeLevelIndex !== -1 && index < activeLevelIndex) {
+                // 🛑 পূর্ববর্তী লেভেলসমূহ (পরবর্তী লেভেলে উন্নীত হওয়ায় এগুলো বন্ধ)
+                cardStatusClass = "is-passed-level";
+                buttonHtml = `
+                    <button class="btn-tier-claim passed" disabled>
+                        <i class="fa-solid fa-circle-check text-success"></i> উত্তীর্ণ (পরবর্তী লেভেল চালু থাকায় এটি বন্ধ)
+                    </button>`;
+            } 
+            else if (index === activeLevelIndex) {
+                // 🟢 বর্তমান সক্রিয় লেভেল (একমাত্র এটি থেকেই স্যালারি পাবে)
+                cardStatusClass = "is-active-level";
+
+                if (claimedTiersThisMonth.has(tier.id)) {
+                    buttonHtml = `
+                        <button class="btn-tier-claim claimed" disabled>
+                            <i class="fa-solid fa-check-double"></i> এই মাসের স্যালারি নেওয়া হয়েছে (Claimed)
+                        </button>`;
+                } else {
+                    buttonHtml = `
+                        <button class="btn-tier-claim active-claim" onclick="claimSalary('${tier.id}', ${salary}, ${target}, '${tier.title}')">
+                            <i class="fa-solid fa-gift"></i> স্যালারি ক্লেইম করুন (৳${salary})
+                        </button>`;
+                }
+            } 
+            else {
+                // 🔒 ভবিষ্যৎ লেভেলসমূহ (এখনো পূরণ হয়নি)
+                const needed = target - userActiveReferrals;
+                buttonHtml = `
+                    <button class="btn-tier-claim locked" disabled>
+                        <i class="fa-solid fa-lock"></i> আরও ${needed}টি একটিভ রেফার প্রয়োজন
+                    </button>`;
+            }
+
+            html += `
+            <div class="tier-card ${cardStatusClass}">
+                <div class="tier-header">
+                    <div class="tier-title-wrap">
+                        <div class="tier-icon-circle">
+                            ${index + 1}
+                        </div>
+                        <div class="tier-title">
+                            <h6>${tier.title}</h6>
+                            <small>${target}টি একটিভ রেফার টার্গেট</small>
+                        </div>
+                    </div>
+                    <div class="tier-amount-pill">৳${salary} / মাস</div>
+                </div>
+
+                <div class="progress-box">
+                    <div class="progress-fill" style="width: ${percent}%;"></div>
+                </div>
+
+                <div class="progress-labels">
+                    <span>অগ্রগতি: ${percent}%</span>
+                    <span>${userActiveReferrals} / ${target} রেফার</span>
+                </div>
+
+                ${buttonHtml}
+            </div>`;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // স্যালারি ক্লেইম হ্যান্ডলার
+    async function claimSalary(tierId, amount, target, title) {
+        if (!currentUser) return;
+
+        if (claimedTiersThisMonth.has(tierId)) {
+            Swal.fire('অলরেডি ক্লেইম করা হয়েছে!', 'আপনি চলতি মাসে এই লেভেলের স্যালারি গ্রহণ করেছেন।', 'info');
+            return;
+        }
+
+        const confirm = await Swal.fire({
+            title: 'স্যালারি ক্লেইম করবেন?',
+            html: `আপনি <b>${title}</b>-এর জন্য <b>৳${amount}</b> টাকা মাসিক স্যালারি ক্লেইম করতে যাচ্ছেন।`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'হ্যাঁ, ক্লেইম করুন',
+            cancelButtonText: 'বাতিল',
+            confirmButtonColor: '#059669'
+        });
+
+        if (!confirm.isConfirmed) return;
+
+        Swal.fire({
+            title: 'প্রসেস হচ্ছে...',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        try {
+            const userRef = db.collection("users").doc(currentUser.uid);
+            const claimRef = db.collection("salary_claims").doc(`${currentUser.uid}_${tierId}_${currentMonthKey}`);
+
+            await db.runTransaction(async (transaction) => {
+                const claimDoc = await transaction.get(claimRef);
+                if (claimDoc.exists) {
+                    throw "আপনি ইতিমধ্যে চলতি মাসে এই স্যালারি ক্লেইম করেছেন!";
+                }
+
+                transaction.update(userRef, {
+                    balance: firebase.firestore.FieldValue.increment(amount)
+                });
+
+                transaction.set(claimRef, {
+                    user_id: currentUser.uid,
+                    tier_id: tierId,
+                    amount: amount,
+                    target: target,
+                    month: currentMonthKey,
+                    created_at: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            });
+
+            claimedTiersThisMonth.add(tierId);
+            renderSalaryTiers();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'অভিনন্দন!',
+                html: `আপনার একাউন্টে <b>৳${amount}</b> টাকা স্যালারি যোগ করা হয়েছে।`,
+                confirmButtonColor: '#059669'
+            });
+
+        } catch (err) {
+            Swal.fire('ব্যর্থ হয়েছে!', err.toString() || 'কিছু ভুল হয়েছে, আবার চেষ্টা করুন।', 'error');
+        }
+    }
+</script>
+</body>
+</html>

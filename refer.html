@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refer & Earn | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --ref-gradient: linear-gradient(135deg, #8b5cf6, #6366f1);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* Hero Banner */
+        .ref-banner {
+            background: var(--ref-gradient);
+            border-radius: 20px;
+            padding: 22px 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .ref-banner::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            width: 130px;
+            height: 130px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .ref-banner h5 { font-size: 18px; font-weight: 800; margin: 0; }
+        .ref-banner p { font-size: 12px; opacity: 0.9; margin: 5px 0 0; }
+        .bonus-chip {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 10px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Stat Grid */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin: 0 auto 8px;
+            color: #fff;
+        }
+        .stat-val { font-size: 16px; font-weight: 800; color: #0f172a; line-height: 1; }
+        .stat-lbl { font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; margin-top: 4px; }
+
+        /* Link & Code Box Card */
+        .link-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 22px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+        }
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ref-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .ref-input-clean {
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            font-weight: 800;
+            color: #1e293b;
+            width: 75%;
+            outline: none;
+            letter-spacing: 1px;
+        }
+        .btn-copy-chip {
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .btn-copy-chip:active { transform: scale(0.95); }
+        .btn-copy-chip.copied { background: #10b981; }
+
+        /* Social Share Buttons */
+        .share-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-share {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none !important;
+            transition: 0.2s;
+        }
+        .btn-share:active { transform: scale(0.98); }
+        .btn-wa { background: #25d366; }
+        .btn-tg { background: #0088cc; }
+
+        /* View Team Button */
+        .btn-view-team {
+            width: 100%;
+            background: #ffffff;
+            color: #475569;
+            font-weight: 700;
+            border: 1px solid #e2e8f0;
+            padding: 13px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            text-decoration: none !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: 0.2s;
+        }
+        .btn-view-team:hover { background: #f8fafc; color: #1e293b; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">রেফার ও আয় (Refer & Earn)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- Banner -->
+    <div class="ref-banner">
+        <h5>বন্ধুদের আমন্ত্রণ জানান 🤝</h5>
+        <p>আপনার রেফার কোড বা লিংক শেয়ার করুন। বন্ধু জয়েন করলেই পাবেন ইনস্ট্যান্ট বোনাস।</p>
+        <div class="bonus-chip" id="lblBonusChip">
+            <i class="fa-solid fa-gift me-1"></i> রেফার করলেই আকর্ষণীয় বোনাস
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #8b5cf6;">
+                <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="stat-val" id="totRef">0</div>
+            <div class="stat-lbl">মোট রেফার</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #10b981;">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div class="stat-val" id="actRef">0</div>
+            <div class="stat-lbl">একটিভ রেফার</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #3b82f6;">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+            <div class="stat-val">৳<span id="refInc">0.00</span></div>
+            <div class="stat-lbl">রেফার আয়</div>
+        </div>
+    </div>
+
+    <!-- Link & Clean Short Code Box Card -->
+    <div class="link-card">
+        <!-- Short Referral Code -->
+        <div class="section-label">
+            <i class="fa-solid fa-hashtag text-indigo-500"></i> আপনার রেফার কোড
+        </div>
+        <div class="ref-box">
+            <input type="text" class="ref-input-clean" id="refCodeText" readonly value="লোড হচ্ছে...">
+            <button type="button" class="btn-copy-chip" id="btnCopyCode" onclick="copyText('refCodeText', 'btnCopyCode')">
+                <i class="fa-regular fa-copy"></i> <span>কপি</span>
+            </button>
+        </div>
+
+        <!-- Direct Registration Link -->
+        <div class="section-label">
+            <i class="fa-solid fa-link text-indigo-500"></i> সরাসরি রেজিস্ট্রেশন লিংক
+        </div>
+        <div class="ref-box">
+            <input type="text" class="ref-input-clean" id="refLinkInput" style="font-size: 13px; font-weight: 600;" readonly value="Generating Link...">
+            <button type="button" class="btn-copy-chip" id="btnCopyLink" onclick="copyText('refLinkInput', 'btnCopyLink')">
+                <i class="fa-regular fa-copy"></i> <span>কপি</span>
+            </button>
+        </div>
+
+        <!-- Social Share Buttons -->
+        <div class="section-label mt-3">
+            <i class="fa-solid fa-share-nodes text-indigo-500"></i> বন্ধুদের কাছে পাঠান
+        </div>
+        <div class="share-row">
+            <a href="#" id="shareWa" target="_blank" class="btn-share btn-wa">
+                <i class="fa-brands fa-whatsapp fa-lg"></i> WhatsApp
+            </a>
+            <a href="#" id="shareTg" target="_blank" class="btn-share btn-tg">
+                <i class="fa-brands fa-telegram fa-lg"></i> Telegram
+            </a>
+        </div>
+    </div>
+
+    <!-- View Team Button -->
+    <a href="referral_users.html" class="btn-view-team">
+        <i class="fa-solid fa-users-viewfinder text-primary"></i>
+        <span>আমার রেফার করা টিম দেখুন (View My Team)</span>
+    </a>
+
+</div>
+
+<!-- Firebase & Script -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let configuredBaseUrl = "";
+    let refBonusRate = 10;
+    let refActiveRate = 25;
+
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const uid = user.uid;
+
+        // এডমিনের রেফারেল সেটিংস রিড
+        db.collection("settings").doc("referral").onSnapshot(doc => {
+            if (doc.exists) {
+                const d = doc.data();
+                if (d.base_url) configuredBaseUrl = d.base_url.trim().replace(/\/$/, "");
+                if (d.referral_bonus !== undefined) refBonusRate = d.referral_bonus;
+                if (d.refer_active_bonus !== undefined) refActiveRate = d.refer_active_bonus;
+
+                document.getElementById('lblBonusChip').innerHTML = `<i class="fa-solid fa-gift me-1"></i> রেফারেল বোনাস ৳${refBonusRate} + একটিভেশন বোনাস ৳${refActiveRate}`;
+            }
+            updateLinkUI(uid);
+        });
+
+        updateLinkUI(uid);
+    });
+
+    async function updateLinkUI(uid) {
+        try {
+            const userRef = db.collection("users").doc(uid);
+            const userSnap = await userRef.get();
+            const userData = userSnap.data() || {};
+
+            let shortReferCode = userData.refer_code || userData.referral_code;
+
+            if (!shortReferCode) {
+                shortReferCode = String(Math.floor(100000 + Math.random() * 900000));
+                await userRef.set({ refer_code: shortReferCode }, { merge: true });
+            }
+
+            document.getElementById('refCodeText').value = shortReferCode;
+
+            // এডমিনের সেট করা বেস ইউআরএল অথবা ব্রাউজারের অটো ডোমেইন
+            let finalBase = configuredBaseUrl;
+            if (!finalBase) {
+                const currentPath = window.location.pathname;
+                const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                finalBase = `${window.location.origin}${basePath}`.replace(/\/$/, "");
+            }
+
+            const fullRegistrationLink = `${finalBase}/register.html?ref=${shortReferCode}`;
+            document.getElementById('refLinkInput').value = fullRegistrationLink;
+
+            const shareMsg = encodeURIComponent(`🔥 BD TOP EARN-এ কাজ করে প্রতিদিন ইনকাম করুন!\nরেজিস্ট্রেশন লিংক: ${fullRegistrationLink}\nরেফার কোড: ${shortReferCode}`);
+            document.getElementById('shareWa').href = `https://api.whatsapp.com/send?text=${shareMsg}`;
+            document.getElementById('shareTg').href = `https://t.me/share/url?url=${encodeURIComponent(fullRegistrationLink)}&text=${shareMsg}`;
+
+            document.getElementById('refInc').innerText = parseFloat(userData.referral_income || 0).toFixed(2);
+
+            const teamSnap = await db.collection("users")
+                                     .where("referred_by", "in", [uid, shortReferCode])
+                                     .get();
+
+            let totalCount = teamSnap.size;
+            let activeCount = 0;
+            teamSnap.forEach(doc => {
+                if ((doc.data().status || '').toLowerCase() === 'active') {
+                    activeCount++;
+                }
+            });
+
+            document.getElementById('totRef').innerText = totalCount;
+            document.getElementById('actRef').innerText = activeCount;
+
+        } catch (e) {
+            console.error("Error setting up refer page:", e);
+        }
+    }
+
+    function copyText(inputId, btnId) {
+        const input = document.getElementById(inputId);
+        const textToCopy = input.value;
+        const btn = document.getElementById(btnId);
+
+        const textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        textArea.style.position = "fixed";
+        textArea.style.top = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+
+        const origHtml = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>কপি হয়েছে</span>`;
+
+        Swal.fire({
+            icon: 'success',
+            title: 'কপি সফল!',
+            timer: 1000,
+            showConfirmButton: false
+        });
+
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = origHtml;
+        }, 1800);
+    }
+</script>
+</body>
+</html>

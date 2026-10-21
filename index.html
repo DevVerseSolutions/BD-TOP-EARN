@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unique Earn - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #00a0e9; --bg: #f4f7fe; --text-dark: #1e293b; --text-light: #64748b; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text-dark); overflow-x: hidden; }
+        
+        /* ০.০১ সেকেন্ডের আল্ট্রাফাস্ট লোডার স্ক্রিন */
+        #pageFastLoader {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #ffffff;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+        #pageFastLoader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .navbar { background: #fff; padding: 12px 0; border-bottom: 1px solid #e2e8f0; }
+        .navbar-brand { font-weight: 800; color: var(--text-dark) !important; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+        .btn-app { background: var(--primary); color: #fff !important; border-radius: 12px; padding: 8px 18px; font-weight: 700; font-size: 13px; text-decoration: none; display: inline-block; }
+        .btn-app:active { transform: scale(0.95); }
+        .hero-section { padding: 60px 0 40px; text-align: center; }
+        .hero-title { font-size: 32px; font-weight: 800; color: var(--text-dark); margin-bottom: 15px; line-height: 1.2; }
+        .hero-text { color: var(--text-light); font-size: 14px; max-width: 500px; margin: 0 auto 25px; }
+        .stats-bar { background: #fff; border-radius: 20px; padding: 15px; margin-top: 30px; border: 1px solid #e2e8f0; display: flex; justify-content: space-around; }
+        .stat-item h5 { font-weight: 800; font-size: 18px; margin-bottom: 2px; color: var(--primary); transition: all 0.3s ease; }
+        .stat-item span { font-size: 10px; font-weight: 700; color: var(--text-light); text-transform: uppercase; }
+        .quote-box { background: #ffffff; border-left: 5px solid var(--primary); border-radius: 14px; padding: 20px; margin: 30px 0 20px; text-align: left; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); }
+        .quote-text { font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--text-dark); margin-bottom: 0; }
+        .btn-bot { background: #24A1DE; color: #fff; font-weight: 700; font-size: 15px; padding: 14px 30px; border-radius: 15px; border: none; width: 100%; max-width: 320px; box-shadow: 0 4px 12px rgba(36, 161, 222, 0.3); cursor: pointer; }
+        footer { padding: 40px 0 20px; text-align: center; font-size: 12px; color: var(--text-light); }
+        ._dev_click_target { font-weight: 700; color: var(--primary); cursor: pointer; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <!-- লোডার ওভারলে স্ক্রিন -->
+    <div id="pageFastLoader">
+        <div class="spinner-border text-info" role="status" style="width: 2.8rem; height: 2.8rem; border-width: 3px;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="mt-3 text-secondary fw-bold" style="font-size: 13px;">
+            <span id="loaderPercent">0</span>% লোডিং হচ্ছে...
+        </div>
+    </div>
+
+    <nav class="navbar sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-wallet text-info"></i>
+                <span id="siteName">BD TOP EARN</span>
+            </a>
+            <div id="navAuthBtn">
+                <a href="login.html" class="btn-app">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container px-4">
+            <div class="mb-2">
+                <span class="badge rounded-pill bg-info bg-opacity-10 text-info px-3 py-2" style="font-size: 10px; font-weight: 800;">
+                    <i class="fa-solid fa-star me-1"></i> TRUSTED PLATFORM
+                </span>
+            </div>
+            <h1 class="hero-title">সহজ সহজ কাজ করে <br> আয় করুন</h1>
+            <p class="hero-text">
+                আপনার মোবাইল দিয়ে প্রতিদিন মাইক্রোজব সম্পন্ন করে আয় করুন এবং সরাসরি বিকাশ বা নগদে পেমেন্ট নিন।
+            </p>
+            <div class="d-flex justify-content-center gap-2" id="heroActionBtns">
+                <a href="register.html" class="btn-app py-3 px-4 w-100" style="max-width: 200px;">একাউন্ট খুলুন</a>
+            </div>
+
+            <!-- শুরুতে সবকিছু জিরো জিরো (0 0 0) থাকবে -->
+            <div class="stats-bar">
+                <div class="stat-item"><h5 id="statUsers">0</h5><span>Users</span></div>
+                <div class="stat-item border-start border-end px-4"><h5 id="statPaid">0</h5><span>Paid</span></div>
+                <div class="stat-item"><h5 id="statSupport">0</h5><span>Support</span></div>
+            </div>
+
+            <div class="quote-box">
+                <p class="quote-text" id="homeQuoteText">💸 প্রতিদিন ছোট ছোট মাইক্রোজব সম্পন্ন করে দৈনিক ৫০০–৭০০ টাকা ইনকাম করতে চাইলে জয়েন করুন নিচের বটে 👇</p>
+            </div>
+
+            <div class="mt-3">
+                <a href="https://t.me/No_ReXbot/app" target="_blank" class="btn-bot d-inline-block text-decoration-none" id="homeBotLink">
+                    <i class="fa-brands fa-telegram"></i> <span id="homeBotBtnText">Join NoReX Bot</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p class="mb-1">&copy; 2026 <strong>BD TOP EARN</strong></p>
+            <p><a href="https://t.me/Aether_Forge1" target="_blank" class="_dev_click_target">Developed by 𒆜 𝒁𝑰𝑩𝑶𝑵 ♡ 𝑨𝑯𝑴𝑬𝑫 𒆜</a></p>
+        </div>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // ১. ক্যাশ মেমোরি থেকে ০.০১ সেকেন্ডে ইনস্ট্যান্ট লোড (যাতে বিন্দুমাত্র দেরি না হয়)
+        const cachedBot = JSON.parse(localStorage.getItem('cached_home_bot') || '{}');
+        if (cachedBot.btn_text) document.getElementById('homeBotBtnText').innerText = cachedBot.btn_text;
+        if (cachedBot.bot_link) document.getElementById('homeBotLink').href = cachedBot.bot_link;
+        if (cachedBot.quote_text) document.getElementById('homeQuoteText').innerText = cachedBot.quote_text;
+
+        const cachedGen = JSON.parse(localStorage.getItem('cached_general') || '{}');
+        if (cachedGen.site_name) document.getElementById('siteName').innerText = cachedGen.site_name;
+
+        // ২. ০.০১ সেকেন্ড রেটের ফাস্ট লোডার টাইমার
+        let currentProgress = 0;
+        const percentElem = document.getElementById('loaderPercent');
+        const loaderOverlay = document.getElementById('pageFastLoader');
+
+        const fastTimer = setInterval(() => {
+            currentProgress += 10;
+            if (percentElem) percentElem.innerText = currentProgress;
+
+            if (currentProgress >= 100) {
+                clearInterval(fastTimer);
+                
+                // লোডিং শেষ: প্রি-লোডার বন্ধ করা
+                loaderOverlay.classList.add('loaded');
+
+                // ০ ০ থেকে আসল সংখ্যাগুলো লোড হওয়া
+                document.getElementById('statUsers').innerText = "12K+";
+                document.getElementById('statPaid').innerText = "50K+";
+                document.getElementById('statSupport').innerText = "24/7";
+            }
+        }, 10); // প্রতি ১০ মিলিসেকেন্ডে (০.০১ সেকেন্ডে) দ্রুত লোড সম্পন্ন হবে
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+            authDomain: "bdt-php.firebaseapp.com",
+            projectId: "bdt-php",
+            storageBucket: "bdt-php.firebasestorage.app",
+            messagingSenderId: "98854531594",
+            appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+            measurementId: "G-VLCRVLP8YP"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // লাইভ টেলিগ্রাম বট ও প্রমোশন আপডেট
+        db.collection("settings").doc("home_bot").onSnapshot(doc => {
+            if (doc.exists) {
+                const d = doc.data();
+                localStorage.setItem('cached_home_bot', JSON.stringify(d));
+                if (d.btn_text) document.getElementById('homeBotBtnText').innerText = d.btn_text;
+                if (d.bot_link) document.getElementById('homeBotLink').href = d.bot_link;
+                if (d.quote_text) document.getElementById('homeQuoteText').innerText = d.quote_text;
+            }
+        });
+
+        // লাইভ ব্র্যান্ড টাইটেল আপডেট
+        db.collection("settings").doc("general").onSnapshot(doc => {
+            if (doc.exists && doc.data().site_name) {
+                localStorage.setItem('cached_general', JSON.stringify(doc.data()));
+                const sn = document.getElementById('siteName');
+                if (sn) sn.innerText = doc.data().site_name;
+            }
+        });
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('navAuthBtn').innerHTML = `<a href="dashboard.html" class="btn-app">Dashboard</a>`;
+                document.getElementById('heroActionBtns').innerHTML = `<a href="dashboard.html" class="btn-app py-3 px-4">কাজ শুরু করুন</a>`;
+            }
+        });
+    </script>
+</body>
+</html>

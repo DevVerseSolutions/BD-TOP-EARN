@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --gold: #f59e0b;
+            --silver: #94a3b8;
+            --bronze: #d97706;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #334155;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        /* Banner Card */
+        .leader-banner {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.25);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .leader-banner::after {
+            content: "";
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+        }
+        .banner-text h5 { font-size: 18px; font-weight: 800; margin: 0; }
+        .banner-text p { font-size: 12px; opacity: 0.9; margin: 4px 0 0; }
+        .trophy-box {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Leader Rank Card */
+        .rank-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+        .rank-card:active { transform: scale(0.99); }
+
+        /* Rank Accents */
+        .rank-card.rank-1 {
+            border: 2px solid #fcd34d;
+            background: linear-gradient(180deg, #fffdfa 0%, #ffffff 100%);
+        }
+        .rank-card.rank-2 {
+            border: 2px solid #e2e8f0;
+        }
+        .rank-card.rank-3 {
+            border: 2px solid #fed7aa;
+        }
+
+        /* Header of Card */
+        .rank-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        .avatar-wrap {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+        }
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        .crown-badge {
+            position: absolute;
+            top: -8px;
+            right: -6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .bg-gold { background: #f59e0b; }
+        .bg-silver { background: #64748b; }
+        .bg-bronze { background: #d97706; }
+        .bg-regular { background: #0ea5e9; }
+
+        .user-meta h6 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .rank-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 50px;
+            margin-top: 4px;
+        }
+        .pill-gold { background: #fef3c7; color: #92400e; }
+        .pill-silver { background: #f1f5f9; color: #475569; }
+        .pill-bronze { background: #ffedd5; color: #9a3412; }
+        .pill-regular { background: #e0f2fe; color: #0369a1; }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info-box i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+        .info-box .labels small {
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+        .info-box .labels span {
+            font-size: 13px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+        .ic-refer { color: #8b5cf6; }
+        .ic-salary { color: #10b981; }
+        .ic-loc { color: #ef4444; }
+        .ic-badge { color: #f59e0b; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">টপ লিডারবোর্ড (Leaderboard)</h6>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <!-- Banner -->
+    <div class="leader-banner">
+        <div class="banner-text">
+            <h5>আমাদের সেরা লিডারগণ</h5>
+            <p>কঠোর পরিশ্রম ও সেরা রেফারারদের মাসিক অ্যাওয়ার্ড</p>
+        </div>
+        <div class="trophy-box">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+    </div>
+
+    <!-- Leaderboard List Container -->
+    <div id="leaderContainer">
+        <!-- লোডিং অবস্থা -->
+        <div class="text-center py-5">
+            <div class="spinner-border text-warning spinner-border-sm mb-2" role="status"></div>
+            <p class="small text-muted mb-0">লিডারবোর্ড তথ্য লোড হচ্ছে...</p>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="text-center mt-3 mb-4">
+        <a href="dashboard.html" class="text-decoration-none text-muted small fw-bold">
+            <i class="fa-solid fa-arrow-left me-1"></i> ড্যাশবোর্ডে ফিরে যান
+        </a>
+    </div>
+
+</div>
+
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // ফলব্যাক ডিফল্ট লিডারগণ (ফায়ারবেসে ডাটা না থাকলে অটো এগুলো দেখাবে)
+    const defaultLeaders = [
+        {
+            rank: 1,
+            name: "Nirob Hassan",
+            referrals: "5,000+",
+            salary: "৳20,000",
+            address: "ঢাকা (Dhaka)",
+            avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+        },
+        {
+            rank: 2,
+            name: "Sadiya Islam",
+            referrals: "4,588+",
+            salary: "৳15,000",
+            address: "চট্টগ্রাম (Chittagong)",
+            avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
+        },
+        {
+            rank: 3,
+            name: "Tanvir Ahmed",
+            referrals: "3,820+",
+            salary: "৳10,000",
+            address: "রাজশাহী (Rajshahi)",
+            avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135768.png"
+        },
+        {
+            rank: 4,
+            name: "Mehedi Hasan",
+            referrals: "2,450+",
+            salary: "৳7,000",
+            address: "সিলেট (Sylhet)",
+            avatar: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+        }
+    ];
+
+    async function loadLeaderboard() {
+        const container = document.getElementById('leaderContainer');
+
+        try {
+            // ফায়ারবেস 'leaderboard' কালেকশন থেকে চেক
+            const snap = await db.collection("leaderboard").orderBy("rank", "asc").get();
+            let leadersData = [];
+
+            if (!snap.empty) {
+                snap.forEach(doc => leadersData.push(doc.data()));
+            } else {
+                // ফায়ারবেস খালি থাকলে ডিফল্ট ডাটা শো করবে
+                leadersData = defaultLeaders;
+            }
+
+            renderLeaders(leadersData);
+
+        } catch (e) {
+            console.log("Using default leaders:", e);
+            renderLeaders(defaultLeaders);
+        }
+    }
+
+    function renderLeaders(list) {
+        const container = document.getElementById('leaderContainer');
+        let html = "";
+
+        list.forEach((item, index) => {
+            const rank = item.rank || (index + 1);
+            let rankClass = "rank-regular";
+            let crownBg = "bg-regular";
+            let pillClass = "pill-regular";
+            let medalIcon = '<i class="fa-solid fa-medal"></i>';
+
+            if (rank === 1) {
+                rankClass = "rank-1";
+                crownBg = "bg-gold";
+                pillClass = "pill-gold";
+                medalIcon = '<i class="fa-solid fa-crown text-warning"></i> ১ম স্থান (1st)';
+            } else if (rank === 2) {
+                rankClass = "rank-2";
+                crownBg = "bg-silver";
+                pillClass = "pill-silver";
+                medalIcon = '<i class="fa-solid fa-award text-secondary"></i> ২য় স্থান (2nd)';
+            } else if (rank === 3) {
+                rankClass = "rank-3";
+                crownBg = "bg-bronze";
+                pillClass = "pill-bronze";
+                medalIcon = '<i class="fa-solid fa-award text-danger"></i> ৩য় স্থান (3rd)';
+            } else {
+                medalIcon = `<i class="fa-solid fa-award text-primary"></i> ${rank}তম স্থান`;
+            }
+
+            const avatar = item.avatar || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+
+            html += `
+            <div class="rank-card ${rankClass}">
+                <div class="rank-header">
+                    <div class="avatar-wrap">
+                        <img src="${avatar}" alt="${item.name}" class="avatar-img">
+                        <div class="crown-badge ${crownBg}">
+                            ${rank <= 3 ? '<i class="fa-solid fa-star"></i>' : rank}
+                        </div>
+                    </div>
+                    <div class="user-meta">
+                        <h6>${item.name}</h6>
+                        <div class="rank-pill ${pillClass}">
+                            ${medalIcon}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-box">
+                        <i class="fa-solid fa-users ic-refer"></i>
+                        <div class="labels">
+                            <small>মোট রেফার</small>
+                            <span>${item.referrals}</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fa-solid fa-sack-dollar ic-salary"></i>
+                        <div class="labels">
+                            <small>মাসিক স্যালারি</small>
+                            <span>${item.salary}</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box" style="grid-column: span 2;">
+                        <i class="fa-solid fa-location-dot ic-loc"></i>
+                        <div class="labels">
+                            <small>জেলা / ঠিকানা</small>
+                            <span>${item.address}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // পেজ লোড হলে চালানো
+    loadLeaderboard();
+</script>
+</body>
+</html>

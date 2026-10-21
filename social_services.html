@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Services | BD TOP EARN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00b894;
+            --secondary: #00897b;
+            --fb: #1877F2;
+            --tiktok: #000000;
+            --yt: #FF0000;
+            --insta: #E4405F;
+            --x: #0f172a;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px 15px 40px;
+            color: #1e293b;
+        }
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #f8fafc; }
+
+        .btn-history-pill {
+            background: #ffffff;
+            color: #0284c7;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid #bae6fd;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-history-pill:hover { background: #f0f9ff; }
+
+        /* Wallet Card */
+        .wallet-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 20px;
+            padding: 18px 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .wallet-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .wallet-amount { font-size: 26px; font-weight: 900; color: #00b894; margin: 2px 0 0; }
+        .btn-quick-dep {
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 8px 14px;
+            border-radius: 12px;
+            text-decoration: none !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 4px 10px rgba(0, 184, 148, 0.3);
+            transition: 0.2s;
+        }
+        .btn-quick-dep:hover { background: #00a383; color: #fff; }
+
+        /* Platform Selector Bar */
+        .platform-nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+            scrollbar-width: none;
+        }
+        .platform-nav::-webkit-scrollbar { display: none; }
+        .p-btn {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #64748b;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .p-btn i { font-size: 16px; }
+        .p-btn.active {
+            border-color: #0f172a;
+            background: #0f172a;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+        }
+
+        /* Package Cards */
+        .package-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: transform 0.2s ease;
+        }
+        .package-card:active { transform: scale(0.99); }
+        .pkg-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+        }
+        .pkg-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .pkg-details h6 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.3;
+        }
+        .pkg-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .price-badge {
+            background: #ecfdf5;
+            color: #059669;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 1px solid #a7f3d0;
+        }
+        .type-pill {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .btn-order-now {
+            background: linear-gradient(135deg, #0f172a, #334155);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .btn-order-now:active { transform: scale(0.95); }
+
+        /* Order Modal */
+        .modal-content {
+            border-radius: 24px;
+            border: none;
+            overflow: hidden;
+        }
+        .modal-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 20px;
+        }
+        .modal-body {
+            padding: 20px;
+            background: #ffffff;
+        }
+        .order-summary-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+        }
+        .custom-input-box {
+            position: relative;
+            margin-bottom: 14px;
+        }
+        .custom-input-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .custom-input-box input {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 11px 14px 11px 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            outline: none;
+            transition: 0.2s;
+        }
+        .custom-input-box input:focus {
+            border-color: #0284c7;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+        }
+        .proof-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        .img-preview-box {
+            width: 100%;
+            max-height: 160px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            margin-top: 10px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+            background: #000;
+        }
+        .img-preview-box img {
+            max-width: 100%;
+            max-height: 160px;
+            object-fit: contain;
+        }
+        .btn-confirm-order {
+            width: 100%;
+            background: linear-gradient(135deg, #00b894, #00897b);
+            color: #fff;
+            font-weight: 800;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 14px;
+            box-shadow: 0 6px 16px rgba(0, 184, 148, 0.25);
+            cursor: pointer;
+        }
+
+        /* History Modal Cards */
+        .history-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .h-details h6 { font-size: 13px; font-weight: 800; margin: 0; color: #0f172a; }
+        .h-details p { font-size: 11px; color: #64748b; margin: 2px 0 0; }
+        .h-details small { font-size: 10px; color: #94a3b8; display: block; margin-top: 3px; }
+        .st-badge { font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; }
+        .st-pending { background: #fef3c7; color: #b45309; }
+        .st-approved { background: #dcfce7; color: #15803d; }
+        .st-rejected { background: #fee2e2; color: #b91c1c; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <a href="dashboard.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h6 class="m-0 fw-bold fs-5">সোশ্যাল সার্ভিস</h6>
+        <button type="button" class="btn-history-pill" onclick="openHistoryModal()">
+            <i class="fa-solid fa-clock-rotate-left"></i> হিস্ট্রি
+        </button>
+    </div>
+
+    <!-- Live Wallet Banner -->
+    <div class="wallet-banner">
+        <div>
+            <div class="wallet-label"><i class="fa-solid fa-wallet text-warning"></i> মেইন ওয়ালেট ব্যালেন্স</div>
+            <div class="wallet-amount">৳ <span id="uBalance">0.00</span></div>
+        </div>
+        <a href="deposit.html" class="btn-quick-dep">
+            <i class="fa-solid fa-plus-circle"></i> ডিপোজিট
+        </a>
+    </div>
+
+    <!-- 5 Platform Selector Tabs -->
+    <div class="platform-nav">
+        <div class="p-btn active" data-platform="facebook" onclick="switchPlatform('facebook')">
+            <i class="fa-brands fa-facebook-f text-primary"></i> Facebook
+        </div>
+        <div class="p-btn" data-platform="tiktok" onclick="switchPlatform('tiktok')">
+            <i class="fa-brands fa-tiktok text-dark"></i> TikTok
+        </div>
+        <div class="p-btn" data-platform="youtube" onclick="switchPlatform('youtube')">
+            <i class="fa-brands fa-youtube text-danger"></i> YouTube
+        </div>
+        <div class="p-btn" data-platform="instagram" onclick="switchPlatform('instagram')">
+            <i class="fa-brands fa-instagram text-danger"></i> Instagram
+        </div>
+        <div class="p-btn" data-platform="twitter" onclick="switchPlatform('twitter')">
+            <i class="fa-brands fa-x-twitter text-dark"></i> Twitter / X
+        </div>
+    </div>
+
+    <!-- Packages Container -->
+    <div id="packagesContainer">
+        <div class="text-center py-5 text-muted">
+            <div class="spinner-border spinner-border-sm text-primary mb-2"></div>
+            <p class="small mb-0">প্যাকেজ লোড হচ্ছে...</p>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="text-center mt-3">
+        <a href="dashboard.html" class="text-decoration-none text-muted small fw-bold">
+            <i class="fa-solid fa-arrow-left me-1"></i> ড্যাশবোর্ডে ফিরে যান
+        </a>
+    </div>
+
+</div>
+
+<!-- Order Modal Popup -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title fw-bold" id="mModalTitle">অর্ডার নিশ্চিতকরণ</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Summary -->
+                <div class="order-summary-box">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="small fw-bold text-dark" id="mPkgName">প্যাকেজের নাম</span>
+                        <span class="badge bg-success fs-6" id="mPkgPrice">৳ 0.00</span>
+                    </div>
+                    <small class="text-muted d-block" style="font-size: 11px;">
+                        <i class="fa-solid fa-circle-info text-primary me-1"></i> সাবমিট করলে আপনার মূল ব্যালেন্স থেকে এই টাকা কেটে নেওয়া হবে।
+                    </small>
+                </div>
+
+                <!-- Input Link -->
+                <label class="form-label small fw-bold text-dark mb-1">
+                    <i class="fa-solid fa-link text-primary me-1"></i> লিঙ্ক দিন (প্রোফাইল/পেইজ/পোস্ট):
+                </label>
+                <div class="custom-input-box">
+                    <i class="fa-solid fa-link"></i>
+                    <input type="url" id="orderLinkInput" placeholder="https://..." required>
+                </div>
+
+                <!-- Profile Name -->
+                <label class="form-label small fw-bold text-dark mb-1">
+                    <i class="fa-solid fa-id-badge text-primary me-1"></i> পেইজ বা একাউন্টের নাম:
+                </label>
+                <div class="custom-input-box">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="orderNameInput" placeholder="আপনার প্রোফাইল বা পেইজের নাম" required>
+                </div>
+
+                <!-- ImgBB Direct Photo Upload -->
+                <div class="proof-box">
+                    <label class="form-label small fw-bold text-dark mb-1">
+                        <i class="fa-solid fa-camera text-primary me-1"></i> প্রোফাইল/পেইজের স্ক্রিনশট ছবি:
+                    </label>
+                    <input type="file" id="orderFileInput" class="form-control form-control-sm mb-2" accept="image/*">
+                    <small class="text-muted d-block" style="font-size: 11px;">ছবি সিলেক্ট করলেই API দিয়ে স্বয়ংক্রিয় প্রুফ লিংক তৈরি হবে।</small>
+
+                    <div class="img-preview-box" id="imgPreviewBox">
+                        <img id="orderPreviewImg" src="" alt="Proof Preview">
+                    </div>
+                </div>
+
+                <!-- Locked User ID -->
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-dark mb-1">
+                        <i class="fa-solid fa-fingerprint text-primary me-1"></i> আপনার ইউজার আইডি (UID):
+                    </label>
+                    <input type="text" id="orderUserIdInput" class="form-control form-control-sm fw-bold text-dark" readonly style="background: #f1f5f9; cursor: not-allowed; font-family: monospace;">
+                </div>
+
+                <button type="button" id="btnConfirmOrder" class="btn-confirm-order" onclick="submitOrder()">
+                    <i class="fa-solid fa-circle-check me-1"></i> অর্ডার সম্পন্ন করুন (Pay & Order)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- History Modal Popup -->
+<div class="modal fade" id="historyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title fw-bold">
+                    <i class="fa-solid fa-clock-rotate-left text-primary me-2"></i>সোশ্যাল অর্ডার হিস্ট্রি
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="historyListContainer">
+                <div class="text-center text-muted py-4">
+                    <div class="spinner-border text-primary spinner-border-sm mb-2"></div>
+                    <p class="small mb-0">অর্ডার হিস্ট্রি লোড হচ্ছে...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase & Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+    const IMGBB_API_KEY = "24dcac3ce6cb918c5d55bd7bcc4d293c";
+
+    const DEFAULT_SERVICES = {
+        facebook: [
+            { id: "fb_1", title: "১,০০০ ফেসবুক পেজ ফলোয়ার", price: 50.00, type: "Followers", icon: "fa-brands fa-facebook-f", bg: "#1877F2" },
+            { id: "fb_2", title: "১,০০০ ফেসবুক পোস্ট লাইক", price: 25.00, type: "Likes", icon: "fa-solid fa-thumbs-up", bg: "#1877F2" },
+            { id: "fb_3", title: "১,০০০ কাস্টম ফেসবুক কমেন্ট", price: 40.00, type: "Comments", icon: "fa-solid fa-comment-dots", bg: "#1877F2" },
+            { id: "fb_4", title: "১০,০০০ ফেসবুক ভিডিও ভিউজ", price: 30.00, type: "Views", icon: "fa-solid fa-play", bg: "#1877F2" }
+        ],
+        tiktok: [
+            { id: "tt_1", title: "১,০০০ টিকটক প্রোফাইল ফলোয়ার", price: 60.00, type: "Followers", icon: "fa-brands fa-tiktok", bg: "#000000" },
+            { id: "tt_2", title: "১,০০০ টিকটক ভিডিও লাইক", price: 20.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#fe2c55" },
+            { id: "tt_3", title: "১০,০০০ টিকটক ভিডিও ভিউজ", price: 15.00, type: "Views", icon: "fa-solid fa-play", bg: "#25f4ee" },
+            { id: "tt_4", title: "১,০০০ টিকটক ভিডিও শেয়ার", price: 25.00, type: "Shares", icon: "fa-solid fa-share", bg: "#000000" }
+        ],
+        youtube: [
+            { id: "yt_1", title: "১,০০০ ইউটিউব রিয়েল সাবস্ক্রাইবার", price: 250.00, type: "Subscribers", icon: "fa-brands fa-youtube", bg: "#FF0000" },
+            { id: "yt_2", title: "৪,০০০ ঘন্টা ওয়াচটাইম (Non-Drop)", price: 800.00, type: "Watchtime", icon: "fa-solid fa-clock", bg: "#FF0000" },
+            { id: "yt_3", title: "১০,০০০ ইউটিউব ভিডিও ভিউজ", price: 90.00, type: "Views", icon: "fa-solid fa-eye", bg: "#FF0000" },
+            { id: "yt_4", title: "১,০০০ ইউটিউব ভিডিও লাইক", price: 40.00, type: "Likes", icon: "fa-solid fa-thumbs-up", bg: "#FF0000" }
+        ],
+        instagram: [
+            { id: "in_1", title: "১,০০০ ইনস্টাগ্রাম ফলোয়ার", price: 45.00, type: "Followers", icon: "fa-brands fa-instagram", bg: "#E4405F" },
+            { id: "in_2", title: "১,০০০ ইনস্টাগ্রাম রিয়েল লাইক", price: 20.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#E4405F" },
+            { id: "in_3", title: "১০,০০০ ইনস্টাগ্রাম রিলস ভিউজ", price: 25.00, type: "Reels Views", icon: "fa-solid fa-play", bg: "#E4405F" },
+            { id: "in_4", title: "৫০০ ইনস্টাগ্রাম কমেন্ট", price: 35.00, type: "Comments", icon: "fa-solid fa-comment", bg: "#E4405F" }
+        ],
+        twitter: [
+            { id: "tw_1", title: "১,০০০ টুইটার (X) ফলোয়ার", price: 80.00, type: "Followers", icon: "fa-brands fa-x-twitter", bg: "#0f172a" },
+            { id: "tw_2", title: "১,০০০ রিটুইট (Retweets)", price: 30.00, type: "Retweets", icon: "fa-solid fa-retweet", bg: "#0f172a" },
+            { id: "tw_3", title: "১,০০০ পোস্ট লাইক", price: 25.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#0f172a" }
+        ]
+    };
+
+    let DYNAMIC_SERVICES = { ...DEFAULT_SERVICES };
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
+        authDomain: "bdt-php.firebaseapp.com",
+        projectId: "bdt-php",
+        storageBucket: "bdt-php.firebasestorage.app",
+        messagingSenderId: "98854531594",
+        appId: "1:98854531594:web:7a3801c1ae6a1817bbe5f3",
+        measurementId: "G-VLCRVLP8YP"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let userBalance = 0;
+    let formattedUserUid = "";
+    let currentPlatform = "facebook";
+    let selectedPackage = null;
+    let uploadedScreenshotUrl = "";
+    let orderModalInstance = null;
+    let historyModalInstance = null;
+
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        currentUser = user;
+        orderModalInstance = new bootstrap.Modal(document.getElementById('orderModal'));
+        historyModalInstance = new bootstrap.Modal(document.getElementById('historyModal'));
+
+        // লাইভ ব্যালেন্স রিড
+        db.collection("users").doc(user.uid).onSnapshot(async doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                userBalance = parseFloat(data.balance || 0);
+                document.getElementById('uBalance').innerText = userBalance.toFixed(2);
+
+                let numId = data.account_id || data.user_id || data.numeric_id;
+                if (!numId) {
+                    numId = String(Math.floor(10000000 + Math.random() * 90000000));
+                    await db.collection("users").doc(user.uid).set({ user_id: numId }, { merge: true });
+                }
+                formattedUserUid = `#${numId}`;
+            }
+        });
+
+        // ফায়ারবেস থেকে লাইভ সার্ভিস প্যাকেজ লোড
+        listenDynamicServices();
+    });
+
+    // ফায়ারবেস থেকে লাইভ সার্ভিস প্যাকেজ রিড
+    function listenDynamicServices() {
+        db.collection("social_services").onSnapshot(snapshot => {
+            if (!snapshot.empty) {
+                DYNAMIC_SERVICES = { facebook: [], tiktok: [], youtube: [], instagram: [], twitter: [] };
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    data.id = doc.id;
+                    const p = (data.platform || 'facebook').toLowerCase();
+
+                    if ((data.status || 'active') === 'active') {
+                        if (!DYNAMIC_SERVICES[p]) DYNAMIC_SERVICES[p] = [];
+                        DYNAMIC_SERVICES[p].push({
+                            id: doc.id,
+                            title: data.title,
+                            price: parseFloat(data.price || 0),
+                            type: data.type || "Service",
+                            icon: data.icon || "fa-solid fa-bolt",
+                            bg: data.bg || "#1877F2"
+                        });
+                    }
+                });
+            } else {
+                DYNAMIC_SERVICES = { ...DEFAULT_SERVICES };
+            }
+
+            renderPlatformPackages(currentPlatform);
+        }, err => {
+            console.log("Services load error, using default:", err);
+            renderPlatformPackages(currentPlatform);
+        });
+    }
+
+    // প্ল্যাটফর্ম সুইচ
+    function switchPlatform(platform) {
+        currentPlatform = platform;
+        document.querySelectorAll('.p-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.platform === platform);
+        });
+        renderPlatformPackages(platform);
+    }
+
+    function renderPlatformPackages(platform) {
+        const container = document.getElementById('packagesContainer');
+        const list = DYNAMIC_SERVICES[platform] || [];
+        let html = "";
+
+        if (list.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-box-open fa-3x mb-2 opacity-50"></i>
+                    <p class="small mb-0">এই মুহূর্তে এই প্ল্যাটফর্মের কোনো প্যাকেজ নেই।</p>
+                </div>`;
+            return;
+        }
+
+        list.forEach(pkg => {
+            html += `
+            <div class="package-card">
+                <div class="pkg-left">
+                    <div class="pkg-icon-box" style="background: ${pkg.bg};">
+                        <i class="${pkg.icon}"></i>
+                    </div>
+                    <div class="pkg-details">
+                        <h6>${pkg.title}</h6>
+                        <div class="pkg-meta">
+                            <span class="price-badge">৳ ${pkg.price.toFixed(2)}</span>
+                            <span class="type-pill">${pkg.type}</span>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-order-now" onclick="openOrderModal('${pkg.id}')">
+                    অর্ডার করুন
+                </button>
+            </div>`;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // অর্ডার পপ-আপ ওপেন
+    function openOrderModal(pkgId) {
+        const list = DYNAMIC_SERVICES[currentPlatform] || [];
+        selectedPackage = list.find(p => p.id === pkgId);
+        if (!selectedPackage) return;
+
+        uploadedScreenshotUrl = "";
+        document.getElementById('orderLinkInput').value = "";
+        document.getElementById('orderNameInput').value = "";
+        document.getElementById('orderFileInput').value = "";
+        document.getElementById('imgPreviewBox').style.display = "none";
+        document.getElementById('orderPreviewImg').src = "";
+
+        document.getElementById('mPkgName').innerText = selectedPackage.title;
+        document.getElementById('mPkgPrice').innerText = `৳ ${selectedPackage.price.toFixed(2)}`;
+        document.getElementById('orderUserIdInput').value = formattedUserUid;
+
+        orderModalInstance.show();
+    }
+
+    // 📸 স্ক্রিনশট আপলোড
+    document.getElementById('orderFileInput').onchange = async (evt) => {
+        const file = evt.target.files[0];
+        if (!file) return;
+
+        if (file.size > 10 * 1024 * 1024) {
+            Swal.fire('ফাইল বড়!', 'অনুগ্রহ করে ১০ মেগাবাইটের কম সাইজের ছবি দিন।', 'warning');
+            return;
+        }
+
+        Swal.fire({
+            title: 'ছবি আপলোড হচ্ছে...',
+            text: 'ইমেজ লিংক তৈরি করা হচ্ছে, অপেক্ষা করুন।',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        try {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await res.json();
+
+            if (result.success) {
+                uploadedScreenshotUrl = result.data.display_url || result.data.url;
+
+                const previewBox = document.getElementById('imgPreviewBox');
+                const previewImg = document.getElementById('orderPreviewImg');
+                previewImg.src = uploadedScreenshotUrl;
+                previewBox.style.display = "block";
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ছবি আপলোড সফল!',
+                    timer: 1400,
+                    showConfirmButton: false
+                });
+
+            } else {
+                throw new Error(result.error ? result.error.message : 'আপলোড ব্যর্থ হয়েছে');
+            }
+        } catch (err) {
+            Swal.fire('আপলোড ত্রুটি!', err.message || 'ছবি আপলোড করতে সমস্যা হয়েছে।', 'error');
+        }
+    };
+
+    // অর্ডার সাবমিট
+    async function submitOrder() {
+        if (!selectedPackage || !currentUser) return;
+
+        const targetLink = document.getElementById('orderLinkInput').value.trim();
+        const targetName = document.getElementById('orderNameInput').value.trim();
+
+        if (!targetLink) {
+            Swal.fire('লিংক আবশ্যক!', 'অনুগ্রহ করে সঠিক লিংক দিন।', 'warning');
+            return;
+        }
+
+        if (!targetName) {
+            Swal.fire('নাম আবশ্যক!', 'অনুগ্রহ করে পেইজ বা একাউন্টের নাম লিখুন।', 'warning');
+            return;
+        }
+
+        if (userBalance < selectedPackage.price) {
+            Swal.fire({
+                title: 'অপর্যাপ্ত ব্যালেন্স!',
+                html: `এই অর্ডারের জন্য <b>৳${selectedPackage.price.toFixed(2)}</b> প্রয়োজন। আপনার ব্যালেন্স <b>৳${userBalance.toFixed(2)}</b>।`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'ডিপোজিট করুন',
+                cancelButtonText: 'বাতিল',
+                confirmButtonColor: '#00b894'
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    window.location.href = "deposit.html";
+                }
+            });
+            return;
+        }
+
+        const confirm = await Swal.fire({
+            title: 'অর্ডার নিশ্চিত করবেন?',
+            html: `আপনার ব্যালেন্স থেকে <b>৳${selectedPackage.price.toFixed(2)}</b> কেটে নেওয়া হবে।`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'হ্যাঁ, অর্ডার দিন',
+            cancelButtonText: 'বাতিল',
+            confirmButtonColor: '#00b894'
+        });
+
+        if (!confirm.isConfirmed) return;
+
+        const btn = document.getElementById('btnConfirmOrder');
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>প্রসেস হচ্ছে...`;
+
+        try {
+            const userRef = db.collection("users").doc(currentUser.uid);
+            const orderRef = db.collection("social_orders").doc();
+
+            await db.runTransaction(async (transaction) => {
+                const userDoc = await transaction.get(userRef);
+                const currentBal = parseFloat(userDoc.data().balance || 0);
+
+                if (currentBal < selectedPackage.price) {
+                    throw "ইনসাফিসিয়েন্ট ব্যালেন্স!";
+                }
+
+                transaction.update(userRef, {
+                    balance: currentBal - selectedPackage.price
+                });
+
+                transaction.set(orderRef, {
+                    order_id: `ORD_${Date.now()}`,
+                    user_id: currentUser.uid,
+                    user_numeric_id: formattedUserUid,
+                    user_email: currentUser.email || "No Email",
+                    platform: currentPlatform,
+                    service_title: selectedPackage.title,
+                    price: selectedPackage.price,
+                    type: selectedPackage.type,
+                    target_link: targetLink,
+                    target_name: targetName,
+                    proof_image: uploadedScreenshotUrl || "No Image",
+                    status: "pending",
+                    created_at: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            });
+
+            orderModalInstance.hide();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'অর্ডার সফল হয়েছে!',
+                text: 'আপনার অর্ডারটি পেন্ডিং রয়েছে। এডমিন দ্রুত ডেলিভারি সম্পন্ন করবেন।',
+                confirmButtonColor: '#00b894'
+            });
+
+        } catch (error) {
+            Swal.fire('ব্যর্থ হয়েছে!', error.toString() || 'অর্ডার করতে সমস্যা হয়েছে।', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i> অর্ডার সম্পন্ন করুন (Pay & Order)`;
+        }
+    }
+
+    // হিস্ট্রি মডাল
+    function openHistoryModal() {
+        historyModalInstance.show();
+        loadOrderHistory();
+    }
+
+    async function loadOrderHistory() {
+        const container = document.getElementById('historyListContainer');
+        container.innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary spinner-border-sm mb-2"></div>
+                <p class="small text-muted mb-0">অর্ডার হিস্ট্রি লোড হচ্ছে...</p>
+            </div>`;
+
+        try {
+            const snap = await db.collection("social_orders")
+                                 .where("user_id", "==", currentUser.uid)
+                                 .get();
+
+            if (snap.empty) {
+                container.innerHTML = `
+                    <div class="text-center text-muted py-5">
+                        <i class="fa-solid fa-box-open fa-3x mb-3 text-secondary opacity-50"></i>
+                        <p class="fw-bold mb-0">কোনো সোশ্যাল অর্ডার পাওয়া যায়নি!</p>
+                    </div>`;
+                return;
+            }
+
+            let docs = [];
+            snap.forEach(doc => docs.push(doc.data()));
+            docs.sort((a, b) => {
+                const timeA = a.created_at ? a.created_at.toMillis() : 0;
+                const timeB = b.created_at ? b.created_at.toMillis() : 0;
+                return timeB - timeA;
+            });
+
+            let html = "";
+            docs.forEach(item => {
+                const status = (item.status || 'pending').toLowerCase();
+                let badgeClass = "st-pending";
+                let badgeText = "পেন্ডিং (Pending)";
+
+                if (status === 'approved' || status === 'completed') {
+                    badgeClass = "st-approved";
+                    badgeText = "সফল (Completed)";
+                } else if (status === 'rejected') {
+                    badgeClass = "st-rejected";
+                    badgeText = "বাতিল (Rejected)";
+                }
+
+                let timeStr = "কিছুক্ষণ আগে";
+                if (item.created_at && item.created_at.toDate) {
+                    const d = item.created_at.toDate();
+                    timeStr = d.toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' }) + " • " + d.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+                }
+
+                html += `
+                <div class="history-card">
+                    <div class="h-details">
+                        <h6>${item.service_title}</h6>
+                        <p>কাটা হয়েছে: <b class="text-success">৳${parseFloat(item.price).toFixed(2)}</b> • নাম: <b>${item.target_name}</b></p>
+                        <small><i class="fa-regular fa-clock me-1"></i>${timeStr}</small>
+                        <a href="${item.target_link}" target="_blank" class="small text-primary text-decoration-none mt-1 d-inline-block">
+                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>লিংক ভিজিট করুন
+                        </a>
+                    </div>
+                    <div>
+                        <span class="st-badge ${badgeClass}">${badgeText}</span>
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+
+        } catch (e) {
+            container.innerHTML = `<p class="text-center text-danger small py-3">হিস্ট্রি লোড করতে সমস্যা হয়েছে।</p>`;
+        }
+    }
+</script>
+</body>
+</html>
