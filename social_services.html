@@ -475,39 +475,33 @@
 <script>
     const IMGBB_API_KEY = "24dcac3ce6cb918c5d55bd7bcc4d293c";
 
-    const DEFAULT_SERVICES = {
-        facebook: [
-            { id: "fb_1", title: "১,০০০ ফেসবুক পেজ ফলোয়ার", price: 50.00, type: "Followers", icon: "fa-brands fa-facebook-f", bg: "#1877F2" },
-            { id: "fb_2", title: "১,০০০ ফেসবুক পোস্ট লাইক", price: 25.00, type: "Likes", icon: "fa-solid fa-thumbs-up", bg: "#1877F2" },
-            { id: "fb_3", title: "১,০০০ কাস্টম ফেসবুক কমেন্ট", price: 40.00, type: "Comments", icon: "fa-solid fa-comment-dots", bg: "#1877F2" },
-            { id: "fb_4", title: "১০,০০০ ফেসবুক ভিডিও ভিউজ", price: 30.00, type: "Views", icon: "fa-solid fa-play", bg: "#1877F2" }
-        ],
-        tiktok: [
-            { id: "tt_1", title: "১,০০০ টিকটক প্রোফাইল ফলোয়ার", price: 60.00, type: "Followers", icon: "fa-brands fa-tiktok", bg: "#000000" },
-            { id: "tt_2", title: "১,০০০ টিকটক ভিডিও লাইক", price: 20.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#fe2c55" },
-            { id: "tt_3", title: "১০,০০০ টিকটক ভিডিও ভিউজ", price: 15.00, type: "Views", icon: "fa-solid fa-play", bg: "#25f4ee" },
-            { id: "tt_4", title: "১,০০০ টিকটক ভিডিও শেয়ার", price: 25.00, type: "Shares", icon: "fa-solid fa-share", bg: "#000000" }
-        ],
-        youtube: [
-            { id: "yt_1", title: "১,০০০ ইউটিউব রিয়েল সাবস্ক্রাইবার", price: 250.00, type: "Subscribers", icon: "fa-brands fa-youtube", bg: "#FF0000" },
-            { id: "yt_2", title: "৪,০০০ ঘন্টা ওয়াচটাইম (Non-Drop)", price: 800.00, type: "Watchtime", icon: "fa-solid fa-clock", bg: "#FF0000" },
-            { id: "yt_3", title: "১০,০০০ ইউটিউব ভিডিও ভিউজ", price: 90.00, type: "Views", icon: "fa-solid fa-eye", bg: "#FF0000" },
-            { id: "yt_4", title: "১,০০০ ইউটিউব ভিডিও লাইক", price: 40.00, type: "Likes", icon: "fa-solid fa-thumbs-up", bg: "#FF0000" }
-        ],
-        instagram: [
-            { id: "in_1", title: "১,০০০ ইনস্টাগ্রাম ফলোয়ার", price: 45.00, type: "Followers", icon: "fa-brands fa-instagram", bg: "#E4405F" },
-            { id: "in_2", title: "১,০০০ ইনস্টাগ্রাম রিয়েল লাইক", price: 20.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#E4405F" },
-            { id: "in_3", title: "১০,০০০ ইনস্টাগ্রাম রিলস ভিউজ", price: 25.00, type: "Reels Views", icon: "fa-solid fa-play", bg: "#E4405F" },
-            { id: "in_4", title: "৫০০ ইনস্টাগ্রাম কমেন্ট", price: 35.00, type: "Comments", icon: "fa-solid fa-comment", bg: "#E4405F" }
-        ],
-        twitter: [
-            { id: "tw_1", title: "১,০০০ টুইটার (X) ফলোয়ার", price: 80.00, type: "Followers", icon: "fa-brands fa-x-twitter", bg: "#0f172a" },
-            { id: "tw_2", title: "১,০০০ রিটুইট (Retweets)", price: 30.00, type: "Retweets", icon: "fa-solid fa-retweet", bg: "#0f172a" },
-            { id: "tw_3", title: "১,০০০ পোস্ট লাইক", price: 25.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#0f172a" }
-        ]
-    };
+    const DEFAULT_SERVICES = [
+        { id: "fb_1", platform: "facebook", title: "১,০০০ ফেসবুক পেজ ফলোয়ার", price: 50.00, type: "Followers", icon: "fa-brands fa-facebook-f", bg: "#1877F2", status: "active", order: 1 },
+        { id: "fb_2", platform: "facebook", title: "১,০০০ ফেসবুক পোস্ট লাইক", price: 25.00, type: "Likes", icon: "fa-solid fa-thumbs-up", bg: "#1877F2", status: "active", order: 2 },
+        { id: "fb_3", platform: "facebook", title: "১,০০০ কাস্টম ফেসবুক কমেন্ট", price: 40.00, type: "Comments", icon: "fa-solid fa-comment-dots", bg: "#1877F2", status: "active", order: 3 },
+        { id: "fb_4", platform: "facebook", title: "১০,০০০ ফেসবুক ভিডিও ভিউজ", price: 30.00, type: "Views", icon: "fa-solid fa-play", bg: "#1877F2", status: "active", order: 4 },
 
-    let DYNAMIC_SERVICES = { ...DEFAULT_SERVICES };
+        { id: "tt_1", platform: "tiktok", title: "১,০০০ টিকটক প্রোফাইল ফলোয়ার", price: 60.00, type: "Followers", icon: "fa-brands fa-tiktok", bg: "#000000", status: "active", order: 5 },
+        { id: "tt_2", platform: "tiktok", title: "১,০০০ টিকটক ভিডিও লাইক", price: 20.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#fe2c55", status: "active", order: 6 },
+        { id: "tt_3", platform: "tiktok", title: "১০,০০০ টিকটক ভিডিও ভিউজ", price: 15.00, type: "Views", icon: "fa-solid fa-play", bg: "#25f4ee", status: "active", order: 7 },
+        { id: "tt_4", platform: "tiktok", title: "১,০০০ টিকটক ভিডিও শেয়ার", price: 25.00, type: "Shares", icon: "fa-solid fa-share", bg: "#000000", status: "active", order: 8 },
+
+        { id: "yt_1", platform: "youtube", title: "১,০০০ ইউটিউব রিয়েল সাবস্ক্রাইবার", price: 250.00, type: "Subscribers", icon: "fa-brands fa-youtube", bg: "#FF0000", status: "active", order: 9 },
+        { id: "yt_2", platform: "youtube", title: "৪,০০০ ঘন্টা ওয়াচটাইম (Non-Drop)", price: 800.00, type: "Watchtime", icon: "fa-solid fa-clock", bg: "#FF0000", status: "active", order: 10 },
+        { id: "yt_3", platform: "youtube", title: "১০,০০০ ইউটিউব ভিডিও ভিউজ", price: 90.00, type: "Views", icon: "fa-solid fa-eye", bg: "#FF0000", status: "active", order: 11 },
+        { id: "yt_4", platform: "youtube", title: "১,০০০ ইউটিউব ভিডিও লাইক", price: 40.00, type: "Likes", icon: "fa-solid fa-thumbs-up", bg: "#FF0000", status: "active", order: 12 },
+
+        { id: "in_1", platform: "instagram", title: "১,০০০ ইনস্টাগ্রাম ফলোয়ার", price: 45.00, type: "Followers", icon: "fa-brands fa-instagram", bg: "#E4405F", status: "active", order: 13 },
+        { id: "in_2", platform: "instagram", title: "১,০০০ ইনস্টাগ্রাম রিয়েল লাইক", price: 20.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#E4405F", status: "active", order: 14 },
+        { id: "in_3", platform: "instagram", title: "১০,০০০ ইনস্টাগ্রাম রিলস ভিউজ", price: 25.00, type: "Reels Views", icon: "fa-solid fa-play", bg: "#E4405F", status: "active", order: 15 },
+        { id: "in_4", platform: "instagram", title: "৫০০ ইনস্টাগ্রাম কমেন্ট", price: 35.00, type: "Comments", icon: "fa-solid fa-comment", bg: "#E4405F", status: "active", order: 16 },
+
+        { id: "tw_1", platform: "twitter", title: "১,০০০ টুইটার (X) ফলোয়ার", price: 80.00, type: "Followers", icon: "fa-brands fa-x-twitter", bg: "#0f172a", status: "active", order: 17 },
+        { id: "tw_2", platform: "twitter", title: "১,০০০ রিটুইট (Retweets)", price: 30.00, type: "Retweets", icon: "fa-solid fa-retweet", bg: "#0f172a", status: "active", order: 18 },
+        { id: "tw_3", platform: "twitter", title: "১,০০০ পোস্ট লাইক", price: 25.00, type: "Likes", icon: "fa-solid fa-heart", bg: "#0f172a", status: "active", order: 19 }
+    ];
+
+    let DYNAMIC_SERVICES = { facebook: [], tiktok: [], youtube: [], instagram: [], twitter: [] };
 
     const firebaseConfig = {
         apiKey: "AIzaSyB3kKnSd54IuuBOCyVjzry47q002cMF-zA",
@@ -560,37 +554,59 @@
         listenDynamicServices();
     });
 
-    // ফায়ারবেস থেকে লাইভ সার্ভিস প্যাকেজ রিড
+    // ফায়ারবেস থেকে লাইভ সার্ভিস প্যাকেজ রিড এবং প্রয়োজনে অটো সিঙ্ক
     function listenDynamicServices() {
-        db.collection("social_services").onSnapshot(snapshot => {
-            if (!snapshot.empty) {
-                DYNAMIC_SERVICES = { facebook: [], tiktok: [], youtube: [], instagram: [], twitter: [] };
-
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    data.id = doc.id;
-                    const p = (data.platform || 'facebook').toLowerCase();
-
-                    if ((data.status || 'active') === 'active') {
-                        if (!DYNAMIC_SERVICES[p]) DYNAMIC_SERVICES[p] = [];
-                        DYNAMIC_SERVICES[p].push({
-                            id: doc.id,
-                            title: data.title,
-                            price: parseFloat(data.price || 0),
-                            type: data.type || "Service",
-                            icon: data.icon || "fa-solid fa-bolt",
-                            bg: data.bg || "#1877F2"
-                        });
-                    }
+        db.collection("social_services").onSnapshot(async snapshot => {
+            if (snapshot.empty) {
+                // কালেকশন খালি থাকলে স্বয়ংক্রিয় ব্যাচ রাইট হবে
+                const batch = db.batch();
+                DEFAULT_SERVICES.forEach(item => {
+                    const docRef = db.collection("social_services").doc(item.id);
+                    batch.set(docRef, {
+                        platform: item.platform,
+                        title: item.title,
+                        price: item.price,
+                        type: item.type,
+                        icon: item.icon,
+                        bg: item.bg,
+                        status: item.status,
+                        order: item.order,
+                        created_at: firebase.firestore.FieldValue.serverTimestamp()
+                    });
                 });
-            } else {
-                DYNAMIC_SERVICES = { ...DEFAULT_SERVICES };
+                await batch.commit();
+                return;
             }
+
+            DYNAMIC_SERVICES = { facebook: [], tiktok: [], youtube: [], instagram: [], twitter: [] };
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                data.id = doc.id;
+                const p = (data.platform || 'facebook').toLowerCase();
+
+                if ((data.status || 'active') === 'active') {
+                    if (!DYNAMIC_SERVICES[p]) DYNAMIC_SERVICES[p] = [];
+                    DYNAMIC_SERVICES[p].push({
+                        id: doc.id,
+                        title: data.title,
+                        price: parseFloat(data.price || 0),
+                        type: data.type || "Service",
+                        icon: data.icon || "fa-solid fa-bolt",
+                        bg: data.bg || "#1877F2",
+                        order: data.order || 999
+                    });
+                }
+            });
+
+            // সর্টিং
+            Object.keys(DYNAMIC_SERVICES).forEach(k => {
+                DYNAMIC_SERVICES[k].sort((a, b) => (a.order || 999) - (b.order || 999));
+            });
 
             renderPlatformPackages(currentPlatform);
         }, err => {
-            console.log("Services load error, using default:", err);
-            renderPlatformPackages(currentPlatform);
+            console.log("Services load error:", err);
         });
     }
 
